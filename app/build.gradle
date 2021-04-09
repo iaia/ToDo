@@ -35,6 +35,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":usecase"))
 
     implementation Deps.Kotlin.stdLib
     implementation Deps.AndroidX.coreKtx

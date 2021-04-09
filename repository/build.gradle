@@ -35,13 +35,9 @@ android {
 }
 
 dependencies {
+    implementation(project(":entity"))
+    implementation(project(":database"))
 
     implementation Deps.Kotlin.stdLib
-    implementation Deps.AndroidX.coreKtx
-    implementation Deps.AndroidX.appCompat
-    implementation Deps.MaterialDesign.material
-    implementation Deps.AndroidX.constraintLayout
     testImplementation Deps.Test.junit4
-    androidTestImplementation Deps.AndroidX.Test.extJunit
-    androidTestImplementation Deps.AndroidX.Test.espresso
 }
