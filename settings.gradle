@@ -1,2 +1,6 @@
+include ':usecase'
+include ':database'
+include ':repository'
+include ':entity'
 include ':app'
 rootProject.name = "ToDo"
