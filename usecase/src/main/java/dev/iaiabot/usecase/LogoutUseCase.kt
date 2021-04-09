@@ -4,7 +4,7 @@ interface LogoutUseCase : UseCase {
     operator fun invoke()
 }
 
-internal class LogoutUseCaseImpl : LoginUseCase {
+internal class LogoutUseCaseImpl : LogoutUseCase {
     override fun invoke() {
         TODO("Not yet implemented")
     }
