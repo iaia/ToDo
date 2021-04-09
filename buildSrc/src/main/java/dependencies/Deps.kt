@@ -23,11 +23,9 @@ object Deps {
     }
 
     object Koin {
-        private val koin_version = "2.2.1"
-        val ktor = "org.koin:koin-ktor:$koin_version"
-        val core = "org.koin:koin-core:$koin_version"
-        val coreExt = "org.koin:koin-core-ext:$koin_version"
-        val test = "org.koin:koin-test:$koin_version"
+        private val koin_version = "3.0.1-beta-2"
+        val base = "io.insert-koin:koin-android:$koin_version"
+        val ext = "io.insert-koin:koin-android-ext:$koin_version"
     }
 
     object Test {
