@@ -1,11 +1,10 @@
 package dev.iaiabot.usecase
 
 interface AddTaskUseCase : UseCase {
-    operator fun invoke()
+    operator fun invoke(title: String)
 }
 
 internal class AddTaskUseCaseImpl : AddTaskUseCase {
-    override fun invoke() {
-        TODO("Not yet implemented")
+    override fun invoke(title: String) {
     }
 }

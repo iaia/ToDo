@@ -39,6 +39,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":entity"))
     implementation(project(":usecase"))
 
     implementation Deps.Kotlin.stdLib
