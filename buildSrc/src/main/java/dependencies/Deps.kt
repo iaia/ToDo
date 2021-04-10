@@ -12,6 +12,10 @@ object Deps {
         val appCompat = "androidx.appcompat:appcompat:1.2.0"
         val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
 
+        val nav_version = "2.3.5"
+        val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$nav_version"
+        val navigationUi = "androidx.navigation:navigation-ui-ktx:$nav_version"
+
         object Test {
             val extJunit = "androidx.test.ext:junit:1.1.2"
             val espresso = "androidx.test.espresso:espresso-core:3.3.0"
