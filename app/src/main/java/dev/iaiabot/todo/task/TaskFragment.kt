@@ -21,6 +21,7 @@ class TaskFragment : Fragment() {
     ): View {
         binding = FragmentTaskBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        lifecycle.addObserver(viewModel)
         return binding.root
     }
 
