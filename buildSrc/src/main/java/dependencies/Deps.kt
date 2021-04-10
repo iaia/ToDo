@@ -22,6 +22,12 @@ object Deps {
         }
     }
 
+    object Epoxy {
+        private val epoxyVersion = "4.4.4"
+        val epoxy = "com.airbnb.android:epoxy:$epoxyVersion"
+        val epoxyProcessor = "com.airbnb.android:epoxy-processor:$epoxyVersion"
+    }
+
     object MaterialDesign {
         val material = "com.google.android.material:material:1.3.0"
     }

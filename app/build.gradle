@@ -51,6 +51,8 @@ dependencies {
     implementation Deps.AndroidX.constraintLayout
     implementation Deps.AndroidX.navigationFragment
     implementation Deps.AndroidX.navigationUi
+    implementation Deps.Epoxy.epoxy
+    annotationProcessor Deps.Epoxy.epoxy
 
     // di
     implementation Deps.Koin.base
