@@ -8,5 +8,5 @@ import dev.iaiabot.todo.R;
         R.layout.list_item_add_task,
         R.layout.list_item_task,
 })
-interface EpoxyConfig {
+interface EpoxyDataBindingConfig {
 }

@@ -52,7 +52,8 @@ dependencies {
     implementation Deps.AndroidX.navigationFragment
     implementation Deps.AndroidX.navigationUi
     implementation Deps.Epoxy.epoxy
-    annotationProcessor Deps.Epoxy.epoxy
+    implementation Deps.Epoxy.epoxyDataBinding
+    kapt Deps.Epoxy.epoxyProcessor
 
     // di
     implementation Deps.Koin.base
