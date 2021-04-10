@@ -10,6 +10,5 @@ object Module {
         single<LoginUseCase> { LoginUseCaseImpl() }
         single<LogoutUseCase> { LogoutUseCaseImpl() }
         single<RestoreTaskUseCase> { RestoreTaskUseCaseImpl() }
-
     }
 }
