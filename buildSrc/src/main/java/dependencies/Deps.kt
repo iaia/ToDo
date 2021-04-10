@@ -39,6 +39,11 @@ object Deps {
         val ext = "io.insert-koin:koin-android-ext:$koin_version"
     }
 
+    object Firebase {
+        val bom = "com.google.firebase:firebase-bom:26.7.0"
+        val firestoreKtx = "com.google.firebase:firebase-firestore-ktx"
+    }
+
     object Test {
         val junit4 = "junit:junit:4.13.2"
         private val mockk_version = "1.10.2"

@@ -45,5 +45,8 @@ dependencies {
     implementation Deps.Koin.base
     implementation Deps.Koin.ext
 
+    implementation platform(Deps.Firebase.bom)
+    implementation Deps.Firebase.firestoreKtx
+
     testImplementation Deps.Test.junit4
 }
