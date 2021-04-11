@@ -10,6 +10,6 @@ import org.koin.dsl.module
 object Module {
     val appModule = module {
         viewModel<LoginViewModel> { LoginViewModelImpl(get()) }
-        viewModel<TaskViewModel> { TaskViewModelImpl(get(), get(), get()) }
+        viewModel<TaskViewModel> { TaskViewModelImpl(get(), get(), get(), get()) }
     }
 }

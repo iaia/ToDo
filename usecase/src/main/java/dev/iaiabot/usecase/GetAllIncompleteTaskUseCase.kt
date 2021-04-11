@@ -12,7 +12,7 @@ internal class GetAllIncompleteTaskUseCaseImpl(
     private val taskRepository: TaskRepository,
 ) : GetAllIncompleteTaskUseCase {
     override fun invoke(): LiveData<List<Task>> {
-        return taskRepository.getAllUncompleted()
+        return taskRepository.tasks
     }
 }
 

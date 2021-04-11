@@ -39,6 +39,7 @@ dependencies {
     implementation(project(":database"))
 
     implementation Deps.Kotlin.stdLib
+    implementation Deps.Kotlin.coroutine
 
     // di
     implementation Deps.Koin.base

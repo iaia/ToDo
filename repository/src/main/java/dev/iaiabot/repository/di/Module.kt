@@ -5,6 +5,7 @@ import dev.iaiabot.repository.TaskRepository
 import dev.iaiabot.repository.TaskRepositoryImpl
 import dev.iaiabot.repository.UserRepository
 import dev.iaiabot.repository.UserRepositoryImpl
+import kotlinx.coroutines.Dispatchers
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
@@ -12,7 +13,9 @@ object Module {
     val repositoryModule = module {
         loadKoinModules(databaseModule)
 
-        single<TaskRepository> { TaskRepositoryImpl(get()) }
+        single<TaskRepository> { TaskRepositoryImpl(get(), coroutineDispatcher) }
         single<UserRepository> { UserRepositoryImpl() }
     }
+
+    private val coroutineDispatcher = Dispatchers.IO
 }

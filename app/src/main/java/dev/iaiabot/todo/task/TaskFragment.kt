@@ -29,10 +29,9 @@ class TaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         controller = TaskController()
+        binding.ervTasks.setController(controller)
 
-        binding.rvTasks.adapter = controller.adapter
-
-        viewModel.incompleteTasks?.observe(viewLifecycleOwner) {
+        viewModel.incompleteTasks.observe(viewLifecycleOwner) {
             controller.setData(it)
         }
     }
