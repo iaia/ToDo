@@ -4,6 +4,7 @@ import android.app.Application
 import dev.iaiabot.todo.di.Module.appModule
 import dev.iaiabot.usecase.di.Module.useCaseModule
 import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 
 class ToDoApplication : Application() {
@@ -11,9 +12,9 @@ class ToDoApplication : Application() {
         super.onCreate()
 
         startKoin {
+            androidLogger()
             androidContext(this@ToDoApplication)
-            modules(useCaseModule)
-            modules(appModule)
+            modules(listOf(useCaseModule, appModule))
         }
     }
 }

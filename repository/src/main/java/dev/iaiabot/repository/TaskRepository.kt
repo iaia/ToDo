@@ -1,15 +1,24 @@
 package dev.iaiabot.repository
 
+import androidx.lifecycle.LiveData
+import dev.iaiabot.database.TaskDao
+import dev.iaiabot.entity.Task
+
 interface TaskRepository {
-    fun add()
+    fun add(task: Task)
     fun restoreCompleted()
     fun complete()
-    fun getAllUncompleted()
+    suspend fun getAllUncompleted(): LiveData<List<Task>>
 }
 
-internal class TaskRepositoryImpl : TaskRepository {
-    override fun add() {
-        TODO("Not yet implemented")
+internal class TaskRepositoryImpl(
+    private val taskDao: TaskDao,
+) : TaskRepository {
+    // TODO: 後でどうにかする
+    private val userId = "437IhnAX77TGoxHcqd1c"
+
+    override fun add(task: Task) {
+        taskDao.add(userId, task)
     }
 
     override fun restoreCompleted() {
@@ -20,7 +29,8 @@ internal class TaskRepositoryImpl : TaskRepository {
         TODO("Not yet implemented")
     }
 
-    override fun getAllUncompleted() {
-        TODO("Not yet implemented")
+    override suspend fun getAllUncompleted(): LiveData<List<Task>> {
+        taskDao.refreshTasks(userId)
+        return taskDao.tasks
     }
 }
