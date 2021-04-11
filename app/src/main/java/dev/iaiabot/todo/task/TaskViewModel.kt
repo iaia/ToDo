@@ -21,13 +21,11 @@ internal class TaskViewModelImpl(
     private val completeTaskUseCase: CompleteTaskUseCase,
 ) : TaskViewModel() {
 
-    override var incompleteTasks: LiveData<List<Task>>? = null
+    override var incompleteTasks: LiveData<List<Task>> = getAllIncompleteTaskUseCase.invoke()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun init() {
-        viewModelScope.launch(Dispatchers.IO) {
-            incompleteTasks = getAllIncompleteTaskUseCase.invoke()
-        }
+
     }
 
     override fun addTask(title: String) {

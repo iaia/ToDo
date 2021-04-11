@@ -2,6 +2,7 @@ package dev.iaiabot.database
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.google.firebase.firestore.DocumentId
 import com.google.firebase.firestore.ktx.toObjects
 import dev.iaiabot.entity.Task
 
@@ -24,7 +25,7 @@ internal class TaskDaoImpl(
 
     override fun refreshTasks(userId: String) {
         collection(userId).get().addOnSuccessListener {
-            tasks.postValue(it.toObjects())
+            tasks.postValue(it.toObjects<TaskEntity>())
         }
     }
 
@@ -32,3 +33,11 @@ internal class TaskDaoImpl(
         collection(userId).add(task)
     }
 }
+
+data class TaskEntity(
+    @DocumentId
+    override val id: String = "",
+    override val title: String = "",
+    override val completed: Boolean = false,
+    override val order: Int = 0,
+) : Task

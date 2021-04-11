@@ -8,7 +8,7 @@ interface TaskRepository {
     fun add(task: Task)
     fun restoreCompleted()
     fun complete()
-    suspend fun getAllUncompleted(): LiveData<List<Task>>
+    fun getAllUncompleted(): LiveData<List<Task>>
 }
 
 internal class TaskRepositoryImpl(
@@ -29,7 +29,7 @@ internal class TaskRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override suspend fun getAllUncompleted(): LiveData<List<Task>> {
+    override fun getAllUncompleted(): LiveData<List<Task>> {
         taskDao.refreshTasks(userId)
         return taskDao.tasks
     }

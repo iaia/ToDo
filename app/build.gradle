@@ -46,6 +46,7 @@ dependencies {
     implementation Deps.Kotlin.stdLib
     implementation Deps.AndroidX.coreKtx
     implementation Deps.AndroidX.appCompat
+    implementation Deps.AndroidX.liveDataLifecycleKtx
 
     // ui
     implementation Deps.MaterialDesign.material
