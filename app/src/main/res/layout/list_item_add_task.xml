@@ -34,8 +34,12 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tiet_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
                 android:text="@={viewModel.newTaskTitle}" />
         </com.google.android.material.textfield.TextInputLayout>
 
