@@ -9,10 +9,9 @@ import dev.iaiabot.usecase.RefreshAllTasks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-abstract class TaskViewModel : ViewModel(), LifecycleObserver {
+abstract class TaskViewModel : ViewModel(), LifecycleObserver, TaskAddViewModel {
     abstract val incompleteTasks: LiveData<List<Task>>
 
-    abstract fun addTask(title: String)
     abstract fun completeTask(taskId: Int)
 }
 
@@ -23,6 +22,7 @@ internal class TaskViewModelImpl(
     private val completeTaskUseCase: CompleteTaskUseCase,
 ) : TaskViewModel() {
 
+    override val newTaskTitle = MutableLiveData<String>("")
     override var incompleteTasks: LiveData<List<Task>> = getAllIncompleteTaskUseCase.invoke()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
@@ -32,9 +32,13 @@ internal class TaskViewModelImpl(
         }
     }
 
-    override fun addTask(title: String) {
+    override fun addTask() {
         viewModelScope.launch(Dispatchers.IO) {
-            addTaskUseCase.invoke(title)
+            val success = addTaskUseCase.invoke(newTaskTitle.value)
+            if (success) {
+                newTaskTitle.postValue("")
+                refreshAllTasks.invoke()
+            }
         }
     }
 

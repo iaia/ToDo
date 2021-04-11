@@ -5,11 +5,14 @@ import dev.iaiabot.entity.Task
 import dev.iaiabot.todo.listItemAddTask
 import dev.iaiabot.todo.listItemTask
 
-class TaskController : TypedEpoxyController<List<Task>>() {
+class TaskController(
+    private val viewModel: TaskAddViewModel,
+) : TypedEpoxyController<List<Task>>() {
     override fun buildModels(data: List<Task>) {
 
         listItemAddTask {
             id(modelCountBuiltSoFar)
+            viewModel(viewModel)
         }
 
         data.forEach {

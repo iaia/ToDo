@@ -1,10 +1,12 @@
 package dev.iaiabot.usecase
 
 interface AddTaskUseCase : UseCase {
-    operator fun invoke(title: String)
+    // Resultにする
+    operator fun invoke(title: String?): Boolean
 }
 
 internal class AddTaskUseCaseImpl : AddTaskUseCase {
-    override fun invoke(title: String) {
+    override fun invoke(title: String?): Boolean {
+        return true
     }
 }
