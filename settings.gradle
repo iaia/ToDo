@@ -1,7 +1,7 @@
+include ':entity'
 include ':auth'
-include ':usecase'
 include ':database'
 include ':repository'
-include ':entity'
+include ':usecase'
 include ':app'
 rootProject.name = "ToDo"
