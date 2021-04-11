@@ -29,7 +29,7 @@ internal class TaskDaoImpl(
     }
 
     override fun add(userId: String, task: Task) {
-        collection(userId).add(task)
+        collection(userId).add(TaskEntity(title = task.title))
     }
 }
 

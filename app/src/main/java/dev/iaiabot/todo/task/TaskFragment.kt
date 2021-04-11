@@ -28,7 +28,7 @@ class TaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        controller = TaskController(viewModel)
+        controller = TaskController(viewModel, viewLifecycleOwner)
         binding.ervTasks.setController(controller)
 
         viewModel.incompleteTasks.observe(viewLifecycleOwner) {
