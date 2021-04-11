@@ -15,13 +15,11 @@ internal interface FirebaseAuthConfig {
 }
 
 internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
-    private lateinit var auth: FirebaseAuth
     override val me: FirebaseUser?
         get() = auth.currentUser
 
-    init {
-        // auth = Firebase.auth
-    }
+    private val auth: FirebaseAuth
+        get() = FirebaseAuth.getInstance()
 
     override suspend fun login(email: String, password: String): Boolean {
         return suspendCoroutine { continuation ->

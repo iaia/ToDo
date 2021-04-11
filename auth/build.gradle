@@ -45,6 +45,7 @@ dependencies {
     implementation Deps.Koin.base
     implementation Deps.Koin.ext
 
+    // firebase
     implementation platform(Deps.Firebase.bom)
     implementation Deps.Firebase.auth
 
