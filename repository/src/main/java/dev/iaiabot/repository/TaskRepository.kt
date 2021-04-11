@@ -12,7 +12,7 @@ interface TaskRepository {
 
     fun add(task: Task)
     fun restoreCompleted()
-    fun complete()
+    fun complete(taskId: String)
     suspend fun refreshTasks()
 }
 
@@ -36,8 +36,10 @@ internal class TaskRepositoryImpl(
         TODO("Not yet implemented")
     }
 
-    override fun complete() {
-        TODO("Not yet implemented")
+    override fun complete(taskId: String) {
+        userId?.let { userId ->
+            taskDao.complete(userId, taskId)
+        }
     }
 
     override suspend fun refreshTasks() {

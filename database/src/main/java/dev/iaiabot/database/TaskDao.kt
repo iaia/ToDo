@@ -9,6 +9,7 @@ import kotlin.coroutines.suspendCoroutine
 interface TaskDao {
     suspend fun refreshTasks(userId: String): List<Task>
     fun add(userId: String, task: Task)
+    fun complete(userId: String, taskId: String)
 }
 
 internal class TaskDaoImpl(
@@ -30,6 +31,12 @@ internal class TaskDaoImpl(
 
     override fun add(userId: String, task: Task) {
         collection(userId).add(TaskEntity(title = task.title))
+    }
+
+    override fun complete(userId: String, taskId: String) {
+        collection(userId)
+            .document(taskId)
+            .update("completed", true)
     }
 }
 

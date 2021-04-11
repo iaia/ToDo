@@ -9,7 +9,7 @@ import dev.iaiabot.todo.listItemAddTask
 import dev.iaiabot.todo.listItemTask
 
 class TaskController(
-    private val viewModel: TaskAddViewModel,
+    private val viewModel: TaskViewModel,
     private val lifecycleOwner: LifecycleOwner,
 ) : TypedEpoxyController<List<Task>>() {
     override fun buildModels(data: List<Task>) {
@@ -21,7 +21,7 @@ class TaskController(
             onBind { _, view, _ ->
                 val binding = view.dataBinding as ListItemAddTaskBinding
                 binding.lifecycleOwner = lifecycleOwner
-                binding.tietTitle.setOnEditorActionListener { v, actionId, event ->
+                binding.tietTitle.setOnEditorActionListener { _, actionId, _ ->
                     if (actionId == IME_ACTION_DONE) {
                         viewModel.addTask()
                     }
@@ -35,6 +35,11 @@ class TaskController(
                 id(it.id)
                 title(it.title)
                 completed(it.completed)
+                onCheckedChanged { _, isChecked ->
+                    if (isChecked) {
+                        viewModel.completeTask(it)
+                    }
+                }
             }
         }
     }
