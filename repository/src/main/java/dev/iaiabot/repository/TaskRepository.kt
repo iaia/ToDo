@@ -18,15 +18,18 @@ interface TaskRepository {
 
 internal class TaskRepositoryImpl(
     private val taskDao: TaskDao,
+    private val userRepository: UserRepository,
     private val dispatcher: CoroutineDispatcher,
 ) : TaskRepository {
     override val tasks = MutableLiveData<List<Task>>()
 
-    // TODO: 後でどうにかする
-    private val userId = "437IhnAX77TGoxHcqd1c"
+    private val userId: String?
+        get() = userRepository.me()?.id
 
     override fun add(task: Task) {
-        taskDao.add(userId, task)
+        userId?.let { userId ->
+            taskDao.add(userId, task)
+        }
     }
 
     override fun restoreCompleted() {
@@ -39,7 +42,9 @@ internal class TaskRepositoryImpl(
 
     override suspend fun refreshTasks() {
         withContext(dispatcher) {
-            tasks.postValue(taskDao.refreshTasks(userId))
+            userId?.let { userId ->
+                tasks.postValue(taskDao.refreshTasks(userId))
+            }
         }
     }
 }

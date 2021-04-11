@@ -15,7 +15,7 @@ object Module {
     val repositoryModule = module {
         loadKoinModules(listOf(databaseModule, authModule))
 
-        single<TaskRepository> { TaskRepositoryImpl(get(), get()) }
+        single<TaskRepository> { TaskRepositoryImpl(get(), get(), get()) }
         single<UserRepository> { UserRepositoryImpl(get(), get()) }
 
         factory<CoroutineDispatcher> { Dispatchers.IO }
