@@ -45,6 +45,7 @@ object Deps {
     object Firebase {
         val bom = "com.google.firebase:firebase-bom:26.7.0"
         val firestoreKtx = "com.google.firebase:firebase-firestore-ktx"
+        val auth = "com.google.firebase:firebase-auth"
     }
 
     object Test {
