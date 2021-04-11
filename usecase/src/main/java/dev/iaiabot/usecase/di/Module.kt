@@ -13,7 +13,7 @@ object Module {
         single<RefreshAllTasks> { RefreshAllTasksImpl(get()) }
         single<AddTaskUseCase> { AddTaskUseCaseImpl(get()) }
         single<CompleteTaskUseCase> { CompleteTaskUseCaseImpl() }
-        single<LoginUseCase> { LoginUseCaseImpl() }
+        single<LoginUseCase> { LoginUseCaseImpl(get()) }
         single<LogoutUseCase> { LogoutUseCaseImpl() }
         single<RestoreTaskUseCase> { RestoreTaskUseCaseImpl() }
     }
