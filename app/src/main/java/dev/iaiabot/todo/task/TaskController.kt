@@ -8,7 +8,7 @@ import dev.iaiabot.todo.databinding.ListItemAddTaskBinding
 import dev.iaiabot.todo.listItemAddTask
 import dev.iaiabot.todo.listItemTask
 
-class TaskController(
+internal class TaskController(
     private val viewModel: TaskViewModel,
     private val lifecycleOwner: LifecycleOwner,
 ) : TypedEpoxyController<List<Task>>() {

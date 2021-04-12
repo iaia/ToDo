@@ -9,7 +9,7 @@ object Module {
     val useCaseModule = module {
         loadKoinModules(repositoryModule)
 
-        single<GetAllIncompleteTaskUseCase> { GetAllIncompleteTaskUseCaseImpl(get()) }
+        single<GetAllTaskUseCase> { GetAllTaskUseCaseImpl(get()) }
         single<RefreshAllTasks> { RefreshAllTasksImpl(get()) }
         single<AddTaskUseCase> { AddTaskUseCaseImpl(get()) }
         single<CompleteTaskUseCase> { CompleteTaskUseCaseImpl(get()) }

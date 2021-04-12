@@ -4,13 +4,13 @@ import androidx.lifecycle.LiveData
 import dev.iaiabot.entity.Task
 import dev.iaiabot.repository.TaskRepository
 
-interface GetAllIncompleteTaskUseCase {
+interface GetAllTaskUseCase {
     operator fun invoke(): LiveData<List<Task>>
 }
 
-internal class GetAllIncompleteTaskUseCaseImpl(
+internal class GetAllTaskUseCaseImpl(
     private val taskRepository: TaskRepository,
-) : GetAllIncompleteTaskUseCase {
+) : GetAllTaskUseCase {
     override fun invoke(): LiveData<List<Task>> {
         return taskRepository.tasks
     }

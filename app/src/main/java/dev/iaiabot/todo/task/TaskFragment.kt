@@ -31,7 +31,7 @@ class TaskFragment : Fragment() {
         controller = TaskController(viewModel, viewLifecycleOwner)
         binding.ervTasks.setController(controller)
 
-        viewModel.incompleteTasks.observe(viewLifecycleOwner) {
+        viewModel.allTask.observe(viewLifecycleOwner) {
             controller.setData(it)
         }
     }

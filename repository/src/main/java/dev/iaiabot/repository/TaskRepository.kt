@@ -11,7 +11,6 @@ interface TaskRepository {
     val tasks: LiveData<List<Task>>
 
     fun add(task: Task)
-    fun restoreCompleted()
     fun complete(taskId: String)
     suspend fun refreshTasks()
 }
@@ -30,10 +29,6 @@ internal class TaskRepositoryImpl(
         userId?.let { userId ->
             taskDao.add(userId, task)
         }
-    }
-
-    override fun restoreCompleted() {
-        TODO("Not yet implemented")
     }
 
     override fun complete(taskId: String) {
