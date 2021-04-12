@@ -6,6 +6,7 @@ interface UserAuth {
     val me: User?
 
     suspend fun login(email: String, password: String): Boolean
+    suspend fun logout()
 }
 
 internal class UserAuthImpl(
@@ -19,6 +20,10 @@ internal class UserAuthImpl(
 
     override suspend fun login(email: String, password: String): Boolean {
         return firebaseAuthConfig.login(email, password)
+    }
+
+    override suspend fun logout() {
+        return firebaseAuthConfig.logout()
     }
 }
 

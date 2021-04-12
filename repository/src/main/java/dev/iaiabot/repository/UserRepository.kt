@@ -8,7 +8,7 @@ import kotlinx.coroutines.withContext
 interface UserRepository {
     fun me(): User?
     suspend fun login(email: String, password: String)
-    fun logout()
+    suspend fun logout()
 }
 
 internal class UserRepositoryImpl(
@@ -28,7 +28,9 @@ internal class UserRepositoryImpl(
         }
     }
 
-    override fun logout() {
-        TODO("Not yet implemented")
+    override suspend fun logout() {
+        withContext(dispatcher) {
+            userAuth.logout()
+        }
     }
 }

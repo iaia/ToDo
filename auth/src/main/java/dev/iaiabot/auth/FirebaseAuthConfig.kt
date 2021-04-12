@@ -8,10 +8,9 @@ import kotlin.coroutines.suspendCoroutine
 internal interface FirebaseAuthConfig {
     val me: FirebaseUser?
 
-    /**
-     * TODO: エラーメッセージ表示したいのでresultにする
-     */
+    // TODO: エラーメッセージ表示したいのでresultにする
     suspend fun login(email: String, password: String): Boolean
+    suspend fun logout()
 }
 
 internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
@@ -28,5 +27,9 @@ internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
                     continuation.resume(it.user != null)
                 }
         }
+    }
+
+    override suspend fun logout() {
+        auth.signOut()
     }
 }

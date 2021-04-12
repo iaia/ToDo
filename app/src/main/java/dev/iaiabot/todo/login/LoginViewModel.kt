@@ -21,6 +21,7 @@ internal class LoginViewModelImpl(
     private val loginUseCase: LoginUseCase,
     private val checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
 ) : LoginViewModel() {
+    // TODO: LiveEvent使う
     override val routerAction = MutableLiveData<Action>()
     override val email = MutableLiveData("")
     override val password = MutableLiveData("")

@@ -15,7 +15,7 @@ object Module {
         single<CompleteTaskUseCase> { CompleteTaskUseCaseImpl(get()) }
         single<LoginUseCase> { LoginUseCaseImpl(get()) }
         single<CheckAlreadyLoggedInUseCase> { CheckAlreadyLoggedInUseCaseImpl(get()) }
-        single<LogoutUseCase> { LogoutUseCaseImpl() }
+        single<LogoutUseCase> { LogoutUseCaseImpl(get()) }
         single<RestoreTaskUseCase> { RestoreTaskUseCaseImpl() }
     }
 }
