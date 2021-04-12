@@ -7,9 +7,10 @@ import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 interface TaskDao {
-    suspend fun refreshTasks(userId: String): List<Task>
     fun add(userId: String, task: Task)
     fun complete(userId: String, taskId: String)
+    suspend fun allIncompleteTask(userId: String): List<Task>
+    suspend fun allCompletedTask(userId: String): List<Task>
 }
 
 internal class TaskDaoImpl(
@@ -21,14 +22,6 @@ internal class TaskDaoImpl(
 
     private fun collection(userId: String) = db.collection("users/${userId}/tasks")
 
-    override suspend fun refreshTasks(userId: String): List<Task> {
-        return suspendCoroutine { continuation ->
-            collection(userId).get().addOnSuccessListener {
-                continuation.resume(it.toObjects<TaskEntity>())
-            }
-        }
-    }
-
     override fun add(userId: String, task: Task) {
         collection(userId).add(TaskEntity(title = task.title))
     }
@@ -37,6 +30,22 @@ internal class TaskDaoImpl(
         collection(userId)
             .document(taskId)
             .update("completed", true)
+    }
+
+    override suspend fun allIncompleteTask(userId: String): List<Task> {
+        return suspendCoroutine { continuation ->
+            collection(userId).whereEqualTo("completed", false).get().addOnSuccessListener {
+                continuation.resume(it.toObjects<TaskEntity>())
+            }
+        }
+    }
+
+    override suspend fun allCompletedTask(userId: String): List<Task> {
+        return suspendCoroutine { continuation ->
+            collection(userId).whereEqualTo("completed", true).get().addOnSuccessListener {
+                continuation.resume(it.toObjects<TaskEntity>())
+            }
+        }
     }
 }
 

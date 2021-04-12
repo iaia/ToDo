@@ -6,4 +6,5 @@ interface TaskAddViewModel {
     val newTaskTitle: MutableLiveData<String>
 
     fun addTask()
+    fun refreshAddedTask()
 }

@@ -31,7 +31,11 @@ class TaskFragment : Fragment() {
         controller = TaskController(viewModel, viewLifecycleOwner)
         binding.ervTasks.setController(controller)
 
-        viewModel.allTask.observe(viewLifecycleOwner) {
+        viewModel.allIncompleteTask.observe(viewLifecycleOwner) {
+            controller.setData(it)
+        }
+        viewModel.allCompletedTask.observe(viewLifecycleOwner) {
+            // TODO: もう一種類controllerを追加する
             controller.setData(it)
         }
     }
