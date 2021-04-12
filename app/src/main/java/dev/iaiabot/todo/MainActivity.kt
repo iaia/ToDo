@@ -1,6 +1,7 @@
 package dev.iaiabot.todo
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import dev.iaiabot.todo.databinding.ActivityMainBinding
@@ -24,5 +25,11 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.top_app_bar, menu)
+
+        return super.onCreateOptionsMenu(menu)
     }
 }
