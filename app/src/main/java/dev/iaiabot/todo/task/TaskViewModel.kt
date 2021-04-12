@@ -8,7 +8,7 @@ import dev.iaiabot.usecase.GetAllCompletedTaskUseCase
 import dev.iaiabot.usecase.GetAllIncompleteTaskUseCase
 import kotlinx.coroutines.launch
 
-abstract class TaskViewModel : ViewModel(), LifecycleObserver, TaskAddViewModel {
+abstract class TaskViewModel : ViewModel(), LifecycleObserver, NewTaskViewModel {
     abstract val allIncompleteTask: LiveData<List<TaskItemViewModel>>
     abstract val allCompletedTask: LiveData<List<TaskItemViewModel>>
 }
