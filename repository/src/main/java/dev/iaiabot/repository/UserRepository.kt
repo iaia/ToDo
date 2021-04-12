@@ -21,6 +21,9 @@ internal class UserRepositoryImpl(
 
     override suspend fun login(email: String, password: String) {
         withContext(dispatcher) {
+            if (me() != null) {
+                return@withContext
+            }
             userAuth.login(email, password)
         }
     }
