@@ -23,6 +23,7 @@ class LoginFragment : Fragment() {
         binding = FragmentLoginBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        viewLifecycleOwner.lifecycle.addObserver(viewModel)
         return binding.root
     }
 

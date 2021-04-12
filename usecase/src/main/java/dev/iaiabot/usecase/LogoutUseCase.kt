@@ -6,6 +6,5 @@ interface LogoutUseCase : UseCase {
 
 internal class LogoutUseCaseImpl : LogoutUseCase {
     override fun invoke() {
-        TODO("Not yet implemented")
     }
 }
