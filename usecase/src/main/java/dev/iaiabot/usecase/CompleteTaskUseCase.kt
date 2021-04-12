@@ -3,6 +3,7 @@ package dev.iaiabot.usecase
 import dev.iaiabot.entity.Task
 import dev.iaiabot.repository.TaskRepository
 
+// TODO: トグルに変更する
 interface CompleteTaskUseCase : UseCase {
     operator fun invoke(task: Task)
 }
