@@ -16,16 +16,7 @@
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/new_task"
             layout="@layout/list_item_new_task"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/erv_incomplete_tasks"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0"
-            app:layout_constraintVertical_chainStyle="packed"
             app:viewModel="@{viewModel}" />
 
         <com.airbnb.epoxy.EpoxyRecyclerView
@@ -33,10 +24,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/erv_completed_tasks"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/new_task" />
+            app:layout_constraintTop_toBottomOf="@id/mtv_title" />
 
         <!-- TODO: ダサいので表示しない -->
         <com.airbnb.epoxy.EpoxyRecyclerView
