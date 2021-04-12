@@ -20,14 +20,18 @@ class TaskFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        lifecycle.addObserver(viewModel)
+
         binding = FragmentTaskBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        lifecycle.addObserver(viewModel)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.viewModel = viewModel
 
         completedTaskController = CompletedTaskController()
         binding.ervCompletedTasks.setController(completedTaskController)
