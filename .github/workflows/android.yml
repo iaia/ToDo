@@ -19,7 +19,15 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
 
+    # Runs a single command using the runners shell
+    - name: generate gradlew
+      run: gradle wrapper
+
+    - name: unit test
+      run: ./gradlew testDebugUnitTest
+
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
+
     - name: Build with Gradle
       run: ./gradlew build
