@@ -24,7 +24,6 @@ jobs:
         GOOGLE_SERVICE: ${{ secrets.GOOGLE_SERVICE_JSON }}
       run: echo $GOOGLE_SERVICE | base64 --decode --ignore-garbage > ./app/google-services.json
 
-    # Runs a single command using the runners shell
     - name: generate gradlew
       run: gradle wrapper
 
