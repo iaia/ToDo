@@ -4,19 +4,41 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".task.TaskFragment">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="dev.iaiabot.todo.task.TaskViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <include
+            layout="@layout/list_item_new_task"
+            app:viewModel="@{viewModel}" />
+
         <com.airbnb.epoxy.EpoxyRecyclerView
-            android:id="@+id/erv_tasks"
+            android:id="@+id/erv_incomplete_tasks"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/mtv_title" />
+
+        <!-- TODO: ダサいので表示しない -->
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/erv_completed_tasks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/erv_incomplete_tasks"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

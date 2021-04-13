@@ -12,27 +12,37 @@ class TaskFragment : Fragment() {
 
     private lateinit var binding: FragmentTaskBinding
     private val viewModel: TaskViewModel by inject()
-    private lateinit var controller: TaskController
+    private lateinit var incompleteTaskController: IncompleteTaskController
+    private lateinit var completedTaskController: CompletedTaskController
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        lifecycle.addObserver(viewModel)
+
         binding = FragmentTaskBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
-        lifecycle.addObserver(viewModel)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        controller = TaskController(viewModel, viewLifecycleOwner)
-        binding.ervTasks.setController(controller)
+        binding.viewModel = viewModel
 
-        viewModel.incompleteTasks.observe(viewLifecycleOwner) {
-            controller.setData(it)
+        completedTaskController = CompletedTaskController()
+        binding.ervCompletedTasks.setController(completedTaskController)
+        viewModel.allCompletedTask.observe(viewLifecycleOwner) {
+            completedTaskController.setData(it)
+        }
+
+        incompleteTaskController = IncompleteTaskController()
+        binding.ervIncompleteTasks.setController(incompleteTaskController)
+        viewModel.allIncompleteTask.observe(viewLifecycleOwner) {
+            incompleteTaskController.setData(it)
         }
     }
 }

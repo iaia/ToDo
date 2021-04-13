@@ -1,19 +1,15 @@
 package dev.iaiabot.repository
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import dev.iaiabot.database.TaskDao
 import dev.iaiabot.entity.Task
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 interface TaskRepository {
-    val tasks: LiveData<List<Task>>
-
     fun add(task: Task)
-    fun restoreCompleted()
     fun complete(taskId: String)
-    suspend fun refreshTasks()
+    suspend fun allIncompleteTask(): List<Task>
+    suspend fun allCompletedTask(): List<Task>
 }
 
 internal class TaskRepositoryImpl(
@@ -21,8 +17,6 @@ internal class TaskRepositoryImpl(
     private val userRepository: UserRepository,
     private val dispatcher: CoroutineDispatcher,
 ) : TaskRepository {
-    override val tasks = MutableLiveData<List<Task>>()
-
     private val userId: String?
         get() = userRepository.me()?.id
 
@@ -32,21 +26,25 @@ internal class TaskRepositoryImpl(
         }
     }
 
-    override fun restoreCompleted() {
-        TODO("Not yet implemented")
-    }
-
     override fun complete(taskId: String) {
         userId?.let { userId ->
             taskDao.complete(userId, taskId)
         }
     }
 
-    override suspend fun refreshTasks() {
-        withContext(dispatcher) {
+    override suspend fun allIncompleteTask(): List<Task> {
+        return withContext(dispatcher) {
             userId?.let { userId ->
-                tasks.postValue(taskDao.refreshTasks(userId))
-            }
+                taskDao.allIncompleteTask(userId)
+            } ?: emptyList()
+        }
+    }
+
+    override suspend fun allCompletedTask(): List<Task> {
+        return withContext(dispatcher) {
+            userId?.let { userId ->
+                taskDao.allCompletedTask(userId)
+            } ?: emptyList()
         }
     }
 }

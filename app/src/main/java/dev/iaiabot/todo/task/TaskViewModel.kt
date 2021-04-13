@@ -4,47 +4,76 @@ import androidx.lifecycle.*
 import dev.iaiabot.entity.Task
 import dev.iaiabot.usecase.AddTaskUseCase
 import dev.iaiabot.usecase.CompleteTaskUseCase
+import dev.iaiabot.usecase.GetAllCompletedTaskUseCase
 import dev.iaiabot.usecase.GetAllIncompleteTaskUseCase
-import dev.iaiabot.usecase.RefreshAllTasks
 import kotlinx.coroutines.launch
 
-abstract class TaskViewModel : ViewModel(), LifecycleObserver, TaskAddViewModel {
-    // TODO: 完了・未完了によらずとりあえず全部取ってくるので名前変える
-    abstract val incompleteTasks: LiveData<List<Task>>
-
-    abstract fun completeTask(task: Task)
+abstract class TaskViewModel : ViewModel(), LifecycleObserver, NewTaskViewModel {
+    abstract val allIncompleteTask: LiveData<List<TaskItemViewModel>>
+    abstract val allCompletedTask: LiveData<List<TaskItemViewModel>>
 }
 
 internal class TaskViewModelImpl(
     private val addTaskUseCase: AddTaskUseCase,
     private val getAllIncompleteTaskUseCase: GetAllIncompleteTaskUseCase,
-    private val refreshAllTasks: RefreshAllTasks,
+    private val getAllCompletedTaskUseCase: GetAllCompletedTaskUseCase,
     private val completeTaskUseCase: CompleteTaskUseCase,
 ) : TaskViewModel() {
 
     override val newTaskTitle = MutableLiveData<String>("")
-    override var incompleteTasks: LiveData<List<Task>> = getAllIncompleteTaskUseCase.invoke()
+    override val allIncompleteTask = MutableLiveData<List<TaskItemViewModel>>()
+    override val allCompletedTask = MutableLiveData<List<TaskItemViewModel>>()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     fun init() {
-        viewModelScope.launch {
-            refreshAllTasks.invoke()
-        }
+        refreshAllTask()
     }
 
     override fun addTask() {
         viewModelScope.launch {
             val success = addTaskUseCase.invoke(newTaskTitle.value)
             if (success) {
-                newTaskTitle.postValue("")
-                refreshAllTasks.invoke()
+                refreshAddedTask()
             }
         }
     }
 
-    override fun completeTask(task: Task) {
+    override fun refreshAddedTask() {
+        newTaskTitle.value = ""
+        refreshIncompleteTask()
+    }
+
+    private fun onCheckedChanged(task: Task, checked: Boolean) {
         viewModelScope.launch {
-            completeTaskUseCase.invoke(task)
+            if (checked) {
+                completeTaskUseCase.invoke(task)
+            }
+            refreshAllTask()
+        }
+    }
+
+    private fun refreshAllTask() {
+        refreshIncompleteTask()
+        refreshCompletedTask()
+    }
+
+    private fun refreshIncompleteTask() {
+        viewModelScope.launch {
+            allIncompleteTask.postValue(
+                getAllIncompleteTaskUseCase.invoke().map {
+                    TaskItemViewModelImpl(it, ::onCheckedChanged)
+                }
+            )
+        }
+    }
+
+    private fun refreshCompletedTask() {
+        viewModelScope.launch {
+            allCompletedTask.postValue(
+                getAllCompletedTaskUseCase.invoke().map {
+                    TaskItemViewModelImpl(it, ::onCheckedChanged)
+                }
+            )
         }
     }
 }
