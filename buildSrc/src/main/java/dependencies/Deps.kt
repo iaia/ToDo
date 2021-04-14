@@ -6,6 +6,10 @@ object Deps {
     object Kotlin {
         val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
         val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+
+        object Test {
+            val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3"
+        }
     }
 
     object AndroidX {
