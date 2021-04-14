@@ -17,7 +17,6 @@ abstract class MainViewModel : ViewModel(), LifecycleObserver {
     @VisibleForTesting
     abstract fun onResume()
     abstract fun onClickLogout()
-    abstract fun checkAlreadyLoggedIn()
 }
 
 internal class MainViewModelImpl(
@@ -41,7 +40,7 @@ internal class MainViewModelImpl(
         }
     }
 
-    override fun checkAlreadyLoggedIn() {
+    private fun checkAlreadyLoggedIn() {
         viewModelScope.launch {
             loggedIn.postValue(checkAlreadyLoggedInUseCase.invoke())
         }
