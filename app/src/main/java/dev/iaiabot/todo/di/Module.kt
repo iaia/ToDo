@@ -1,6 +1,7 @@
 package dev.iaiabot.todo.di
 
 import dev.iaiabot.todo.MainViewModel
+import dev.iaiabot.todo.MainViewModelImpl
 import dev.iaiabot.todo.login.LoginViewModel
 import dev.iaiabot.todo.login.LoginViewModelImpl
 import dev.iaiabot.todo.task.TaskViewModel
@@ -10,7 +11,7 @@ import org.koin.dsl.module
 
 object Module {
     val appModule = module {
-        viewModel<MainViewModel> { MainViewModel(get(), get()) }
+        viewModel<MainViewModel> { MainViewModelImpl(get(), get()) }
         viewModel<LoginViewModel> { LoginViewModelImpl(get(), get()) }
         viewModel<TaskViewModel> { TaskViewModelImpl(get(), get(), get(), get()) }
     }
