@@ -61,7 +61,13 @@ dependencies {
     implementation Deps.Koin.base
     implementation Deps.Koin.ext
 
-    testImplementation Deps.Test.junit4
+    testImplementation Deps.Test.mockk
+    testImplementation Deps.Test.truth
+    testImplementation Deps.Spek.spek
+    testImplementation Deps.Spek.spekRunner
+    testImplementation Deps.Spek.kotlinReflect
+    testImplementation Deps.Kotlin.Test.coroutine
+    testImplementation Deps.AndroidX.Test.coreTesting
 
     androidTestImplementation Deps.AndroidX.Test.extJunit
     androidTestImplementation Deps.AndroidX.Test.espresso

@@ -24,6 +24,7 @@ object Deps {
         val liveDataLifecycleKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 
         object Test {
+            val coreTesting = "androidx.arch.core:core-testing:2.1.0"
             val extJunit = "androidx.test.ext:junit:1.1.2"
             val espresso = "androidx.test.espresso:espresso-core:3.3.0"
         }
