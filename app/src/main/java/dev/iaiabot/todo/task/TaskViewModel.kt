@@ -8,12 +8,12 @@ import dev.iaiabot.usecase.CompleteTaskUseCase
 import dev.iaiabot.usecase.GetAllCompletedTaskUseCase
 import dev.iaiabot.usecase.GetAllIncompleteTaskUseCase
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 abstract class TaskViewModel : ViewModel(), LifecycleObserver, NewTaskViewModel {
-    abstract val allIncompleteTask: LiveData<List<TaskItemViewModel>>
-    abstract val allCompletedTask: LiveData<List<TaskItemViewModel>>
+    abstract val allTask: LiveData<List<TaskItemViewModel>>
 
     @VisibleForTesting
     abstract fun init()
@@ -27,8 +27,7 @@ internal class TaskViewModelImpl(
 ) : TaskViewModel() {
 
     override val newTaskTitle = MutableLiveData<String>("")
-    override val allIncompleteTask = MutableLiveData<List<TaskItemViewModel>>()
-    override val allCompletedTask = MutableLiveData<List<TaskItemViewModel>>()
+    override val allTask = MutableLiveData<List<TaskItemViewModel>>()
 
     private var refreshTaskJob: Job? = null
 
@@ -48,7 +47,7 @@ internal class TaskViewModelImpl(
 
     override fun refreshAddedTask() {
         newTaskTitle.value = ""
-        refreshIncompleteTask()
+        this.refreshAllTask()
     }
 
     private fun onCheckedChanged(task: Task, checked: Boolean) {
@@ -65,26 +64,19 @@ internal class TaskViewModelImpl(
     }
 
     private fun refreshAllTask() {
-        refreshIncompleteTask()
-        refreshCompletedTask()
-    }
-
-    private fun refreshIncompleteTask() {
         viewModelScope.launch {
-            allIncompleteTask.postValue(
+            val incompleteTasks = async {
                 getAllIncompleteTaskUseCase.invoke().map {
                     TaskItemViewModelImpl(it, ::onCheckedChanged)
                 }
-            )
-        }
-    }
-
-    private fun refreshCompletedTask() {
-        viewModelScope.launch {
-            allCompletedTask.postValue(
+            }
+            val completedTasks = async {
                 getAllCompletedTaskUseCase.invoke().map {
                     TaskItemViewModelImpl(it, ::onCheckedChanged)
                 }
+            }
+            allTask.postValue(
+                incompleteTasks.await() + completedTasks.await()
             )
         }
     }

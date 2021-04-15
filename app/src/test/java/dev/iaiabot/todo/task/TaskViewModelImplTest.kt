@@ -38,7 +38,7 @@ internal object TaskViewModelImplTest : Spek({
         it("未完了と完了のタスクが両方設定されている") {
             viewModel.init()
 
-            assertThat(viewModel.allIncompleteTask.value).hasSize(1)
+            assertThat(viewModel.allTask.value).hasSize(1)
             assertThat(viewModel.allCompletedTask.value).hasSize(1)
         }
     }
