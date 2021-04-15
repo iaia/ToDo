@@ -7,6 +7,8 @@ import dev.iaiabot.usecase.AddTaskUseCase
 import dev.iaiabot.usecase.CompleteTaskUseCase
 import dev.iaiabot.usecase.GetAllCompletedTaskUseCase
 import dev.iaiabot.usecase.GetAllIncompleteTaskUseCase
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 abstract class TaskViewModel : ViewModel(), LifecycleObserver, NewTaskViewModel {
@@ -27,6 +29,8 @@ internal class TaskViewModelImpl(
     override val newTaskTitle = MutableLiveData<String>("")
     override val allIncompleteTask = MutableLiveData<List<TaskItemViewModel>>()
     override val allCompletedTask = MutableLiveData<List<TaskItemViewModel>>()
+
+    private var refreshTaskJob: Job? = null
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun init() {
@@ -52,7 +56,11 @@ internal class TaskViewModelImpl(
             if (checked) {
                 completeTaskUseCase.invoke(task)
             }
-            refreshAllTask()
+            refreshTaskJob?.cancel()
+            refreshTaskJob = launch {
+                delay(2000) // TODO: 要調整
+                refreshAllTask()
+            }
         }
     }
 
