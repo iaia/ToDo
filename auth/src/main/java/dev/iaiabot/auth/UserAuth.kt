@@ -1,5 +1,6 @@
 package dev.iaiabot.auth
 
+import dev.iaiabot.auth.model.UserModel
 import dev.iaiabot.entity.User
 
 interface UserAuth {
@@ -15,7 +16,7 @@ internal class UserAuthImpl(
 
     override val me: User?
         get() = firebaseAuthConfig.me?.let {
-            UserEntity(it.uid)
+            UserModel(it.uid)
         }
 
     override suspend fun login(email: String, password: String): Boolean {
@@ -26,7 +27,3 @@ internal class UserAuthImpl(
         return firebaseAuthConfig.logout()
     }
 }
-
-data class UserEntity(
-    override val id: String
-) : User
