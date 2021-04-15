@@ -10,13 +10,13 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
 internal class CompleteTaskUseCaseImplTest : Spek({
-    lateinit var usecase: CompleteTaskUseCase
+    lateinit var usecase: ToggleCompleteTaskUseCase
     lateinit var taskRepository: TaskRepository
 
     describe("#invoke") {
         beforeEachTest {
             taskRepository = mockk(relaxed = true)
-            usecase = CompleteTaskUseCaseImpl(taskRepository)
+            usecase = ToggleCompleteTaskUseCaseImpl(taskRepository)
         }
 
         context("taskが渡される") {
@@ -25,14 +25,14 @@ internal class CompleteTaskUseCaseImplTest : Spek({
             }
 
             beforeEachTest {
-                every { taskRepository.complete(any()) } returns Unit
+                every { taskRepository.saveCompletedState(any()) } returns Unit
             }
 
             it("渡したtaskのidでcompleteしている") {
                 usecase.invoke(task)
 
                 verify {
-                    taskRepository.complete(withArg {
+                    taskRepository.saveCompletedState(withArg {
                         assertThat(it).isEqualTo("task_id")
                     })
                 }

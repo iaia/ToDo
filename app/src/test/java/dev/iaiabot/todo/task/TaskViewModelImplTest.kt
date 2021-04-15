@@ -13,7 +13,7 @@ internal object TaskViewModelImplTest : Spek({
     lateinit var addTaskUseCase: AddTaskUseCase
     lateinit var getAllIncompleteTaskUseCase: GetAllIncompleteTaskUseCase
     lateinit var getAllCompletedTaskUseCase: GetAllCompletedTaskUseCase
-    lateinit var completeTaskUseCase: CompleteTaskUseCase
+    lateinit var toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase
 
     val coroutineScope = viewModelTestRule()
 
@@ -26,20 +26,19 @@ internal object TaskViewModelImplTest : Spek({
             getAllCompletedTaskUseCase = mockk() {
                 coEvery { this@mockk.invoke() } returns listOf(mockk())
             }
-            completeTaskUseCase = mockk()
+            toggleCompleteTaskUseCase = mockk()
             viewModel = TaskViewModelImpl(
                 addTaskUseCase,
                 getAllIncompleteTaskUseCase,
                 getAllCompletedTaskUseCase,
-                completeTaskUseCase
+                toggleCompleteTaskUseCase
             )
         }
 
         it("未完了と完了のタスクが両方設定されている") {
             viewModel.init()
 
-            assertThat(viewModel.allTask.value).hasSize(1)
-            assertThat(viewModel.allCompletedTask.value).hasSize(1)
+            assertThat(viewModel.allTask.value).hasSize(2)
         }
     }
 })

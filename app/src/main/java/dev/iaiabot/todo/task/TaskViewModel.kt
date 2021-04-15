@@ -4,9 +4,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import dev.iaiabot.entity.Task
 import dev.iaiabot.usecase.AddTaskUseCase
-import dev.iaiabot.usecase.CompleteTaskUseCase
 import dev.iaiabot.usecase.GetAllCompletedTaskUseCase
 import dev.iaiabot.usecase.GetAllIncompleteTaskUseCase
+import dev.iaiabot.usecase.ToggleCompleteTaskUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -23,7 +23,7 @@ internal class TaskViewModelImpl(
     private val addTaskUseCase: AddTaskUseCase,
     private val getAllIncompleteTaskUseCase: GetAllIncompleteTaskUseCase,
     private val getAllCompletedTaskUseCase: GetAllCompletedTaskUseCase,
-    private val completeTaskUseCase: CompleteTaskUseCase,
+    private val toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase,
 ) : TaskViewModel() {
 
     override val newTaskTitle = MutableLiveData<String>("")
@@ -52,12 +52,11 @@ internal class TaskViewModelImpl(
 
     private fun onCheckedChanged(task: Task, checked: Boolean) {
         viewModelScope.launch {
-            if (checked) {
-                completeTaskUseCase.invoke(task)
-            }
+            task.completed = !task.completed
+            toggleCompleteTaskUseCase.invoke(task)
             refreshTaskJob?.cancel()
             refreshTaskJob = launch {
-                delay(2000) // TODO: 要調整
+                delay(1000)
                 refreshAllTask()
             }
         }

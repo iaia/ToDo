@@ -15,14 +15,14 @@ internal class AddTaskUseCaseImpl(
         if (title.isNullOrEmpty()) {
             return false
         }
-        taskRepository.add(TaskModel(title))
+        taskRepository.add(TaskModel(title = title))
         return true
     }
 }
 
 data class TaskModel(
-    override val title: String,
     override val id: String = "",
-    override val order: Int = 0,
-    override val completed: Boolean = false,
+    override val title: String,
+    override var completed: Boolean = false,
+    override var order: Int = 0,
 ) : Task

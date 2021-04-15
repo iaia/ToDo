@@ -10,7 +10,7 @@ object Module {
         loadKoinModules(repositoryModule)
 
         single<AddTaskUseCase> { AddTaskUseCaseImpl(get()) }
-        single<CompleteTaskUseCase> { CompleteTaskUseCaseImpl(get()) }
+        single<ToggleCompleteTaskUseCase> { ToggleCompleteTaskUseCaseImpl(get()) }
         single<LoginUseCase> { LoginUseCaseImpl(get()) }
         single<CheckAlreadyLoggedInUseCase> { CheckAlreadyLoggedInUseCaseImpl(get()) }
         single<LogoutUseCase> { LogoutUseCaseImpl(get()) }

@@ -8,7 +8,7 @@ import kotlin.coroutines.suspendCoroutine
 
 interface TaskDao {
     fun add(userId: String, task: Task)
-    fun complete(userId: String, taskId: String)
+    fun saveCompletedState(userId: String, taskId: String, completedState: Boolean)
     suspend fun allIncompleteTask(userId: String): List<Task>
     suspend fun allCompletedTask(userId: String): List<Task>
 }
@@ -26,10 +26,10 @@ internal class TaskDaoImpl(
         collection(userId).add(TaskEntity(title = task.title))
     }
 
-    override fun complete(userId: String, taskId: String) {
+    override fun saveCompletedState(userId: String, taskId: String, completedState: Boolean) {
         collection(userId)
             .document(taskId)
-            .update("completed", true)
+            .update("completed", completedState)
     }
 
     override suspend fun allIncompleteTask(userId: String): List<Task> {
@@ -53,6 +53,6 @@ data class TaskEntity(
     @DocumentId
     override val id: String = "",
     override val title: String = "",
-    override val completed: Boolean = false,
-    override val order: Int = 0,
+    override var completed: Boolean = false,
+    override var order: Int = 0,
 ) : Task
