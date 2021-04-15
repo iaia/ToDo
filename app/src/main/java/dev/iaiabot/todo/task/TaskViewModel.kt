@@ -56,6 +56,7 @@ internal class TaskViewModelImpl(
             refreshTaskJob?.cancel()
             refreshTaskJob = launch {
                 delay(1000)
+                // TODO: ローカル情報だけで済むのでどうにかする
                 refreshAllTask()
             }
         }
