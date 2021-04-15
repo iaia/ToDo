@@ -9,7 +9,7 @@ import io.mockk.verify
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
-internal class CompleteTaskUseCaseImplTest : Spek({
+internal class ToggleCompleteTaskUseCaseImplTest : Spek({
     lateinit var usecase: ToggleCompleteTaskUseCase
     lateinit var taskRepository: TaskRepository
 
@@ -22,19 +22,36 @@ internal class CompleteTaskUseCaseImplTest : Spek({
         context("taskが渡される") {
             val task = mockk<Task>() {
                 every { id } returns "task_id"
+                every { completed } returns false
             }
 
             beforeEachTest {
-                every { taskRepository.saveCompletedState(any()) } returns Unit
+                every { taskRepository.saveCompletedState(any(), any()) } returns Unit
             }
 
-            it("渡したtaskのidでcompleteしている") {
+            it("渡したtaskのidで保存している") {
                 usecase.invoke(task)
 
                 verify {
-                    taskRepository.saveCompletedState(withArg {
-                        assertThat(it).isEqualTo("task_id")
-                    })
+                    taskRepository.saveCompletedState(
+                        withArg {
+                            assertThat(it).isEqualTo("task_id")
+                        },
+                        any()
+                    )
+                }
+            }
+
+            it("渡したtaskのcompletedとは反対で保存している") {
+                usecase.invoke(task)
+
+                verify {
+                    taskRepository.saveCompletedState(
+                        any(),
+                        withArg {
+                            assertThat(it).isEqualTo(true)
+                        },
+                    )
                 }
             }
         }

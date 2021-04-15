@@ -11,6 +11,6 @@ internal class ToggleCompleteTaskUseCaseImpl(
     private val taskRepository: TaskRepository,
 ) : ToggleCompleteTaskUseCase {
     override fun invoke(task: Task) {
-        taskRepository.saveCompletedState(task.id, task.completed)
+        taskRepository.saveCompletedState(task.id, !task.completed)
     }
 }

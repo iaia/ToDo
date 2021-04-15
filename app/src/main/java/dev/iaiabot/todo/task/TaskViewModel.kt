@@ -52,7 +52,6 @@ internal class TaskViewModelImpl(
 
     private fun onCheckedChanged(task: Task, checked: Boolean) {
         viewModelScope.launch {
-            task.completed = !task.completed
             toggleCompleteTaskUseCase.invoke(task)
             refreshTaskJob?.cancel()
             refreshTaskJob = launch {
