@@ -1,5 +1,6 @@
 package dev.iaiabot.todo.task
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import dev.iaiabot.entity.Task
 import dev.iaiabot.usecase.AddTaskUseCase
@@ -11,6 +12,9 @@ import kotlinx.coroutines.launch
 abstract class TaskViewModel : ViewModel(), LifecycleObserver, NewTaskViewModel {
     abstract val allIncompleteTask: LiveData<List<TaskItemViewModel>>
     abstract val allCompletedTask: LiveData<List<TaskItemViewModel>>
+
+    @VisibleForTesting
+    abstract fun init()
 }
 
 internal class TaskViewModelImpl(
@@ -25,7 +29,7 @@ internal class TaskViewModelImpl(
     override val allCompletedTask = MutableLiveData<List<TaskItemViewModel>>()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun init() {
+    override fun init() {
         refreshAllTask()
     }
 

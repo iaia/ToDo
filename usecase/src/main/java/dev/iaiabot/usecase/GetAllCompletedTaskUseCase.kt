@@ -14,4 +14,3 @@ internal class GetAllCompletedTaskUseCaseImpl(
         return taskRepository.allCompletedTask()
     }
 }
-

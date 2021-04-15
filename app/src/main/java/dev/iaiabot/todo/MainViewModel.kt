@@ -1,5 +1,6 @@
 package dev.iaiabot.todo
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import dev.iaiabot.usecase.CheckAlreadyLoggedInUseCase
 import dev.iaiabot.usecase.LogoutUseCase
@@ -9,31 +10,39 @@ sealed class Action {
     object Finish : Action()
 }
 
-class MainViewModel(
+abstract class MainViewModel : ViewModel(), LifecycleObserver {
+    abstract val loggedIn: LiveData<Boolean>
+    abstract val routerAction: LiveData<Action>
+
+    @VisibleForTesting
+    abstract fun onResume()
+    abstract fun onClickLogout()
+}
+
+internal class MainViewModelImpl(
     private val checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
     private val logoutUseCase: LogoutUseCase,
-) : ViewModel(), LifecycleObserver {
-    private val _loggedIn: MutableLiveData<Boolean> = MutableLiveData(false)
-    val loggedIn: LiveData<Boolean> = _loggedIn
-    private val _routerAction: MutableLiveData<Action> = MutableLiveData()
-    val routerAction: LiveData<Action> = _routerAction
+) : MainViewModel() {
+
+    override val loggedIn: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val routerAction: MutableLiveData<Action> = MutableLiveData()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
+    override fun onResume() {
         checkAlreadyLoggedIn()
     }
 
-    fun onClickLogout() {
+    override fun onClickLogout() {
         viewModelScope.launch {
             logoutUseCase.invoke()
             checkAlreadyLoggedIn()
-            _routerAction.postValue(Action.Finish)
+            routerAction.postValue(Action.Finish)
         }
     }
 
     private fun checkAlreadyLoggedIn() {
         viewModelScope.launch {
-            _loggedIn.postValue(checkAlreadyLoggedInUseCase.invoke())
+            loggedIn.postValue(checkAlreadyLoggedInUseCase.invoke())
         }
     }
 }

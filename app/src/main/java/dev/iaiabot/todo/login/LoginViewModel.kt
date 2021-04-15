@@ -1,5 +1,6 @@
 package dev.iaiabot.todo.login
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import dev.iaiabot.usecase.CheckAlreadyLoggedInUseCase
 import dev.iaiabot.usecase.LoginUseCase
@@ -14,6 +15,8 @@ abstract class LoginViewModel : ViewModel(), LifecycleObserver {
     abstract val email: MutableLiveData<String>
     abstract val password: MutableLiveData<String>
 
+    @VisibleForTesting
+    abstract fun onResume()
     abstract fun onClickLogin()
 }
 
@@ -27,7 +30,7 @@ internal class LoginViewModelImpl(
     override val password = MutableLiveData("")
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    fun onResume() {
+    override fun onResume() {
         checkAlreadyLoggedIn()
     }
 

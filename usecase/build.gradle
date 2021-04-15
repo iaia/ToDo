@@ -52,4 +52,5 @@ dependencies {
     testImplementation Deps.Spek.spek
     testImplementation Deps.Spek.spekRunner
     testImplementation Deps.Spek.kotlinReflect
+    testImplementation Deps.Kotlin.Test.coroutine
 }
