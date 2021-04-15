@@ -1,4 +1,4 @@
-package dev.iaiabot.usecase
+package dev.iaiabot.usecase.task
 
 import dev.iaiabot.entity.Task
 import dev.iaiabot.repository.TaskRepository

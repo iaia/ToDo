@@ -1,6 +1,7 @@
-package dev.iaiabot.usecase
+package dev.iaiabot.usecase.task
 
 import dev.iaiabot.repository.TaskRepository
+import dev.iaiabot.usecase.UseCase
 import dev.iaiabot.usecase.model.TaskModel
 
 interface AddTaskUseCase : UseCase {

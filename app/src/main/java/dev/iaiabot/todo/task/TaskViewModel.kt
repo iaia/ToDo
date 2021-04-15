@@ -3,10 +3,10 @@ package dev.iaiabot.todo.task
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import dev.iaiabot.entity.Task
-import dev.iaiabot.usecase.AddTaskUseCase
-import dev.iaiabot.usecase.GetAllCompletedTaskUseCase
-import dev.iaiabot.usecase.GetAllIncompleteTaskUseCase
-import dev.iaiabot.usecase.ToggleCompleteTaskUseCase
+import dev.iaiabot.usecase.task.AddTaskUseCase
+import dev.iaiabot.usecase.task.GetAllCompletedTaskUseCase
+import dev.iaiabot.usecase.task.GetAllIncompleteTaskUseCase
+import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay

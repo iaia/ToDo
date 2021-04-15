@@ -1,7 +1,8 @@
 package dev.iaiabot.usecase.di
 
 import dev.iaiabot.repository.di.Module.repositoryModule
-import dev.iaiabot.usecase.*
+import dev.iaiabot.usecase.task.*
+import dev.iaiabot.usecase.user.*
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 

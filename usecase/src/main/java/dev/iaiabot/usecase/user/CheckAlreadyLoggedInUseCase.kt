@@ -1,6 +1,7 @@
-package dev.iaiabot.usecase
+package dev.iaiabot.usecase.user
 
 import dev.iaiabot.repository.UserRepository
+import dev.iaiabot.usecase.UseCase
 
 interface CheckAlreadyLoggedInUseCase : UseCase {
     suspend operator fun invoke(): Boolean

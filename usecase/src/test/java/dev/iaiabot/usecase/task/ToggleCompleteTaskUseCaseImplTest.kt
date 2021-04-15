@@ -1,4 +1,4 @@
-package dev.iaiabot.usecase
+package dev.iaiabot.usecase.task
 
 import com.google.common.truth.Truth.assertThat
 import dev.iaiabot.entity.Task

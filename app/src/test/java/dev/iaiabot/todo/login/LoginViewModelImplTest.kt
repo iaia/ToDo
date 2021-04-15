@@ -2,8 +2,8 @@ package dev.iaiabot.todo.login
 
 import com.google.common.truth.Truth.assertThat
 import dev.iaiabot.todo.testrule.viewModelTestRule
-import dev.iaiabot.usecase.CheckAlreadyLoggedInUseCase
-import dev.iaiabot.usecase.LoginUseCase
+import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
+import dev.iaiabot.usecase.user.LoginUseCase
 import io.mockk.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.spekframework.spek2.Spek

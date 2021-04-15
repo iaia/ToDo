@@ -3,6 +3,9 @@ package dev.iaiabot.todo.task
 import com.google.common.truth.Truth.assertThat
 import dev.iaiabot.todo.testrule.viewModelTestRule
 import dev.iaiabot.usecase.*
+import dev.iaiabot.usecase.task.GetAllCompletedTaskUseCase
+import dev.iaiabot.usecase.task.GetAllIncompleteTaskUseCase
+import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.spekframework.spek2.Spek
