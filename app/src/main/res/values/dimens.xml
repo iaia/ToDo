@@ -2,5 +2,6 @@
 <resources>
 
     <dimen name="item_vertical_margin">4dp</dimen>
+    <dimen name="task_bottom_margin">80dp</dimen>
 
 </resources>
