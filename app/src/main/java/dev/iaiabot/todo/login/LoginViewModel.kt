@@ -2,16 +2,17 @@ package dev.iaiabot.todo.login
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
+import dev.iaiabot.todo.HasToastAction
+import dev.iaiabot.todo.HasToastActionImpl
 import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
 import dev.iaiabot.usecase.user.LoginUseCase
 import kotlinx.coroutines.launch
 
 sealed class Action {
     object GoToTasks : Action()
-    class ShowToast(val text: String?) : Action()
 }
 
-abstract class LoginViewModel : ViewModel(), LifecycleObserver {
+abstract class LoginViewModel : ViewModel(), LifecycleObserver, HasToastAction {
     abstract val routerAction: LiveData<Action>
     abstract val email: MutableLiveData<String>
     abstract val password: MutableLiveData<String>
@@ -25,7 +26,7 @@ abstract class LoginViewModel : ViewModel(), LifecycleObserver {
 internal class LoginViewModelImpl(
     private val loginUseCase: LoginUseCase,
     private val checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
-) : LoginViewModel() {
+) : LoginViewModel(), HasToastAction by HasToastActionImpl() {
     // TODO: LiveEvent使う
     override val routerAction = MutableLiveData<Action>()
     override val email = MutableLiveData("")
@@ -43,7 +44,7 @@ internal class LoginViewModelImpl(
             try {
                 loginUseCase(email.value, password.value)
             } catch (e: Exception) {
-                routerAction.postValue(Action.ShowToast(e.message))
+                showToast(e.message)
             }
             checkAlreadyLoggedIn()
         }

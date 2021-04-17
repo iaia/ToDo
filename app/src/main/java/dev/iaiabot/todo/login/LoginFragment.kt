@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dev.iaiabot.todo.R
 import dev.iaiabot.todo.databinding.FragmentLoginBinding
+import dev.iaiabot.todo.observeToastAction
 import org.koin.android.ext.android.inject
 
 class LoginFragment : Fragment() {
@@ -34,9 +34,9 @@ class LoginFragment : Fragment() {
         viewModel.routerAction.observe(viewLifecycleOwner) {
             when (it) {
                 Action.GoToTasks -> findNavController().navigate(R.id.action_login_to_task, null)
-                is Action.ShowToast -> Toast.makeText(requireContext(), it.text, Toast.LENGTH_LONG)
-                    .show()
             }
         }
+
+        observeToastAction(viewModel)
     }
 }
