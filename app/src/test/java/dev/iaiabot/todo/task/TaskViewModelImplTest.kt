@@ -81,5 +81,19 @@ internal object TaskViewModelImplTest : Spek({
 
             assertThat(viewModel.ableAddTask.value).isEqualTo(true)
         }
+
+        context("追加可能状態から不可能状態になったとき") {
+            beforeEachTest {
+                viewModel.onClickAddTask()
+                viewModel.newTaskTitle.value = "タスク"
+                assertThat(viewModel.ableAddTask.value).isEqualTo(true)
+            }
+
+            it("タスクを追加している") {
+                viewModel.onClickAddTask()
+
+                verify { addTaskUseCase.invoke(any()) }
+            }
+        }
     }
 })

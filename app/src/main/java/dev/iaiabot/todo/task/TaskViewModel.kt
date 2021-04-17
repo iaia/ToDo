@@ -52,6 +52,9 @@ internal class TaskViewModelImpl(
 
     override fun onClickAddTask() {
         ableAddTask.value?.let {
+            if (it) {
+                addTask()
+            }
             ableAddTask.postValue(!it)
         }
     }
