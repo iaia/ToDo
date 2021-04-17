@@ -9,6 +9,7 @@ import dev.iaiabot.usecase.task.GetAllIncompleteTaskUseCase
 import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
+import io.mockk.verify
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
@@ -21,28 +22,54 @@ internal object TaskViewModelImplTest : Spek({
 
     val coroutineScope = viewModelTestRule()
 
-    describe("#init") {
-        beforeEachTest {
-            addTaskUseCase = mockk()
-            getAllIncompleteTaskUseCase = mockk() {
-                coEvery { this@mockk.invoke() } returns listOf(mockk())
-            }
-            getAllCompletedTaskUseCase = mockk() {
-                coEvery { this@mockk.invoke() } returns listOf(mockk())
-            }
-            toggleCompleteTaskUseCase = mockk()
-            viewModel = TaskViewModelImpl(
-                addTaskUseCase,
-                getAllIncompleteTaskUseCase,
-                getAllCompletedTaskUseCase,
-                toggleCompleteTaskUseCase
-            )
+    beforeEachTest {
+        addTaskUseCase = mockk() {
+            coEvery { this@mockk.invoke(any()) } returns true
         }
+        getAllIncompleteTaskUseCase = mockk() {
+            coEvery { this@mockk.invoke() } returns listOf(mockk())
+        }
+        getAllCompletedTaskUseCase = mockk() {
+            coEvery { this@mockk.invoke() } returns listOf(mockk())
+        }
+        toggleCompleteTaskUseCase = mockk()
+        viewModel = TaskViewModelImpl(
+            addTaskUseCase,
+            getAllIncompleteTaskUseCase,
+            getAllCompletedTaskUseCase,
+            toggleCompleteTaskUseCase
+        )
+    }
 
+    describe("#init") {
         it("未完了と完了のタスクが両方設定されている") {
             viewModel.init()
 
             assertThat(viewModel.allTask.value).hasSize(2)
+        }
+    }
+
+    describe("#addTask") {
+        beforeEachTest {
+            viewModel.newTaskTitle.value = "タスク"
+        }
+
+        it("タスク追加のユースケースを実行している") {
+            viewModel.addTask()
+
+            verify {
+                addTaskUseCase.invoke(withArg {
+                    assertThat(it).isEqualTo("タスク")
+                })
+            }
+        }
+
+        it("追加タスクの変数を空にしている") {
+            assertThat(viewModel.newTaskTitle.value).isEqualTo("タスク")
+
+            viewModel.addTask()
+
+            assertThat(viewModel.newTaskTitle.value).isEqualTo("")
         }
     }
 })

@@ -53,7 +53,7 @@ internal class TaskViewModelImpl(
 
     private fun refreshAddedTask() {
         newTaskTitle.value = ""
-        this.refreshAllTask()
+        refreshAllTask()
     }
 
     private fun onCheckedChanged(task: Task, checked: Boolean) {
