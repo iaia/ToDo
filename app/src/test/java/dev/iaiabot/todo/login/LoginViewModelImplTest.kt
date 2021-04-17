@@ -81,5 +81,15 @@ internal object LoginViewModelImplTest : Spek({
                 assertThat(viewModel.routerAction.value).isEqualTo(Action.GoToTasks)
             }
         }
+
+        it("nowLoginがtrue") {
+            assertThat(viewModel.nowLogin.value).isEqualTo(false)
+
+            coroutineScope.runBlockingTest {
+                viewModel.onClickLogin()
+
+                assertThat(viewModel.nowLogin.value).isEqualTo(true)
+            }
+        }
     }
 })
