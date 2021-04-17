@@ -55,7 +55,7 @@ internal object UserRepositoryImplTest : Spek({
 
         beforeEachTest {
             userAuth = mockk() {
-                coEvery { login(any(), any()) } returns true
+                coEvery { login(any(), any()) } returns Unit
             }
             repository = UserRepositoryImpl(userAuth, dispatcher)
         }
