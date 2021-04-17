@@ -1,7 +1,8 @@
-package dev.iaiabot.usecase
+package dev.iaiabot.usecase.task
 
-import dev.iaiabot.entity.Task
 import dev.iaiabot.repository.TaskRepository
+import dev.iaiabot.usecase.UseCase
+import dev.iaiabot.usecase.model.TaskModel
 
 interface AddTaskUseCase : UseCase {
     // Resultにする
@@ -15,14 +16,7 @@ internal class AddTaskUseCaseImpl(
         if (title.isNullOrEmpty()) {
             return false
         }
-        taskRepository.add(TaskModel(title))
+        taskRepository.add(TaskModel(title = title))
         return true
     }
 }
-
-data class TaskModel(
-    override val title: String,
-    override val id: String = "",
-    override val order: Int = 0,
-    override val completed: Boolean = false,
-) : Task

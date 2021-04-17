@@ -2,8 +2,8 @@ package dev.iaiabot.todo.login
 
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
-import dev.iaiabot.usecase.CheckAlreadyLoggedInUseCase
-import dev.iaiabot.usecase.LoginUseCase
+import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
+import dev.iaiabot.usecase.user.LoginUseCase
 import kotlinx.coroutines.launch
 
 sealed class Action {

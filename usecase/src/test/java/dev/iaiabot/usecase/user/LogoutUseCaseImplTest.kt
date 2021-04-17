@@ -1,4 +1,4 @@
-package dev.iaiabot.usecase
+package dev.iaiabot.usecase.user
 
 import dev.iaiabot.repository.UserRepository
 import io.mockk.coEvery

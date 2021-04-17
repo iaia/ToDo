@@ -55,12 +55,12 @@ internal object TaskRepositoryImplTest : Spek({
         }
     }
 
-    describe("#complete") {
+    describe("#saveCompletedState") {
         val taskId = "task_id"
 
         beforeEachTest {
             dao = mockk() {
-                every { complete(any(), any()) } returns Unit
+                every { saveCompletedState(any(), any(), any()) } returns Unit
             }
             userRepository = mockk()
             repository = TaskRepositoryImpl(dao, userRepository, dispatcher)
@@ -71,8 +71,8 @@ internal object TaskRepositoryImplTest : Spek({
                 every { userRepository.me()?.id } returns null
             }
 
-            it("完了にしていない") {
-                repository.complete(taskId)
+            it("完了ステータスを更新していない") {
+                repository.saveCompletedState(taskId, true)
 
                 verify(exactly = 0) { dao.add(any(), any()) }
             }
@@ -83,10 +83,10 @@ internal object TaskRepositoryImplTest : Spek({
                 every { userRepository.me()?.id } returns "user_id"
             }
 
-            it("完了にしている") {
-                repository.complete(taskId)
+            it("完了ステータスを更新している") {
+                repository.saveCompletedState(taskId, true)
 
-                verify() { dao.complete(any(), any()) }
+                verify() { dao.saveCompletedState(any(), any(), true) }
             }
         }
     }

@@ -3,6 +3,10 @@ package dev.iaiabot.todo.task
 import com.google.common.truth.Truth.assertThat
 import dev.iaiabot.todo.testrule.viewModelTestRule
 import dev.iaiabot.usecase.*
+import dev.iaiabot.usecase.task.AddTaskUseCase
+import dev.iaiabot.usecase.task.GetAllCompletedTaskUseCase
+import dev.iaiabot.usecase.task.GetAllIncompleteTaskUseCase
+import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import org.spekframework.spek2.Spek
@@ -13,7 +17,7 @@ internal object TaskViewModelImplTest : Spek({
     lateinit var addTaskUseCase: AddTaskUseCase
     lateinit var getAllIncompleteTaskUseCase: GetAllIncompleteTaskUseCase
     lateinit var getAllCompletedTaskUseCase: GetAllCompletedTaskUseCase
-    lateinit var completeTaskUseCase: CompleteTaskUseCase
+    lateinit var toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase
 
     val coroutineScope = viewModelTestRule()
 
@@ -26,20 +30,19 @@ internal object TaskViewModelImplTest : Spek({
             getAllCompletedTaskUseCase = mockk() {
                 coEvery { this@mockk.invoke() } returns listOf(mockk())
             }
-            completeTaskUseCase = mockk()
+            toggleCompleteTaskUseCase = mockk()
             viewModel = TaskViewModelImpl(
                 addTaskUseCase,
                 getAllIncompleteTaskUseCase,
                 getAllCompletedTaskUseCase,
-                completeTaskUseCase
+                toggleCompleteTaskUseCase
             )
         }
 
         it("未完了と完了のタスクが両方設定されている") {
             viewModel.init()
 
-            assertThat(viewModel.allIncompleteTask.value).hasSize(1)
-            assertThat(viewModel.allCompletedTask.value).hasSize(1)
+            assertThat(viewModel.allTask.value).hasSize(2)
         }
     }
 })

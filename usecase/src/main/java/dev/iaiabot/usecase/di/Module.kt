@@ -1,7 +1,8 @@
 package dev.iaiabot.usecase.di
 
 import dev.iaiabot.repository.di.Module.repositoryModule
-import dev.iaiabot.usecase.*
+import dev.iaiabot.usecase.task.*
+import dev.iaiabot.usecase.user.*
 import org.koin.core.context.loadKoinModules
 import org.koin.dsl.module
 
@@ -10,7 +11,7 @@ object Module {
         loadKoinModules(repositoryModule)
 
         single<AddTaskUseCase> { AddTaskUseCaseImpl(get()) }
-        single<CompleteTaskUseCase> { CompleteTaskUseCaseImpl(get()) }
+        single<ToggleCompleteTaskUseCase> { ToggleCompleteTaskUseCaseImpl(get()) }
         single<LoginUseCase> { LoginUseCaseImpl(get()) }
         single<CheckAlreadyLoggedInUseCase> { CheckAlreadyLoggedInUseCaseImpl(get()) }
         single<LogoutUseCase> { LogoutUseCaseImpl(get()) }
