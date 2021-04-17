@@ -25,7 +25,7 @@ internal object GetAllIncompleteTaskUseCaseImplTest : Spek({
 
             it("タスクが1個返る") {
                 runBlockingTest {
-                    val result = usecase.invoke()
+                    val result = usecase()
 
                     assertThat(result.size).isEqualTo(1)
                 }

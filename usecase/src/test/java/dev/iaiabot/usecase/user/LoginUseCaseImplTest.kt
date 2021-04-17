@@ -28,7 +28,7 @@ internal object LoginUseCaseImplTest : Spek({
 
             it("ログインしない") {
                 runBlockingTest {
-                    usecase.invoke(email, password)
+                    usecase(email, password)
 
                     coVerify(exactly = 0) { userRepository.login(any(), any()) }
                 }
@@ -45,7 +45,7 @@ internal object LoginUseCaseImplTest : Spek({
 
             it("ログインしない") {
                 runBlockingTest {
-                    usecase.invoke(email, password)
+                    usecase(email, password)
 
                     coVerify(exactly = 0) { userRepository.login(any(), any()) }
                 }
@@ -62,7 +62,7 @@ internal object LoginUseCaseImplTest : Spek({
 
             it("ログインしない") {
                 runBlockingTest {
-                    usecase.invoke(email, password)
+                    usecase(email, password)
 
                     coVerify(exactly = 0) { userRepository.login(any(), any()) }
                 }
@@ -79,7 +79,7 @@ internal object LoginUseCaseImplTest : Spek({
 
             it("ログインする") {
                 runBlockingTest {
-                    usecase.invoke(email, password)
+                    usecase(email, password)
 
                     coVerify { userRepository.login(any(), any()) }
                 }

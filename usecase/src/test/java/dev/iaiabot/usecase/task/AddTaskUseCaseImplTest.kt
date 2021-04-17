@@ -21,7 +21,7 @@ internal object AddTaskUseCaseImplTest : Spek({
             val title = null
 
             it("タスクを追加していない") {
-                usecase.invoke(title)
+                usecase(title)
 
                 verify(exactly = 0) { taskRepository.add(any()) }
             }
@@ -31,7 +31,7 @@ internal object AddTaskUseCaseImplTest : Spek({
             val title = ""
 
             it("タスクを追加していない") {
-                usecase.invoke(title)
+                usecase(title)
                 verify(exactly = 0) { taskRepository.add(any()) }
             }
         }
@@ -46,13 +46,13 @@ internal object AddTaskUseCaseImplTest : Spek({
             }
 
             it("タスクを追加している") {
-                usecase.invoke(title)
+                usecase(title)
 
                 verify { taskRepository.add(any()) }
             }
 
             it("追加するTaskのtitleが引数と等しい") {
-                usecase.invoke(title)
+                usecase(title)
 
                 assertThat(taskSlot.captured.title).isEqualTo("タイトル")
             }

@@ -36,14 +36,14 @@ internal class LoginViewModelImpl(
 
     override fun onClickLogin() {
         viewModelScope.launch {
-            loginUseCase.invoke(email.value, password.value)
+            loginUseCase(email.value, password.value)
             checkAlreadyLoggedIn()
         }
     }
 
     private fun checkAlreadyLoggedIn() {
         viewModelScope.launch {
-            if (checkAlreadyLoggedInUseCase.invoke()) {
+            if (checkAlreadyLoggedInUseCase()) {
                 routerAction.postValue(Action.GoToTasks)
             }
         }

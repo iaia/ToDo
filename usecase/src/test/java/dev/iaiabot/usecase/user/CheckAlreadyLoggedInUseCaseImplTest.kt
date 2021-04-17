@@ -25,7 +25,7 @@ internal object CheckAlreadyLoggedInUseCaseImplTest : Spek({
 
             it("falseが返る") {
                 runBlockingTest {
-                    val result = usecase.invoke()
+                    val result = usecase()
 
                     assertThat(result).isEqualTo(false)
                 }
@@ -39,7 +39,7 @@ internal object CheckAlreadyLoggedInUseCaseImplTest : Spek({
 
             it("trueが返る") {
                 runBlockingTest {
-                    val result = usecase.invoke()
+                    val result = usecase()
 
                     assertThat(result).isEqualTo(true)
                 }

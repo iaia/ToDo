@@ -30,7 +30,7 @@ internal class ToggleCompleteTaskUseCaseImplTest : Spek({
             }
 
             it("渡したtaskのidで保存している") {
-                usecase.invoke(task)
+                usecase(task)
 
                 verify {
                     taskRepository.saveCompletedState(
@@ -43,7 +43,7 @@ internal class ToggleCompleteTaskUseCaseImplTest : Spek({
             }
 
             it("渡したtaskのcompletedとは反対で保存している") {
-                usecase.invoke(task)
+                usecase(task)
 
                 verify {
                     taskRepository.saveCompletedState(

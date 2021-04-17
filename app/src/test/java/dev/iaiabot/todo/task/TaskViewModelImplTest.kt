@@ -24,13 +24,13 @@ internal object TaskViewModelImplTest : Spek({
 
     beforeEachTest {
         addTaskUseCase = mockk() {
-            coEvery { this@mockk.invoke(any()) } returns true
+            coEvery { this@mockk(any()) } returns true
         }
         getAllIncompleteTaskUseCase = mockk() {
-            coEvery { this@mockk.invoke() } returns listOf(mockk())
+            coEvery { this@mockk() } returns listOf(mockk())
         }
         getAllCompletedTaskUseCase = mockk() {
-            coEvery { this@mockk.invoke() } returns listOf(mockk())
+            coEvery { this@mockk() } returns listOf(mockk())
         }
         toggleCompleteTaskUseCase = mockk()
         viewModel = TaskViewModelImpl(
@@ -58,7 +58,7 @@ internal object TaskViewModelImplTest : Spek({
             viewModel.addTask()
 
             verify {
-                addTaskUseCase.invoke(withArg {
+                addTaskUseCase(withArg {
                     assertThat(it).isEqualTo("タスク")
                 })
             }
@@ -92,7 +92,7 @@ internal object TaskViewModelImplTest : Spek({
             it("タスクを追加している") {
                 viewModel.onClickAddTask()
 
-                verify { addTaskUseCase.invoke(any()) }
+                verify { addTaskUseCase(any()) }
             }
         }
     }

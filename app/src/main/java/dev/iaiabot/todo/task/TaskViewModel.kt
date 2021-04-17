@@ -43,7 +43,7 @@ internal class TaskViewModelImpl(
 
     override fun addTask() {
         viewModelScope.launch {
-            val success = addTaskUseCase.invoke(newTaskTitle.value)
+            val success = addTaskUseCase(newTaskTitle.value)
             if (success) {
                 refreshAddedTask()
             }
@@ -66,7 +66,7 @@ internal class TaskViewModelImpl(
 
     private fun onCheckedChanged(task: Task, checked: Boolean) {
         viewModelScope.launch {
-            toggleCompleteTaskUseCase.invoke(task)
+            toggleCompleteTaskUseCase(task)
             refreshTaskJob?.cancel()
             refreshTaskJob = launch {
                 delay(1000)
@@ -79,12 +79,12 @@ internal class TaskViewModelImpl(
     private fun refreshAllTask() {
         viewModelScope.launch {
             val incompleteTasks = async {
-                getAllIncompleteTaskUseCase.invoke().map {
+                getAllIncompleteTaskUseCase().map {
                     TaskItemViewModelImpl(it, ::onCheckedChanged)
                 }
             }
             val completedTasks = async {
-                getAllCompletedTaskUseCase.invoke().map {
+                getAllCompletedTaskUseCase().map {
                     TaskItemViewModelImpl(it, ::onCheckedChanged)
                 }
             }

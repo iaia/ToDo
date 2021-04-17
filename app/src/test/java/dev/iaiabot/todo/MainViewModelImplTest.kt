@@ -27,7 +27,7 @@ internal object MainViewModelImplTest : Spek({
 
         context("すでにログインしている場合") {
             beforeEachTest {
-                coEvery { checkAlreadyLoggedInUseCase.invoke() } returns true
+                coEvery { checkAlreadyLoggedInUseCase() } returns true
                 assertThat(viewModel.loggedIn.value).isFalse()
             }
 
@@ -42,7 +42,7 @@ internal object MainViewModelImplTest : Spek({
 
         context("未ログインの場合") {
             beforeEachTest {
-                coEvery { checkAlreadyLoggedInUseCase.invoke() } returns false
+                coEvery { checkAlreadyLoggedInUseCase() } returns false
                 assertThat(viewModel.loggedIn.value).isFalse()
             }
 
@@ -59,10 +59,10 @@ internal object MainViewModelImplTest : Spek({
     describe("#onClickLogout") {
         beforeEachTest {
             logoutUseCase = mockk() {
-                coEvery { this@mockk.invoke() } returns Unit
+                coEvery { this@mockk() } returns Unit
             }
             checkAlreadyLoggedInUseCase = mockk() {
-                coEvery { this@mockk.invoke() } returns true
+                coEvery { this@mockk() } returns true
             }
             viewModel = MainViewModelImpl(checkAlreadyLoggedInUseCase, logoutUseCase)
         }
@@ -71,7 +71,7 @@ internal object MainViewModelImplTest : Spek({
             coroutineScope.runBlockingTest {
                 viewModel.onClickLogout()
 
-                coVerify { logoutUseCase.invoke() }
+                coVerify { logoutUseCase() }
             }
         }
 
