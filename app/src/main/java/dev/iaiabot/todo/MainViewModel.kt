@@ -34,7 +34,7 @@ internal class MainViewModelImpl(
 
     override fun onClickLogout() {
         viewModelScope.launch {
-            logoutUseCase.invoke()
+            logoutUseCase()
             checkAlreadyLoggedIn()
             routerAction.postValue(Action.Finish)
         }
@@ -42,7 +42,7 @@ internal class MainViewModelImpl(
 
     private fun checkAlreadyLoggedIn() {
         viewModelScope.launch {
-            loggedIn.postValue(checkAlreadyLoggedInUseCase.invoke())
+            loggedIn.postValue(checkAlreadyLoggedInUseCase())
         }
     }
 }

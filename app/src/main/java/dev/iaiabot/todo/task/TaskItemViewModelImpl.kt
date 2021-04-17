@@ -13,6 +13,6 @@ internal class TaskItemViewModelImpl(
     Task by task {
 
     override fun onCheckedChanged(checked: Boolean) {
-        onCheckedChanged.invoke(task, checked)
+        onCheckedChanged(task, checked)
     }
 }

@@ -14,6 +14,7 @@ abstract class LoginViewModel : ViewModel(), LifecycleObserver {
     abstract val routerAction: LiveData<Action>
     abstract val email: MutableLiveData<String>
     abstract val password: MutableLiveData<String>
+    abstract val nowLogin: LiveData<Boolean>
 
     @VisibleForTesting
     abstract fun onResume()
@@ -28,6 +29,7 @@ internal class LoginViewModelImpl(
     override val routerAction = MutableLiveData<Action>()
     override val email = MutableLiveData("")
     override val password = MutableLiveData("")
+    override val nowLogin = MutableLiveData<Boolean>(false)
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun onResume() {
@@ -35,16 +37,19 @@ internal class LoginViewModelImpl(
     }
 
     override fun onClickLogin() {
+        nowLogin.value = true
         viewModelScope.launch {
-            loginUseCase.invoke(email.value, password.value)
+            loginUseCase(email.value, password.value)
             checkAlreadyLoggedIn()
         }
     }
 
     private fun checkAlreadyLoggedIn() {
         viewModelScope.launch {
-            if (checkAlreadyLoggedInUseCase.invoke()) {
+            if (checkAlreadyLoggedInUseCase()) {
                 routerAction.postValue(Action.GoToTasks)
+            } else {
+                nowLogin.postValue(false)
             }
         }
     }

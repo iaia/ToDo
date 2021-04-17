@@ -21,7 +21,7 @@ internal object LogoutUseCaseImplTest : Spek({
 
         it("ログアウトしてる") {
             runBlockingTest {
-                usecase.invoke()
+                usecase()
 
                 coVerify { userRepository.logout() }
             }

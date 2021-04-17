@@ -25,7 +25,7 @@ internal object LoginViewModelImplTest : Spek({
 
         context("すでにログインしている場合") {
             beforeEachTest {
-                coEvery { checkAlreadyLoggedInUseCase.invoke() } returns true
+                coEvery { checkAlreadyLoggedInUseCase() } returns true
                 assertThat(viewModel.routerAction.value).isNull()
             }
 
@@ -40,8 +40,8 @@ internal object LoginViewModelImplTest : Spek({
 
         context("未ログインの場合") {
             beforeEachTest {
-                coEvery { loginUseCase.invoke(any(), any()) } returns Unit
-                coEvery { checkAlreadyLoggedInUseCase.invoke() } returns false
+                coEvery { loginUseCase(any(), any()) } returns Unit
+                coEvery { checkAlreadyLoggedInUseCase() } returns false
                 assertThat(viewModel.routerAction.value).isNull()
             }
 
@@ -58,10 +58,10 @@ internal object LoginViewModelImplTest : Spek({
     describe("#onClickLogin") {
         beforeEachTest {
             loginUseCase = mockk() {
-                coEvery { this@mockk.invoke(any(), any()) } returns Unit
+                coEvery { this@mockk(any(), any()) } returns Unit
             }
             checkAlreadyLoggedInUseCase = mockk() {
-                coEvery { this@mockk.invoke() } returns true
+                coEvery { this@mockk() } returns true
             }
             viewModel = LoginViewModelImpl(loginUseCase, checkAlreadyLoggedInUseCase)
         }
@@ -70,7 +70,7 @@ internal object LoginViewModelImplTest : Spek({
             coroutineScope.runBlockingTest {
                 viewModel.onClickLogin()
 
-                coVerify { loginUseCase.invoke(any(), any()) }
+                coVerify { loginUseCase(any(), any()) }
             }
         }
 
@@ -79,6 +79,16 @@ internal object LoginViewModelImplTest : Spek({
                 viewModel.onClickLogin()
 
                 assertThat(viewModel.routerAction.value).isEqualTo(Action.GoToTasks)
+            }
+        }
+
+        it("nowLoginがtrue") {
+            assertThat(viewModel.nowLogin.value).isEqualTo(false)
+
+            coroutineScope.runBlockingTest {
+                viewModel.onClickLogin()
+
+                assertThat(viewModel.nowLogin.value).isEqualTo(true)
             }
         }
     }

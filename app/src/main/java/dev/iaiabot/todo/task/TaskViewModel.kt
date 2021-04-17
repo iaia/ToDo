@@ -12,11 +12,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-abstract class TaskViewModel : ViewModel(), LifecycleObserver, NewTaskViewModel {
+abstract class TaskViewModel : ViewModel(), LifecycleObserver {
+    abstract val ableAddTask: LiveData<Boolean>
     abstract val allTask: LiveData<List<TaskItemViewModel>>
+    abstract val newTaskTitle: MutableLiveData<String>
 
     @VisibleForTesting
     abstract fun init()
+    abstract fun addTask()
+    abstract fun onClickAddTask()
 }
 
 internal class TaskViewModelImpl(
@@ -26,6 +30,7 @@ internal class TaskViewModelImpl(
     private val toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase,
 ) : TaskViewModel() {
 
+    override val ableAddTask = MutableLiveData<Boolean>(false)
     override val newTaskTitle = MutableLiveData<String>("")
     override val allTask = MutableLiveData<List<TaskItemViewModel>>()
 
@@ -38,21 +43,30 @@ internal class TaskViewModelImpl(
 
     override fun addTask() {
         viewModelScope.launch {
-            val success = addTaskUseCase.invoke(newTaskTitle.value)
+            val success = addTaskUseCase(newTaskTitle.value)
             if (success) {
                 refreshAddedTask()
             }
         }
     }
 
-    override fun refreshAddedTask() {
+    override fun onClickAddTask() {
+        ableAddTask.value?.let {
+            if (it) {
+                addTask()
+            }
+            ableAddTask.postValue(!it)
+        }
+    }
+
+    private fun refreshAddedTask() {
         newTaskTitle.value = ""
-        this.refreshAllTask()
+        refreshAllTask()
     }
 
     private fun onCheckedChanged(task: Task, checked: Boolean) {
         viewModelScope.launch {
-            toggleCompleteTaskUseCase.invoke(task)
+            toggleCompleteTaskUseCase(task)
             refreshTaskJob?.cancel()
             refreshTaskJob = launch {
                 delay(1000)
@@ -65,12 +79,12 @@ internal class TaskViewModelImpl(
     private fun refreshAllTask() {
         viewModelScope.launch {
             val incompleteTasks = async {
-                getAllIncompleteTaskUseCase.invoke().map {
+                getAllIncompleteTaskUseCase().map {
                     TaskItemViewModelImpl(it, ::onCheckedChanged)
                 }
             }
             val completedTasks = async {
-                getAllCompletedTaskUseCase.invoke().map {
+                getAllCompletedTaskUseCase().map {
                     TaskItemViewModelImpl(it, ::onCheckedChanged)
                 }
             }
