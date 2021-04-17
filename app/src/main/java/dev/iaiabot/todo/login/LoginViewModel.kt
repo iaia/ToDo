@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 
 sealed class Action {
     object GoToTasks : Action()
+    class ShowToast(val text: String?) : Action()
 }
 
 abstract class LoginViewModel : ViewModel(), LifecycleObserver {
@@ -39,7 +40,11 @@ internal class LoginViewModelImpl(
     override fun onClickLogin() {
         nowLogin.value = true
         viewModelScope.launch {
-            loginUseCase(email.value, password.value)
+            try {
+                loginUseCase(email.value, password.value)
+            } catch (e: Exception) {
+                routerAction.postValue(Action.ShowToast(e.message))
+            }
             checkAlreadyLoggedIn()
         }
     }
