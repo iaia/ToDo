@@ -6,7 +6,7 @@ import dev.iaiabot.entity.User
 interface UserAuth {
     val me: User?
 
-    suspend fun login(email: String, password: String): Boolean
+    suspend fun login(email: String, password: String)
     suspend fun logout()
 }
 
@@ -19,8 +19,8 @@ internal class UserAuthImpl(
             UserModel(it.uid)
         }
 
-    override suspend fun login(email: String, password: String): Boolean {
-        return firebaseAuthConfig.login(email, password)
+    override suspend fun login(email: String, password: String) {
+        firebaseAuthConfig.login(email, password)
     }
 
     override suspend fun logout() {
