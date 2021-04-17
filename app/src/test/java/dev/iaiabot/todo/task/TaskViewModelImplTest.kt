@@ -72,4 +72,14 @@ internal object TaskViewModelImplTest : Spek({
             assertThat(viewModel.newTaskTitle.value).isEqualTo("")
         }
     }
+
+    describe("#onClickAddTask") {
+        it("ableAddTaskをtoggleしている") {
+            assertThat(viewModel.ableAddTask.value).isEqualTo(false)
+
+            viewModel.onClickAddTask()
+
+            assertThat(viewModel.ableAddTask.value).isEqualTo(true)
+        }
+    }
 })

@@ -13,6 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 abstract class TaskViewModel : ViewModel(), LifecycleObserver {
+    abstract val ableAddTask: LiveData<Boolean>
     abstract val allTask: LiveData<List<TaskItemViewModel>>
     abstract val newTaskTitle: MutableLiveData<String>
 
@@ -29,6 +30,7 @@ internal class TaskViewModelImpl(
     private val toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase,
 ) : TaskViewModel() {
 
+    override val ableAddTask = MutableLiveData<Boolean>(false)
     override val newTaskTitle = MutableLiveData<String>("")
     override val allTask = MutableLiveData<List<TaskItemViewModel>>()
 
@@ -49,6 +51,9 @@ internal class TaskViewModelImpl(
     }
 
     override fun onClickAddTask() {
+        ableAddTask.value?.let {
+            ableAddTask.postValue(!it)
+        }
     }
 
     private fun refreshAddedTask() {
