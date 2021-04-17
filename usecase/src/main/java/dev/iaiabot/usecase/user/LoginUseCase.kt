@@ -4,7 +4,6 @@ import dev.iaiabot.repository.UserRepository
 import dev.iaiabot.usecase.UseCase
 
 interface LoginUseCase : UseCase {
-    // TODO: エラー出したいのでresultにする
     suspend operator fun invoke(email: String?, password: String?)
 }
 

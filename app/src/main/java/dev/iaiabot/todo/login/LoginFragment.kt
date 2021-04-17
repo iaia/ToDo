@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dev.iaiabot.todo.R
 import dev.iaiabot.todo.databinding.FragmentLoginBinding
+import dev.iaiabot.todo.observeToastAction
 import org.koin.android.ext.android.inject
 
 class LoginFragment : Fragment() {
@@ -35,5 +36,7 @@ class LoginFragment : Fragment() {
                 Action.GoToTasks -> findNavController().navigate(R.id.action_login_to_task, null)
             }
         }
+
+        observeToastAction(viewModel)
     }
 }
