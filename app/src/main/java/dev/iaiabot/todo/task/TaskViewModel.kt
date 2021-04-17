@@ -12,11 +12,14 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-abstract class TaskViewModel : ViewModel(), LifecycleObserver, NewTaskViewModel {
+abstract class TaskViewModel : ViewModel(), LifecycleObserver {
     abstract val allTask: LiveData<List<TaskItemViewModel>>
+    abstract val newTaskTitle: MutableLiveData<String>
 
     @VisibleForTesting
     abstract fun init()
+    abstract fun addTask()
+    abstract fun onClickAddTask()
 }
 
 internal class TaskViewModelImpl(
@@ -45,7 +48,10 @@ internal class TaskViewModelImpl(
         }
     }
 
-    override fun refreshAddedTask() {
+    override fun onClickAddTask() {
+    }
+
+    private fun refreshAddedTask() {
         newTaskTitle.value = ""
         this.refreshAllTask()
     }
