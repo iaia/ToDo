@@ -3,6 +3,7 @@ package dev.iaiabot.auth
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 internal interface FirebaseAuthConfig {
@@ -25,6 +26,9 @@ internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
             auth.signInWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
                     continuation.resume(it.user != null)
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
                 }
         }
     }
