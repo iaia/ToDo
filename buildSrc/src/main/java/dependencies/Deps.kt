@@ -1,30 +1,28 @@
 package dependencies
 
 object Deps {
-    val kotlin_version = "1.4.32"
+    val kotlin_version = "1.5.10"
 
     object Kotlin {
         val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9"
+        val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
 
         object Test {
-            val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.3"
+            val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
         }
     }
 
     object AndroidX {
-        val coreKtx = "androidx.core:core-ktx:1.3.2"
-        val appCompat = "androidx.appcompat:appcompat:1.2.0"
+        val coreKtx = "androidx.core:core-ktx:1.5.0"
+        val appCompat = "androidx.appcompat:appcompat:1.3.0"
         val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
-
         val nav_version = "2.3.5"
         val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$nav_version"
         val navigationUi = "androidx.navigation:navigation-ui-ktx:$nav_version"
-
         val liveDataLifecycleKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 
         object Compose {
-            val version = "1.0.0-alpha10"
+            val version = "1.0.0-beta08"
             val compose = "androidx.compose.ui:ui:${version}"
             val tooling = "androidx.compose.ui:ui-tooling:${version}"
             val foundation = "androidx.compose.foundation:foundation:${version}"
@@ -53,13 +51,13 @@ object Deps {
     }
 
     object Koin {
-        private val koin_version = "3.0.1-beta-2"
+        private val koin_version = "3.0.1"
         val base = "io.insert-koin:koin-android:$koin_version"
         val ext = "io.insert-koin:koin-android-ext:$koin_version"
     }
 
     object Firebase {
-        val bom = "com.google.firebase:firebase-bom:26.7.0"
+        val bom = "com.google.firebase:firebase-bom:28.1.0"
         val firestoreKtx = "com.google.firebase:firebase-firestore-ktx"
         val auth = "com.google.firebase:firebase-auth"
     }
