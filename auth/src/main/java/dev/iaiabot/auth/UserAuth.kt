@@ -30,6 +30,5 @@ internal class UserAuthImpl(
 
     override suspend fun signUp(email: String, password: String) {
         firebaseAuthConfig.createUser(email, password)
-        // sendMail??
     }
 }

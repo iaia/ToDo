@@ -39,5 +39,14 @@ internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
 
     override suspend fun createUser(email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                sendMail(it.user)
+            }
+            .addOnFailureListener {
+            }
+    }
+
+    private fun sendMail(user: FirebaseUser?) {
+        user?.sendEmailVerification()
     }
 }

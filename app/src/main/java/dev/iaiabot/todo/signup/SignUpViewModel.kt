@@ -15,6 +15,7 @@ abstract class SignUpViewModel : ViewModel(), LifecycleObserver, HasToastAction 
     abstract val password: MutableLiveData<String>
 
     abstract fun onResume()
+    abstract fun onClickSignUp()
 }
 
 internal class SignUpViewModelImpl(
@@ -29,7 +30,7 @@ internal class SignUpViewModelImpl(
     override fun onResume() {
     }
 
-    fun onClickSignUp() {
+    override fun onClickSignUp() {
         viewModelScope.launch {
             signUpUseCase(email.value, password.value)
         }
