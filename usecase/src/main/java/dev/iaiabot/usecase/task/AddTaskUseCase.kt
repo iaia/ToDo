@@ -5,18 +5,13 @@ import dev.iaiabot.usecase.UseCase
 import dev.iaiabot.usecase.model.TaskModel
 
 interface AddTaskUseCase : UseCase {
-    // Resultにする
-    operator fun invoke(title: String?): Boolean
+    suspend operator fun invoke()
 }
 
 internal class AddTaskUseCaseImpl(
     private val taskRepository: TaskRepository
 ) : AddTaskUseCase {
-    override fun invoke(title: String?): Boolean {
-        if (title.isNullOrEmpty()) {
-            return false
-        }
-        taskRepository.add(TaskModel(title = title))
-        return true
+    override suspend fun invoke() {
+        taskRepository.add(TaskModel(title = ""))
     }
 }

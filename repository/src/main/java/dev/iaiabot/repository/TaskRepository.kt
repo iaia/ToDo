@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
 
 interface TaskRepository {
-    fun add(task: Task)
+    suspend fun add(task: Task)
     fun saveCompletedState(taskId: String, newCompletedState: Boolean)
     suspend fun allIncompleteTask(): List<Task>
     suspend fun allCompletedTask(): List<Task>
@@ -20,9 +20,11 @@ internal class TaskRepositoryImpl(
     private val userId: String?
         get() = userRepository.me()?.id
 
-    override fun add(task: Task) {
-        userId?.let { userId ->
-            taskDao.add(userId, task)
+    override suspend fun add(task: Task) {
+        withContext(dispatcher) {
+            userId?.let { userId ->
+                taskDao.add(userId, task)
+            }
         }
     }
 

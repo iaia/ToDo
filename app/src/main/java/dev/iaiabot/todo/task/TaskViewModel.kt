@@ -13,7 +13,6 @@ import kotlinx.coroutines.launch
 abstract class TaskViewModel : ViewModel(), LifecycleObserver {
     abstract val ableAddTask: LiveData<Boolean>
     abstract val allTask: LiveData<List<TaskItemViewModel>>
-    abstract val newTaskTitle: MutableLiveData<String>
 
     @VisibleForTesting
     abstract fun init()
@@ -28,7 +27,6 @@ internal class TaskViewModelImpl(
 ) : TaskViewModel() {
 
     override val ableAddTask = MutableLiveData<Boolean>(false)
-    override val newTaskTitle = MutableLiveData<String>("")
     override val allTask = MutableLiveData<List<TaskItemViewModel>>()
 
     private var refreshTaskJob: Job? = null
@@ -40,10 +38,7 @@ internal class TaskViewModelImpl(
 
     override fun addTask() {
         viewModelScope.launch {
-            val success = addTaskUseCase(newTaskTitle.value)
-            if (success) {
-                refreshAddedTask()
-            }
+            addTaskUseCase()
         }
     }
 
@@ -54,11 +49,6 @@ internal class TaskViewModelImpl(
             }
             ableAddTask.postValue(!it)
         }
-    }
-
-    private fun refreshAddedTask() {
-        newTaskTitle.value = ""
-        refreshAllTask()
     }
 
     private fun onCheckedChanged(task: Task, checked: Boolean) {

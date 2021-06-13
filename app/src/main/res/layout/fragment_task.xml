@@ -26,29 +26,6 @@
             app:layout_constraintTop_toTopOf="parent"
             />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/mtv_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:hint="@string/write_your_task"
-            android:layout_marginEnd="8dp"
-            android:visibility="@{viewModel.ableAddTask ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/fab_add_task"
-            app:layout_constraintStart_toStartOf="parent"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/tiet_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLines="1"
-                android:text="@={viewModel.newTaskTitle}"
-                app:onOkInSoftKeyboard="@{() -> viewModel.addTask()}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab_add_task"
             android:layout_width="wrap_content"
