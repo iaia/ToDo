@@ -21,8 +21,8 @@
         android:name="dev.iaiabot.todo.signup.SignUpFragment"
         android:label="SignUp">
         <action
-            android:id="@+id/action_sign_up_to_login"
-            app:destination="@id/login" />
+            android:id="@+id/action_sign_up_to_task"
+            app:destination="@id/task" />
     </fragment>
 
     <fragment

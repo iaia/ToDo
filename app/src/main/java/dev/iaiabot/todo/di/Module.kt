@@ -16,6 +16,6 @@ object Module {
         viewModel<MainViewModel> { MainViewModelImpl(get(), get()) }
         viewModel<LoginViewModel> { LoginViewModelImpl(get(), get()) }
         viewModel<TaskViewModel> { TaskViewModelImpl(get(), get(), get(), get()) }
-        viewModel<SignUpViewModel> { SignUpViewModelImpl(get()) }
+        viewModel<SignUpViewModel> { SignUpViewModelImpl(get(), get()) }
     }
 }

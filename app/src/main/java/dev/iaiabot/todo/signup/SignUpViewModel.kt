@@ -3,10 +3,15 @@ package dev.iaiabot.todo.signup
 import androidx.lifecycle.*
 import dev.iaiabot.todo.HasToastAction
 import dev.iaiabot.todo.HasToastActionImpl
+import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
 import dev.iaiabot.usecase.user.SignUpUseCase
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 
 sealed class Action {
+    object GoToTasks : Action()
 }
 
 abstract class SignUpViewModel : ViewModel(), LifecycleObserver, HasToastAction {
@@ -19,12 +24,20 @@ abstract class SignUpViewModel : ViewModel(), LifecycleObserver, HasToastAction 
 }
 
 internal class SignUpViewModelImpl(
+    private val checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
     private val signUpUseCase: SignUpUseCase,
 ) : SignUpViewModel(), HasToastAction by HasToastActionImpl() {
     // TODO: LiveEvent使う
     override val routerAction = MutableLiveData<Action>()
     override val email = MutableLiveData("")
     override val password = MutableLiveData("")
+    private val loggedIn = checkAlreadyLoggedInUseCase()
+        .mapLatest { loggedIn ->
+            if (loggedIn) {
+                routerAction.postValue(Action.GoToTasks)
+            }
+        }
+        .shareIn(viewModelScope, replay = 1, started = SharingStarted.Eagerly)
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun onResume() {
@@ -32,6 +45,8 @@ internal class SignUpViewModelImpl(
 
     override fun onClickSignUp() {
         viewModelScope.launch {
+            // TODO: try-catchする
+            // TODO: メール送りましたトースト出す
             signUpUseCase(email.value, password.value)
         }
     }

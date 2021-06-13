@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import dev.iaiabot.todo.R
 import dev.iaiabot.todo.databinding.FragmentSignUpBinding
 import dev.iaiabot.todo.observeToastAction
 import org.koin.android.ext.android.inject
@@ -30,6 +32,9 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.routerAction.observe(viewLifecycleOwner) {
+            when (it) {
+                Action.GoToTasks -> findNavController().navigate(R.id.action_sign_up_to_task)
+            }
         }
 
         observeToastAction(viewModel)

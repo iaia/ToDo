@@ -56,6 +56,8 @@ class MainActivity : AppCompatActivity() {
         logoutMenu?.isVisible = false
         viewModel.loggedIn.observe(this) {
             logoutMenu?.isVisible = it
+            // ログアウトしているようならすべてのfragmentを強制的に終了させていいかも
+            // でログイン画面を出す
         }
         return super.onCreateOptionsMenu(menu)
     }
