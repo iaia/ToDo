@@ -1,6 +1,5 @@
 package dev.iaiabot.todo.login
 
-import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import dev.iaiabot.todo.HasToastAction
 import dev.iaiabot.todo.HasToastActionImpl
@@ -18,7 +17,6 @@ abstract class LoginViewModel : ViewModel(), LifecycleObserver, HasToastAction {
     abstract val password: MutableLiveData<String>
     abstract val nowLogin: LiveData<Boolean>
 
-    @VisibleForTesting
     abstract fun onResume()
     abstract fun onClickLogin()
 }
