@@ -24,25 +24,17 @@ internal class MainViewModelImpl(
     private val logoutUseCase: LogoutUseCase,
 ) : MainViewModel() {
 
-    override val loggedIn: MutableLiveData<Boolean> = MutableLiveData(false)
+    override val loggedIn: LiveData<Boolean> = checkAlreadyLoggedInUseCase().asLiveData()
     override val routerAction: MutableLiveData<Action> = MutableLiveData()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun onResume() {
-        checkAlreadyLoggedIn()
     }
 
     override fun onClickLogout() {
         viewModelScope.launch {
             logoutUseCase()
-            checkAlreadyLoggedIn()
             routerAction.postValue(Action.Finish)
-        }
-    }
-
-    private fun checkAlreadyLoggedIn() {
-        viewModelScope.launch {
-            loggedIn.postValue(checkAlreadyLoggedInUseCase())
         }
     }
 }

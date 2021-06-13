@@ -1,4 +1,4 @@
-package dev.iaiabot.todo.login
+package dev.iaiabot.todo.signup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,21 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dev.iaiabot.todo.R
-import dev.iaiabot.todo.databinding.FragmentLoginBinding
+import dev.iaiabot.todo.databinding.FragmentSignUpBinding
 import dev.iaiabot.todo.observeToastAction
 import org.koin.android.ext.android.inject
 
-class LoginFragment : Fragment() {
+class SignUpFragment : Fragment() {
 
-    private lateinit var binding: FragmentLoginBinding
-    private val viewModel: LoginViewModel by inject()
+    private lateinit var binding: FragmentSignUpBinding
+    private val viewModel: SignUpViewModel by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding = FragmentSignUpBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         viewLifecycleOwner.lifecycle.addObserver(viewModel)
@@ -33,11 +33,7 @@ class LoginFragment : Fragment() {
 
         viewModel.routerAction.observe(viewLifecycleOwner) {
             when (it) {
-                Action.GoToTasks -> findNavController().navigate(R.id.action_login_to_task, null)
-                Action.GoToSignUp -> findNavController().navigate(
-                    R.id.action_login_to_sign_up,
-                    null
-                )
+                Action.GoToTasks -> findNavController().navigate(R.id.action_sign_up_to_task)
             }
         }
 

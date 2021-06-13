@@ -15,6 +15,7 @@ object Module {
         single<LoginUseCase> { LoginUseCaseImpl(get()) }
         single<CheckAlreadyLoggedInUseCase> { CheckAlreadyLoggedInUseCaseImpl(get()) }
         single<LogoutUseCase> { LogoutUseCaseImpl(get()) }
+        factory<SignUpUseCase> { SignUpUseCaseImpl(get()) }
         single<GetAllIncompleteTaskUseCase> { GetAllIncompleteTaskUseCaseImpl(get()) }
         single<GetAllCompletedTaskUseCase> { GetAllCompletedTaskUseCaseImpl(get()) }
     }
