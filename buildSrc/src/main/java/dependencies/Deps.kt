@@ -23,6 +23,17 @@ object Deps {
 
         val liveDataLifecycleKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
 
+        object Compose {
+            val version = "1.0.0-alpha10"
+            val compose = "androidx.compose.ui:ui:${version}"
+            val tooling = "androidx.compose.ui:ui-tooling:${version}"
+            val foundation = "androidx.compose.foundation:foundation:${version}"
+            val material = "androidx.compose.material:material:${version}"
+            val materialIcon = "androidx.compose.material:material-icons-core:1.0.0-alpha10"
+            val materialIconExtend = "androidx.compose.material:material-icons-extended:${version}"
+            val livedata = "androidx.compose.runtime:runtime-livedata:${version}"
+        }
+
         object Test {
             val coreTesting = "androidx.arch.core:core-testing:2.1.0"
             val extJunit = "androidx.test.ext:junit:1.1.2"

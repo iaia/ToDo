@@ -33,9 +33,16 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        useIR = true
     }
     buildFeatures {
         dataBinding true
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerVersion Deps.kotlin_version
+        kotlinCompilerExtensionVersion Deps.AndroidX.Compose.version
     }
 }
 
@@ -53,6 +60,13 @@ dependencies {
     implementation Deps.AndroidX.constraintLayout
     implementation Deps.AndroidX.navigationFragment
     implementation Deps.AndroidX.navigationUi
+    implementation Deps.AndroidX.Compose.compose
+    implementation Deps.AndroidX.Compose.tooling
+    implementation Deps.AndroidX.Compose.foundation
+    implementation Deps.AndroidX.Compose.material
+    implementation Deps.AndroidX.Compose.materialIcon
+    implementation Deps.AndroidX.Compose.materialIconExtend
+    implementation Deps.AndroidX.Compose.livedata
     implementation Deps.Epoxy.epoxy
     implementation Deps.Epoxy.epoxyDataBinding
     kapt Deps.Epoxy.epoxyProcessor
