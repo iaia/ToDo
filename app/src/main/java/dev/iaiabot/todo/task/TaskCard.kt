@@ -11,23 +11,28 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import dev.iaiabot.entity.Task
 
 @Composable
-fun TaskCard() {
+fun TaskCard(
+    viewModel: TaskViewModel,
+    tasks: List<Task>
+) {
     Column(
         Modifier.verticalScroll(
             rememberScrollState()
         )
     ) {
-        repeat(100) {
+        tasks.forEach { task ->
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(15.dp)
-                    .clickable { },
-                elevation = 10.dp
+                    .clickable {
+                        viewModel.toggleComplete(task)
+                    },
             ) {
-                Text("this is a card")
+                Text(task.title)
             }
         }
     }

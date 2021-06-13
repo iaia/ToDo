@@ -23,10 +23,6 @@ class TaskFragment : Fragment() {
         binding = FragmentTaskBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        binding.composeView.setContent {
-            TaskCard()
-        }
-
         return binding.root
     }
 
@@ -36,6 +32,9 @@ class TaskFragment : Fragment() {
         binding.viewModel = viewModel
 
         viewModel.allTask.observe(viewLifecycleOwner) {
+            binding.composeView.setContent {
+                TaskCard(viewModel, it)
+            }
         }
     }
 }
