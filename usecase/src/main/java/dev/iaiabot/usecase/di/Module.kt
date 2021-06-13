@@ -10,13 +10,13 @@ object Module {
     val useCaseModule = module {
         loadKoinModules(repositoryModule)
 
-        single<AddTaskUseCase> { AddTaskUseCaseImpl(get()) }
-        single<ToggleCompleteTaskUseCase> { ToggleCompleteTaskUseCaseImpl(get()) }
         single<LoginUseCase> { LoginUseCaseImpl(get()) }
         single<CheckAlreadyLoggedInUseCase> { CheckAlreadyLoggedInUseCaseImpl(get()) }
         single<LogoutUseCase> { LogoutUseCaseImpl(get()) }
         factory<SignUpUseCase> { SignUpUseCaseImpl(get()) }
-        single<GetAllIncompleteTaskUseCase> { GetAllIncompleteTaskUseCaseImpl(get()) }
-        single<GetAllCompletedTaskUseCase> { GetAllCompletedTaskUseCaseImpl(get()) }
+
+        factory<AddTaskUseCase> { AddTaskUseCaseImpl(get()) }
+        factory<ToggleCompleteTaskUseCase> { ToggleCompleteTaskUseCaseImpl(get()) }
+        factory<GetAllTaskUseCase> { GetAllTaskUseCaseImpl(get()) }
     }
 }

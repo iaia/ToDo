@@ -9,7 +9,7 @@ import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
 internal object GetAllIncompleteTaskUseCaseImplTest : Spek({
-    lateinit var usecase: GetAllIncompleteTaskUseCase
+    lateinit var usecase: GetAllTaskUseCase
     lateinit var taskRepository: TaskRepository
 
     describe("#invoke") {

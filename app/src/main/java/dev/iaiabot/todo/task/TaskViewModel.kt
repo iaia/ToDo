@@ -4,11 +4,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import dev.iaiabot.entity.Task
 import dev.iaiabot.usecase.task.AddTaskUseCase
-import dev.iaiabot.usecase.task.GetAllCompletedTaskUseCase
-import dev.iaiabot.usecase.task.GetAllIncompleteTaskUseCase
+import dev.iaiabot.usecase.task.GetAllTaskUseCase
 import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -25,8 +23,7 @@ abstract class TaskViewModel : ViewModel(), LifecycleObserver {
 
 internal class TaskViewModelImpl(
     private val addTaskUseCase: AddTaskUseCase,
-    private val getAllIncompleteTaskUseCase: GetAllIncompleteTaskUseCase,
-    private val getAllCompletedTaskUseCase: GetAllCompletedTaskUseCase,
+    private val getAllTaskUseCase: GetAllTaskUseCase,
     private val toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase,
 ) : TaskViewModel() {
 
@@ -78,18 +75,10 @@ internal class TaskViewModelImpl(
 
     private fun refreshAllTask() {
         viewModelScope.launch {
-            val incompleteTasks = async {
-                getAllIncompleteTaskUseCase().map {
-                    TaskItemViewModelImpl(it, ::onCheckedChanged)
-                }
-            }
-            val completedTasks = async {
-                getAllCompletedTaskUseCase().map {
-                    TaskItemViewModelImpl(it, ::onCheckedChanged)
-                }
-            }
             allTask.postValue(
-                incompleteTasks.await() + completedTasks.await()
+                getAllTaskUseCase().map {
+                    TaskItemViewModelImpl(it, ::onCheckedChanged)
+                }
             )
         }
     }

@@ -5,7 +5,7 @@ import dev.iaiabot.todo.testrule.viewModelTestRule
 import dev.iaiabot.usecase.*
 import dev.iaiabot.usecase.task.AddTaskUseCase
 import dev.iaiabot.usecase.task.GetAllCompletedTaskUseCase
-import dev.iaiabot.usecase.task.GetAllIncompleteTaskUseCase
+import dev.iaiabot.usecase.task.GetAllTaskUseCase
 import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -16,7 +16,7 @@ import org.spekframework.spek2.style.specification.describe
 internal object TaskViewModelImplTest : Spek({
     lateinit var viewModel: TaskViewModel
     lateinit var addTaskUseCase: AddTaskUseCase
-    lateinit var getAllIncompleteTaskUseCase: GetAllIncompleteTaskUseCase
+    lateinit var getAllIncompleteTaskUseCase: GetAllTaskUseCase
     lateinit var getAllCompletedTaskUseCase: GetAllCompletedTaskUseCase
     lateinit var toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase
 

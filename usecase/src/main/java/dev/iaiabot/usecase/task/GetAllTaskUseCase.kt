@@ -3,14 +3,15 @@ package dev.iaiabot.usecase.task
 import dev.iaiabot.entity.Task
 import dev.iaiabot.repository.TaskRepository
 
-interface GetAllCompletedTaskUseCase {
+interface GetAllTaskUseCase {
     suspend operator fun invoke(): List<Task>
 }
 
-internal class GetAllCompletedTaskUseCaseImpl(
+internal class GetAllTaskUseCaseImpl(
     private val taskRepository: TaskRepository,
-) : GetAllCompletedTaskUseCase {
+) : GetAllTaskUseCase {
     override suspend fun invoke(): List<Task> {
-        return taskRepository.allCompletedTask()
+        return taskRepository.allIncompleteTask() + taskRepository.allCompletedTask()
     }
 }
+
