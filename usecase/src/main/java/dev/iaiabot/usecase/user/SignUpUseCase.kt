@@ -8,8 +8,9 @@ interface SignUpUseCase : UseCase {
 }
 
 internal class SignUpUseCaseImpl(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
 ) : SignUpUseCase {
+
     override suspend fun invoke(email: String?, password: String?) {
         if (email.isNullOrEmpty() || password.isNullOrEmpty()) {
             return

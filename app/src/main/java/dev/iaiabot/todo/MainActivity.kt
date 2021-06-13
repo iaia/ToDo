@@ -42,9 +42,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.onResume()
             }
         }, true)
-        viewModel.loggedIn.observe(this) {
-            logoutMenu?.isVisible = it
-        }
+
         viewModel.routerAction.observe(this) {
             when (it) {
                 Action.Finish -> finish()
@@ -56,6 +54,9 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.top_app_bar, menu)
         logoutMenu = menu?.findItem(R.id.menu_item_logout)
         logoutMenu?.isVisible = false
+        viewModel.loggedIn.observe(this) {
+            logoutMenu?.isVisible = it
+        }
         return super.onCreateOptionsMenu(menu)
     }
 }

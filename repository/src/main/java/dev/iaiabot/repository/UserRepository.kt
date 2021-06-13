@@ -3,9 +3,12 @@ package dev.iaiabot.repository
 import dev.iaiabot.auth.UserAuth
 import dev.iaiabot.entity.User
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 interface UserRepository {
+    val alreadyLoggedIn: Flow<Boolean>
+
     fun me(): User?
     suspend fun login(email: String, password: String)
     suspend fun logout()
@@ -16,6 +19,9 @@ internal class UserRepositoryImpl(
     private val userAuth: UserAuth,
     private val dispatcher: CoroutineDispatcher,
 ) : UserRepository {
+
+    override val alreadyLoggedIn: Flow<Boolean> = userAuth.alreadyLoggedIn
+
     override fun me(): User? {
         return userAuth.me
     }
