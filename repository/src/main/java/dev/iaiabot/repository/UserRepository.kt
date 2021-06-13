@@ -10,7 +10,7 @@ interface UserRepository {
     val alreadyLoggedIn: Flow<Boolean>
 
     fun me(): User?
-    suspend fun login(email: String, password: String)
+    suspend fun login(email: String, password: String): Flow<Unit>?
     suspend fun logout()
     suspend fun signUp(email: String, password: String)
 }
@@ -26,10 +26,10 @@ internal class UserRepositoryImpl(
         return userAuth.me
     }
 
-    override suspend fun login(email: String, password: String) {
-        withContext(dispatcher) {
+    override suspend fun login(email: String, password: String): Flow<Unit>? {
+        return withContext(dispatcher) {
             if (me() != null) {
-                return@withContext
+                return@withContext null
             }
             userAuth.login(email, password)
         }

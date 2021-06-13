@@ -14,7 +14,7 @@ internal interface FirebaseAuthConfig {
     val me: FirebaseUser?
     val loggedIn: Flow<Boolean>
 
-    suspend fun login(email: String, password: String)
+    suspend fun login(email: String, password: String): Flow<Unit>
     suspend fun logout()
     suspend fun createUser(email: String, password: String)
 }
@@ -41,16 +41,16 @@ internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
         }
     }
 
-    override suspend fun login(email: String, password: String) {
-        return suspendCoroutine { continuation ->
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnSuccessListener {
-                    continuation.resume(Unit)
-                }
-                .addOnFailureListener {
-                    continuation.resumeWithException(it)
-                }
-        }
+    @ExperimentalCoroutinesApi
+    override suspend fun login(email: String, password: String) = callbackFlow<Unit> {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnSuccessListener {
+                offer(Unit)
+            }
+            .addOnFailureListener {
+                close(it)
+            }
+        awaitClose { }
     }
 
     override suspend fun logout() {

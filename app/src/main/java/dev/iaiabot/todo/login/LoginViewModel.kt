@@ -8,6 +8,7 @@ import dev.iaiabot.usecase.user.LoginUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 
 sealed class Action {
@@ -39,10 +40,7 @@ internal class LoginViewModelImpl(
         .mapLatest { loggedIn ->
             if (loggedIn) {
                 routerAction.postValue(Action.GoToTasks)
-            } else {
-                nowLogin.postValue(false)
             }
-            loggedIn
         }
         .shareIn(viewModelScope, replay = 1, started = SharingStarted.Eagerly)
 
@@ -54,9 +52,13 @@ internal class LoginViewModelImpl(
         nowLogin.value = true
         viewModelScope.launch {
             try {
-                loginUseCase(email.value, password.value)
+                val flow = loginUseCase(email.value, password.value)
+                    ?: throw Exception("fill email and password")
+                flow.single()
             } catch (e: Exception) {
                 showToast(e.message)
+            } finally {
+                nowLogin.postValue(false)
             }
         }
     }

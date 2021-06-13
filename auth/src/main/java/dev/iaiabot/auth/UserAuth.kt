@@ -8,7 +8,7 @@ interface UserAuth {
     val me: User?
     val alreadyLoggedIn: Flow<Boolean>
 
-    suspend fun login(email: String, password: String)
+    suspend fun login(email: String, password: String): Flow<Unit>
     suspend fun logout()
     suspend fun signUp(email: String, password: String)
 }
@@ -24,8 +24,8 @@ internal class UserAuthImpl(
 
     override val alreadyLoggedIn: Flow<Boolean> = firebaseAuthConfig.loggedIn
 
-    override suspend fun login(email: String, password: String) {
-        firebaseAuthConfig.login(email, password)
+    override suspend fun login(email: String, password: String): Flow<Unit> {
+        return firebaseAuthConfig.login(email, password)
     }
 
     override suspend fun logout() {
