@@ -2,6 +2,7 @@ package dev.iaiabot.auth
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -37,13 +38,18 @@ internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
         auth.signOut()
     }
 
+    @ExperimentalCoroutinesApi
     override suspend fun createUser(email: String, password: String) {
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                sendMail(it.user)
-            }
-            .addOnFailureListener {
-            }
+        return suspendCoroutine { continuation ->
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener {
+                    sendMail(it.user)
+                    continuation.resume(Unit)
+                }
+                .addOnFailureListener {
+                    continuation.resumeWithException(it)
+                }
+        }
     }
 
     private fun sendMail(user: FirebaseUser?) {
