@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    >
 
     <data>
 
@@ -18,29 +17,13 @@
             type="android.widget.CompoundButton.OnCheckedChangeListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:checkable="true"
+        android:clickable="true"
+        android:focusable="true"
+        >
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/mcb_complete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="@{completed}"
-            android:onCheckedChanged="@{onCheckedChanged}"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/mtv_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@{title}"
-            app:layout_constraintBottom_toBottomOf="@id/mcb_complete"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/mcb_complete"
-            app:layout_constraintTop_toTopOf="@id/mcb_complete"
-            tools:text="tasktasktasktasktasktasktasktasktasktasktasktask" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

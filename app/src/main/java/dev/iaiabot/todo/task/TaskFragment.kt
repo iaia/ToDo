@@ -12,7 +12,6 @@ class TaskFragment : Fragment() {
 
     private lateinit var binding: FragmentTaskBinding
     private val viewModel: TaskViewModel by inject()
-    private lateinit var taskController: TaskController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,10 +31,7 @@ class TaskFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        taskController = TaskController()
-        binding.ervIncompleteTasks.setController(taskController)
         viewModel.allTask.observe(viewLifecycleOwner) {
-            taskController.setData(it)
         }
     }
 }
