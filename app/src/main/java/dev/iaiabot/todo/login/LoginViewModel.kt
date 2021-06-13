@@ -53,7 +53,6 @@ internal class LoginViewModelImpl(
         viewModelScope.launch {
             try {
                 val flow = loginUseCase(email.value, password.value)
-                    ?: throw Exception("fill email and password")
                 flow.single()
             } catch (e: Exception) {
                 showToast(e.message)
