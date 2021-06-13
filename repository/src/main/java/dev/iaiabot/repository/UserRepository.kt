@@ -9,6 +9,7 @@ interface UserRepository {
     fun me(): User?
     suspend fun login(email: String, password: String)
     suspend fun logout()
+    suspend fun signUp(email: String, password: String)
 }
 
 internal class UserRepositoryImpl(
@@ -32,5 +33,9 @@ internal class UserRepositoryImpl(
         withContext(dispatcher) {
             userAuth.logout()
         }
+    }
+
+    override suspend fun signUp(email: String, password: String) {
+        userAuth.signUp(email, password)
     }
 }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".signup.SignUpFragment"
     >
@@ -12,9 +13,15 @@
             type="dev.iaiabot.todo.signup.SignUpViewModel" />
     </data>
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </FrameLayout>
+        <include
+            layout="@layout/merge_email_and_password"
+            app:email="@={viewModel.email}"
+            app:password="@={viewModel.password}"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

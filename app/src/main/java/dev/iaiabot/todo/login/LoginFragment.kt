@@ -34,6 +34,10 @@ class LoginFragment : Fragment() {
         viewModel.routerAction.observe(viewLifecycleOwner) {
             when (it) {
                 Action.GoToTasks -> findNavController().navigate(R.id.action_login_to_task, null)
+                Action.GoToSignUp -> findNavController().navigate(
+                    R.id.action_login_to_sign_up,
+                    null
+                )
             }
         }
 

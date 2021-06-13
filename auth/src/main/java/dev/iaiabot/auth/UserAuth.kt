@@ -8,6 +8,7 @@ interface UserAuth {
 
     suspend fun login(email: String, password: String)
     suspend fun logout()
+    suspend fun signUp(email: String, password: String)
 }
 
 internal class UserAuthImpl(
@@ -25,5 +26,10 @@ internal class UserAuthImpl(
 
     override suspend fun logout() {
         return firebaseAuthConfig.logout()
+    }
+
+    override suspend fun signUp(email: String, password: String) {
+        firebaseAuthConfig.createUser(email, password)
+        // sendMail??
     }
 }

@@ -11,6 +11,7 @@ internal interface FirebaseAuthConfig {
 
     suspend fun login(email: String, password: String)
     suspend fun logout()
+    suspend fun createUser(email: String, password: String)
 }
 
 internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
@@ -34,5 +35,9 @@ internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
 
     override suspend fun logout() {
         auth.signOut()
+    }
+
+    override suspend fun createUser(email: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
     }
 }

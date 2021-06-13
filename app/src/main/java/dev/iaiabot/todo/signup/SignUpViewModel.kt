@@ -3,6 +3,7 @@ package dev.iaiabot.todo.signup
 import androidx.lifecycle.*
 import dev.iaiabot.todo.HasToastAction
 import dev.iaiabot.todo.HasToastActionImpl
+import dev.iaiabot.usecase.user.SignUpUseCase
 import kotlinx.coroutines.launch
 
 sealed class Action {
@@ -17,6 +18,7 @@ abstract class SignUpViewModel : ViewModel(), LifecycleObserver, HasToastAction 
 }
 
 internal class SignUpViewModelImpl(
+    private val signUpUseCase: SignUpUseCase,
 ) : SignUpViewModel(), HasToastAction by HasToastActionImpl() {
     // TODO: LiveEvent使う
     override val routerAction = MutableLiveData<Action>()
@@ -27,8 +29,9 @@ internal class SignUpViewModelImpl(
     override fun onResume() {
     }
 
-    private fun checkAlreadyLoggedIn() {
+    fun onClickSignUp() {
         viewModelScope.launch {
+            signUpUseCase(email.value, password.value)
         }
     }
 }
