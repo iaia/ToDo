@@ -1,21 +1,16 @@
 package dev.iaiabot.todo
 
-import android.content.Context
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.navigation.findNavController
 import dev.iaiabot.todo.databinding.ActivityMainBinding
 import org.koin.android.ext.android.inject
-
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by inject()
-    private var logoutMenu: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,31 +29,22 @@ class MainActivity : AppCompatActivity() {
                 else -> false
             }
         }
-
-        supportFragmentManager.registerFragmentLifecycleCallbacks(object :
-            FragmentManager.FragmentLifecycleCallbacks() {
-            override fun onFragmentAttached(fm: FragmentManager, f: Fragment, context: Context) {
-                super.onFragmentAttached(fm, f, context)
-                viewModel.onResume()
-            }
-        }, true)
-
-        viewModel.routerAction.observe(this) {
-            when (it) {
-                Action.Finish -> finish()
-            }
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.top_app_bar, menu)
-        logoutMenu = menu?.findItem(R.id.menu_item_logout)
+        val logoutMenu = menu?.findItem(R.id.menu_item_logout)
         logoutMenu?.isVisible = false
         viewModel.loggedIn.observe(this) {
             logoutMenu?.isVisible = it
-            // ログアウトしているようならすべてのfragmentを強制的に終了させていいかも
-            // でログイン画面を出す
+            signOuted()
         }
         return super.onCreateOptionsMenu(menu)
+    }
+
+    private fun signOuted() {
+        findNavController(binding.fcvContainer.id).run {
+            navigate(R.id.action_sign_out)
+        }
     }
 }

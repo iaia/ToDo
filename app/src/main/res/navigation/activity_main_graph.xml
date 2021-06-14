@@ -4,6 +4,14 @@
     android:id="@+id/activity_main_graph"
     app:startDestination="@id/login">
 
+    <action
+        android:id="@+id/action_sign_out"
+        app:destination="@id/login"
+        app:launchSingleTop="true"
+        app:popUpTo="@id/activity_main_graph"
+        app:popUpToInclusive="true"
+        />
+
     <fragment
         android:id="@+id/login"
         android:name="dev.iaiabot.todo.login.LoginFragment"
