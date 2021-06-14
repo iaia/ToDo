@@ -18,10 +18,15 @@
         android:label="Login">
         <action
             android:id="@+id/action_login_to_task"
-            app:destination="@id/task" />
+            app:destination="@id/task"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true"
+            />
         <action
             android:id="@+id/action_login_to_sign_up"
-            app:destination="@id/sign_up" />
+            app:destination="@id/sign_up"
+            app:popUpTo="@id/login"
+            />
     </fragment>
 
     <fragment
@@ -30,7 +35,10 @@
         android:label="SignUp">
         <action
             android:id="@+id/action_sign_up_to_task"
-            app:destination="@id/task" />
+            app:destination="@id/task"
+            app:popUpTo="@id/login"
+            app:popUpToInclusive="true"
+            />
     </fragment>
 
     <fragment
