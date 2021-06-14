@@ -30,9 +30,9 @@ internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
     override val loggedIn: Flow<Boolean> = callbackFlow<Boolean> {
         val listener = FirebaseAuth.AuthStateListener {
             if (it.currentUser != null) {
-                offer(true)
+                trySend(true)
             } else {
-                offer(false)
+                trySend(false)
             }
         }
         auth.addAuthStateListener(listener)
@@ -45,7 +45,7 @@ internal class FirebaseAuthConfigImpl : FirebaseAuthConfig {
     override suspend fun login(email: String, password: String) = callbackFlow<Unit> {
         auth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                offer(Unit)
+                trySend(Unit)
             }
             .addOnFailureListener {
                 close(it)
