@@ -2,16 +2,17 @@ package dev.iaiabot.usecase.task
 
 import dev.iaiabot.entity.Task
 import dev.iaiabot.repository.TaskRepository
+import kotlinx.coroutines.flow.Flow
 
 interface GetAllTaskUseCase {
-    suspend operator fun invoke(): List<Task>
+    operator fun invoke(): Flow<List<Task>>
 }
 
 internal class GetAllTaskUseCaseImpl(
     private val taskRepository: TaskRepository,
 ) : GetAllTaskUseCase {
-    override suspend fun invoke(): List<Task> {
-        return taskRepository.allIncompleteTask() + taskRepository.allCompletedTask()
+    override fun invoke(): Flow<List<Task>> {
+        return taskRepository.allTask()
     }
 }
 

@@ -3,12 +3,14 @@ package dev.iaiabot.repository
 import dev.iaiabot.database.TaskDataSource
 import dev.iaiabot.entity.Task
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
 interface TaskRepository {
     suspend fun add(task: Task)
     suspend fun update(task: Task, newTaskTitle: String)
     fun saveCompletedState(taskId: String, newCompletedState: Boolean)
+    fun allTask(): Flow<List<Task>>
     suspend fun allIncompleteTask(): List<Task>
     suspend fun allCompletedTask(): List<Task>
 }
@@ -39,6 +41,12 @@ internal class TaskRepositoryImpl(
         userId?.let { userId ->
             taskDataSource.saveCompletedState(userId, taskId, newCompletedState)
         }
+    }
+
+    override fun allTask(): Flow<List<Task>> {
+        userId?.let { userId ->
+            return taskDataSource.getAllTask(userId)
+        } ?: throw Exception("TODO: user id 無いときのexception")
     }
 
     override suspend fun allIncompleteTask(): List<Task> {

@@ -38,8 +38,7 @@ dependencies {
     implementation(project(":entity"))
 
     implementation Deps.Kotlin.stdLib
-    implementation Deps.AndroidX.coreKtx
-    implementation Deps.AndroidX.appCompat
+    implementation Deps.Kotlin.coroutine
 
     // di
     implementation Deps.Koin.base
