@@ -66,6 +66,7 @@ dependencies {
     implementation Deps.AndroidX.Compose.material
     implementation Deps.AndroidX.Compose.materialIcon
     implementation Deps.AndroidX.Compose.materialIconExtend
+    implementation Deps.AndroidX.Compose.rxJava
     implementation Deps.AndroidX.Compose.livedata
     implementation Deps.Epoxy.epoxy
     implementation Deps.Epoxy.epoxyDataBinding

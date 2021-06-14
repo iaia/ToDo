@@ -27,8 +27,9 @@ object Deps {
             val tooling = "androidx.compose.ui:ui-tooling:${version}"
             val foundation = "androidx.compose.foundation:foundation:${version}"
             val material = "androidx.compose.material:material:${version}"
-            val materialIcon = "androidx.compose.material:material-icons-core:1.0.0-alpha10"
+            val materialIcon = "androidx.compose.material:material-icons-core:${version}"
             val materialIconExtend = "androidx.compose.material:material-icons-extended:${version}"
+            val rxJava = "androidx.compose.runtime:runtime-rxjava2:${version}"
             val livedata = "androidx.compose.runtime:runtime-livedata:${version}"
         }
 

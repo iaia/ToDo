@@ -19,6 +19,7 @@ abstract class TaskViewModel : ViewModel(), LifecycleObserver {
     abstract fun addTask()
     abstract fun onClickAddTask()
     abstract fun toggleComplete(task: Task)
+    abstract fun onChangeTask(id: String, taskTitle: String)
 }
 
 internal class TaskViewModelImpl(
@@ -62,6 +63,10 @@ internal class TaskViewModelImpl(
                 refreshAllTask()
             }
         }
+    }
+
+    override fun onChangeTask(id: String, taskTitle: String) {
+        // todo
     }
 
     private fun refreshAllTask() {
