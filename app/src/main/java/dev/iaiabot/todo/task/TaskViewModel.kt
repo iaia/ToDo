@@ -4,6 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import dev.iaiabot.entity.Task
 import dev.iaiabot.usecase.task.AddTaskUseCase
+import dev.iaiabot.usecase.task.ChangeTaskUseCase
 import dev.iaiabot.usecase.task.GetAllTaskUseCase
 import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import kotlinx.coroutines.Job
@@ -19,13 +20,14 @@ abstract class TaskViewModel : ViewModel(), LifecycleObserver {
     abstract fun addTask()
     abstract fun onClickAddTask()
     abstract fun toggleComplete(task: Task)
-    abstract fun onChangeTask(id: String, taskTitle: String)
+    abstract fun onChangeTask(task: Task, taskTitle: String)
 }
 
 internal class TaskViewModelImpl(
     private val addTaskUseCase: AddTaskUseCase,
     private val getAllTaskUseCase: GetAllTaskUseCase,
     private val toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase,
+    private val changeTaskUseCase: ChangeTaskUseCase,
 ) : TaskViewModel() {
 
     override val ableAddTask = MutableLiveData<Boolean>(false)
@@ -65,8 +67,10 @@ internal class TaskViewModelImpl(
         }
     }
 
-    override fun onChangeTask(id: String, taskTitle: String) {
-        // todo
+    override fun onChangeTask(task: Task, newTaskTitle: String) {
+        viewModelScope.launch {
+            changeTaskUseCase(task, newTaskTitle)
+        }
     }
 
     private fun refreshAllTask() {

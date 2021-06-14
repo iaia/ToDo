@@ -18,5 +18,6 @@ object Module {
         factory<AddTaskUseCase> { AddTaskUseCaseImpl(get()) }
         factory<ToggleCompleteTaskUseCase> { ToggleCompleteTaskUseCaseImpl(get()) }
         factory<GetAllTaskUseCase> { GetAllTaskUseCaseImpl(get()) }
+        factory<ChangeTaskUseCase> { ChangeTaskUseCaseImpl(get()) }
     }
 }

@@ -7,6 +7,7 @@ import kotlinx.coroutines.withContext
 
 interface TaskRepository {
     suspend fun add(task: Task)
+    suspend fun update(task: Task, newTaskTitle: String)
     fun saveCompletedState(taskId: String, newCompletedState: Boolean)
     suspend fun allIncompleteTask(): List<Task>
     suspend fun allCompletedTask(): List<Task>
@@ -25,6 +26,12 @@ internal class TaskRepositoryImpl(
             userId?.let { userId ->
                 taskDao.add(userId, task)
             }
+        }
+    }
+
+    override suspend fun update(task: Task, newTaskTitle: String) {
+        userId?.let { userId ->
+            taskDao.update(userId, task, newTaskTitle)
         }
     }
 

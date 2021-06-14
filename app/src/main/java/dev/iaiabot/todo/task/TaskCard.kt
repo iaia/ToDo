@@ -34,12 +34,12 @@ fun TaskCard(
                         viewModel.toggleComplete(task)
                     },
             ) {
-                val title = remember { mutableStateOf("") }
+                val title = remember { mutableStateOf(task.title) }
                 TextField(
                     value = title.value,
                     onValueChange = {
                         title.value = it
-                        viewModel.onChangeTask(task.id, it)
+                        viewModel.onChangeTask(task, it)
                     },
                 )
             }
