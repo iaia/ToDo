@@ -54,6 +54,7 @@ dependencies {
     implementation Deps.AndroidX.coreKtx
     implementation Deps.AndroidX.appCompat
     implementation Deps.AndroidX.liveDataLifecycleKtx
+    implementation Deps.AndroidX.liveEvent
 
     // ui
     implementation Deps.MaterialDesign.material

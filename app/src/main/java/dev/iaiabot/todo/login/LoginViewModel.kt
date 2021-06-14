@@ -1,6 +1,7 @@
 package dev.iaiabot.todo.login
 
 import androidx.lifecycle.*
+import com.hadilq.liveevent.LiveEvent
 import dev.iaiabot.todo.HasToastAction
 import dev.iaiabot.todo.HasToastActionImpl
 import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
@@ -31,8 +32,7 @@ internal class LoginViewModelImpl(
     private val loginUseCase: LoginUseCase,
     private val checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
 ) : LoginViewModel(), HasToastAction by HasToastActionImpl() {
-    // TODO: LiveEvent使う
-    override val routerAction = MutableLiveData<Action>()
+    override val routerAction = LiveEvent<Action>()
     override val email = MutableLiveData("")
     override val password = MutableLiveData("")
     override val nowLogin = MutableLiveData<Boolean>(false)
