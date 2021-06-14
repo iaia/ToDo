@@ -1,7 +1,7 @@
 package dev.iaiabot.repository
 
 import com.google.common.truth.Truth.assertThat
-import dev.iaiabot.database.TaskDao
+import dev.iaiabot.database.TaskDataSource
 import dev.iaiabot.entity.Task
 import io.mockk.coEvery
 import io.mockk.every
@@ -15,7 +15,7 @@ import org.spekframework.spek2.style.specification.describe
 
 internal object TaskRepositoryImplTest : Spek({
     lateinit var repository: TaskRepository
-    lateinit var dao: TaskDao
+    lateinit var dataSource: TaskDataSource
     lateinit var userRepository: UserRepository
     val dispatcher: CoroutineDispatcher = TestCoroutineDispatcher()
 
@@ -23,11 +23,11 @@ internal object TaskRepositoryImplTest : Spek({
         val task = mockk<Task>()
 
         beforeEachTest {
-            dao = mockk() {
+            dataSource = mockk() {
                 every { add(any(), any()) } returns Unit
             }
             userRepository = mockk()
-            repository = TaskRepositoryImpl(dao, userRepository, dispatcher)
+            repository = TaskRepositoryImpl(dataSource, userRepository, dispatcher)
         }
 
         context("未ログイン") {
@@ -38,7 +38,7 @@ internal object TaskRepositoryImplTest : Spek({
             it("追加していない") {
                 repository.add(task)
 
-                verify(exactly = 0) { dao.add(any(), any()) }
+                verify(exactly = 0) { dataSource.add(any(), any()) }
             }
         }
 
@@ -50,7 +50,7 @@ internal object TaskRepositoryImplTest : Spek({
             it("追加している") {
                 repository.add(task)
 
-                verify() { dao.add(any(), any()) }
+                verify() { dataSource.add(any(), any()) }
             }
         }
     }
@@ -59,11 +59,11 @@ internal object TaskRepositoryImplTest : Spek({
         val taskId = "task_id"
 
         beforeEachTest {
-            dao = mockk() {
+            dataSource = mockk() {
                 every { saveCompletedState(any(), any(), any()) } returns Unit
             }
             userRepository = mockk()
-            repository = TaskRepositoryImpl(dao, userRepository, dispatcher)
+            repository = TaskRepositoryImpl(dataSource, userRepository, dispatcher)
         }
 
         context("未ログイン") {
@@ -74,7 +74,7 @@ internal object TaskRepositoryImplTest : Spek({
             it("完了ステータスを更新していない") {
                 repository.saveCompletedState(taskId, true)
 
-                verify(exactly = 0) { dao.add(any(), any()) }
+                verify(exactly = 0) { dataSource.add(any(), any()) }
             }
         }
 
@@ -86,7 +86,7 @@ internal object TaskRepositoryImplTest : Spek({
             it("完了ステータスを更新している") {
                 repository.saveCompletedState(taskId, true)
 
-                verify() { dao.saveCompletedState(any(), any(), true) }
+                verify() { dataSource.saveCompletedState(any(), any(), true) }
             }
         }
     }
@@ -95,9 +95,9 @@ internal object TaskRepositoryImplTest : Spek({
         val taskId = "task_id"
 
         beforeEachTest {
-            dao = mockk()
+            dataSource = mockk()
             userRepository = mockk()
-            repository = TaskRepositoryImpl(dao, userRepository, dispatcher)
+            repository = TaskRepositoryImpl(dataSource, userRepository, dispatcher)
         }
 
         context("未ログイン") {
@@ -121,7 +121,7 @@ internal object TaskRepositoryImplTest : Spek({
 
             context("1件登録済み") {
                 beforeEachTest {
-                    coEvery { dao.allIncompleteTask(any()) } returns listOf(mockk())
+                    coEvery { dataSource.allIncompleteTask(any()) } returns listOf(mockk())
                 }
 
                 it("1件返る") {
@@ -139,9 +139,9 @@ internal object TaskRepositoryImplTest : Spek({
         val taskId = "task_id"
 
         beforeEachTest {
-            dao = mockk()
+            dataSource = mockk()
             userRepository = mockk()
-            repository = TaskRepositoryImpl(dao, userRepository, dispatcher)
+            repository = TaskRepositoryImpl(dataSource, userRepository, dispatcher)
         }
 
         context("未ログイン") {
@@ -165,7 +165,7 @@ internal object TaskRepositoryImplTest : Spek({
 
             context("1件登録済み") {
                 beforeEachTest {
-                    coEvery { dao.allCompletedTask(any()) } returns listOf(mockk())
+                    coEvery { dataSource.allCompletedTask(any()) } returns listOf(mockk())
                 }
 
                 it("1件返る") {

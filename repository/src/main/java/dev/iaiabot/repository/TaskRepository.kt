@@ -1,6 +1,6 @@
 package dev.iaiabot.repository
 
-import dev.iaiabot.database.TaskDao
+import dev.iaiabot.database.TaskDataSource
 import dev.iaiabot.entity.Task
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.withContext
@@ -14,7 +14,7 @@ interface TaskRepository {
 }
 
 internal class TaskRepositoryImpl(
-    private val taskDao: TaskDao,
+    private val taskDataSource: TaskDataSource,
     private val userRepository: UserRepository,
     private val dispatcher: CoroutineDispatcher,
 ) : TaskRepository {
@@ -24,27 +24,27 @@ internal class TaskRepositoryImpl(
     override suspend fun add(task: Task) {
         withContext(dispatcher) {
             userId?.let { userId ->
-                taskDao.add(userId, task)
+                taskDataSource.add(userId, task)
             }
         }
     }
 
     override suspend fun update(task: Task, newTaskTitle: String) {
         userId?.let { userId ->
-            taskDao.update(userId, task, newTaskTitle)
+            taskDataSource.update(userId, task, newTaskTitle)
         }
     }
 
     override fun saveCompletedState(taskId: String, newCompletedState: Boolean) {
         userId?.let { userId ->
-            taskDao.saveCompletedState(userId, taskId, newCompletedState)
+            taskDataSource.saveCompletedState(userId, taskId, newCompletedState)
         }
     }
 
     override suspend fun allIncompleteTask(): List<Task> {
         return withContext(dispatcher) {
             userId?.let { userId ->
-                taskDao.allIncompleteTask(userId)
+                taskDataSource.allIncompleteTask(userId)
             } ?: emptyList()
         }
     }
@@ -52,7 +52,7 @@ internal class TaskRepositoryImpl(
     override suspend fun allCompletedTask(): List<Task> {
         return withContext(dispatcher) {
             userId?.let { userId ->
-                taskDao.allCompletedTask(userId)
+                taskDataSource.allCompletedTask(userId)
             } ?: emptyList()
         }
     }

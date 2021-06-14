@@ -6,7 +6,7 @@ import dev.iaiabot.entity.Task
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-interface TaskDao {
+interface TaskDataSource {
     fun add(userId: String, task: Task)
     suspend fun update(userId: String, task: Task, newTaskTitle: String)
     fun saveCompletedState(userId: String, taskId: String, completedState: Boolean)
@@ -14,9 +14,9 @@ interface TaskDao {
     suspend fun allCompletedTask(userId: String): List<Task>
 }
 
-internal class TaskDaoImpl(
+internal class TaskDataSourceImpl(
     private val dbConfig: DatabaseConfig
-) : TaskDao {
+) : TaskDataSource {
     // users/{user_id}/tasks/{task_id}
 
     private val db = dbConfig.db

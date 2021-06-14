@@ -1,14 +1,14 @@
 package dev.iaiabot.database.di
 
 import dev.iaiabot.database.DatabaseConfig
-import dev.iaiabot.database.TaskDao
-import dev.iaiabot.database.TaskDaoImpl
+import dev.iaiabot.database.TaskDataSource
+import dev.iaiabot.database.TaskDataSourceImpl
 import org.koin.dsl.module
 
 object Module {
     val databaseModule = module {
         single { DatabaseConfig() }
 
-        single<TaskDao> { TaskDaoImpl(get()) }
+        single<TaskDataSource> { TaskDataSourceImpl(get()) }
     }
 }
