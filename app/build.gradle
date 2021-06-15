@@ -72,6 +72,7 @@ dependencies {
     implementation Deps.Epoxy.epoxy
     implementation Deps.Epoxy.epoxyDataBinding
     kapt Deps.Epoxy.epoxyProcessor
+    implementation Deps.flexbox
 
     // di
     implementation Deps.Koin.base

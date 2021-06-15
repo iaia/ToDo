@@ -78,4 +78,6 @@ object Deps {
             "org.spekframework.spek2:spek-runner-junit5:$spek_version" // testRuntimeOnly
         val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version" // testRuntimeOnly
     }
+
+    val flexbox = "com.google.android.flexbox:flexbox:3.0.0"
 }
