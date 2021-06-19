@@ -14,11 +14,16 @@ class TaskController(
             listItemTask {
                 id(task.id)
                 task(task)
+                editMode(false)
                 onBind { model, view, position ->
                     val binding = view.dataBinding as ListItemTaskBinding
                     binding.taskCard.isChecked = task.completed
                     binding.taskCard.setOnClickListener {
+                        binding.editMode = !(binding.editMode ?: false)
+                    }
+                    binding.taskCard.setOnLongClickListener {
                         viewModel.toggleComplete(task)
+                        true
                     }
                 }
             }
