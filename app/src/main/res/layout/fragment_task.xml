@@ -16,14 +16,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.compose.ui.platform.ComposeView
-            android:id="@+id/compose_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <com.airbnb.epoxy.EpoxyRecyclerView
+            android:id="@+id/flex_cards"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:paddingBottom="56dp"
+            app:flexDirection="column"
+            app:flexWrap="wrap"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/list_item_task"
             />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton

@@ -1,29 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     >
 
     <data>
 
-        <variable
-            name="title"
-            type="String" />
+        <import type="android.view.View" />
 
         <variable
-            name="completed"
+            name="task"
+            type="dev.iaiabot.entity.Task" />
+
+        <variable
+            name="editMode"
             type="Boolean" />
-
-        <variable
-            name="onCheckedChanged"
-            type="android.widget.CompoundButton.OnCheckedChangeListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
+        android:id="@+id/task_card"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:checkable="true"
         android:clickable="true"
         android:focusable="true"
+        android:layout_margin="8dp"
+        android:state_checked="true"
         >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lines="1"
+                android:text="@{task.title}"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:visibility="@{editMode ? View.GONE : View.VISIBLE}"
+                tools:text="TODOTODOTODOTODO"
+                tools:visibility="gone"
+                />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{task.title}"
+                android:textAppearance="?attr/textAppearanceHeadline6"
+                android:lines="1"
+                android:visibility="@{editMode ? View.VISIBLE : View.GONE}"
+                tools:visibility="visible"
+                tools:text="TODOTODOTODOTODO"
+                />
+        </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
