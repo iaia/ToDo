@@ -11,6 +11,7 @@ class TaskController(
 
     override fun buildModels(data: List<Task>) {
         data.forEach { task ->
+            var checked = task.completed
             listItemTask {
                 id(task.id)
                 task(task)
@@ -23,6 +24,8 @@ class TaskController(
                     }
                     binding.taskCard.setOnLongClickListener {
                         viewModel.toggleComplete(task)
+                        checked = !checked
+                        binding.taskCard.isChecked = checked
                         true
                     }
                 }
