@@ -8,6 +8,7 @@ import kotlinx.coroutines.withContext
 
 interface TaskRepository {
     suspend fun add(task: Task)
+    suspend fun delete(task: Task)
     suspend fun update(task: Task, newTaskTitle: String)
     fun saveCompletedState(taskId: String, newCompletedState: Boolean)
     fun allTask(): Flow<List<Task>>
@@ -27,6 +28,14 @@ internal class TaskRepositoryImpl(
         withContext(dispatcher) {
             userId?.let { userId ->
                 taskDataSource.add(userId, task)
+            }
+        }
+    }
+
+    override suspend fun delete(task: Task) {
+        withContext(dispatcher) {
+            userId?.let { userId ->
+                taskDataSource.delete(userId, task)
             }
         }
     }

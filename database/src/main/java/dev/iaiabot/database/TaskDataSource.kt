@@ -11,6 +11,7 @@ import kotlin.coroutines.suspendCoroutine
 
 interface TaskDataSource {
     fun add(userId: String, task: Task)
+    fun delete(userId: String, task: Task)
     suspend fun update(userId: String, task: Task, newTaskTitle: String)
     fun saveCompletedState(userId: String, taskId: String, completedState: Boolean)
     fun getAllTask(userId: String): Flow<List<Task>>
@@ -29,6 +30,10 @@ internal class TaskDataSourceImpl(
 
     override fun add(userId: String, task: Task) {
         collection(userId).add(TaskModel(title = task.title))
+    }
+
+    override fun delete(userId: String, task: Task) {
+        collection(userId).document(task.id).delete()
     }
 
     override suspend fun update(userId: String, task: Task, newTaskTitle: String) {
