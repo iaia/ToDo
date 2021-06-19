@@ -8,8 +8,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="task"
-            type="dev.iaiabot.entity.Task" />
+            name="title"
+            type="String" />
 
         <variable
             name="editMode"
@@ -38,7 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:text="@{task.title}"
+                android:text="@{title}"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:visibility="@{editMode ? View.GONE : View.VISIBLE}"
                 tools:text="TODOTODOTODOTODO"
@@ -48,7 +48,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{task.title}"
+                android:text="@={title}"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:lines="1"
                 android:visibility="@{editMode ? View.VISIBLE : View.GONE}"
