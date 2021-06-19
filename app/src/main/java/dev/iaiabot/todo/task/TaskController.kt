@@ -10,7 +10,7 @@ class TaskController(
 ) : TypedEpoxyController<List<Task>>() {
 
     override fun buildModels(data: List<Task>) {
-        data.forEach { task ->
+        data.sortedByDescending { it.order }.forEach { task ->
             var checked = task.completed
             listItemTask {
                 id(task.id)
