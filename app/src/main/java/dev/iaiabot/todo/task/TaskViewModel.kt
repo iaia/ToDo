@@ -3,7 +3,10 @@ package dev.iaiabot.todo.task
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.*
 import dev.iaiabot.entity.Task
-import dev.iaiabot.usecase.task.*
+import dev.iaiabot.usecase.task.AddTaskUseCase
+import dev.iaiabot.usecase.task.ChangeTaskUseCase
+import dev.iaiabot.usecase.task.GetAllTaskUseCase
+import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import kotlinx.coroutines.launch
 
 abstract class TaskViewModel : ViewModel(), LifecycleObserver {
@@ -12,14 +15,12 @@ abstract class TaskViewModel : ViewModel(), LifecycleObserver {
     @VisibleForTesting
     abstract fun init()
     abstract fun onClickAddTask()
-    abstract fun deleteTask(task: Task)
     abstract fun toggleComplete(task: Task)
     abstract fun onChangeTask(task: Task, newTaskTitle: String)
 }
 
 internal class TaskViewModelImpl(
     private val addTaskUseCase: AddTaskUseCase,
-    private val deleteTaskUseCase: DeleteTaskUseCase,
     private val getAllTaskUseCase: GetAllTaskUseCase,
     private val toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase,
     private val changeTaskUseCase: ChangeTaskUseCase,
@@ -34,12 +35,6 @@ internal class TaskViewModelImpl(
     override fun onClickAddTask() {
         viewModelScope.launch {
             addTaskUseCase()
-        }
-    }
-
-    override fun deleteTask(task: Task) {
-        viewModelScope.launch {
-            deleteTaskUseCase(task)
         }
     }
 
