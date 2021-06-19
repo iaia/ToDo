@@ -12,6 +12,7 @@ class TaskFragment : Fragment() {
 
     private lateinit var binding: FragmentTaskBinding
     private val viewModel: TaskViewModel by inject()
+    private lateinit var controller: TaskController
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,11 +31,11 @@ class TaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
+        controller = TaskController()
+        binding.flexCards.setController(controller)
 
-        viewModel.allTask.observe(viewLifecycleOwner) {
-            binding.composeView.setContent {
-                TaskCard(viewModel, it)
-            }
+        viewModel.allTask.observe(viewLifecycleOwner) { tasks ->
+            controller.setData(tasks)
         }
     }
 }
