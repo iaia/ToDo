@@ -36,6 +36,7 @@ class TaskFragment : Fragment() {
 
         viewModel.allTask.observe(viewLifecycleOwner) { tasks ->
             controller.setData(tasks)
+            binding.flexCards.scrollToPosition(0)
         }
     }
 }
