@@ -31,7 +31,7 @@ class TaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
-        controller = TaskController()
+        controller = TaskController(viewModel)
         binding.flexCards.setController(controller)
 
         viewModel.allTask.observe(viewLifecycleOwner) { tasks ->
