@@ -67,8 +67,9 @@ object Deps {
 
     object Test {
         val junit4 = "junit:junit:4.13.2"
-        private val mockk_version = "1.9.3" // spekで実行出来ないので 1.9.3 に固定
+        private val mockk_version = "1.11.0"
         val mockk = "io.mockk:mockk:$mockk_version"
+        val mockkAgent = "io.mockk:mockk-agent-jvm:$mockk_version"
         val truth = "com.google.truth:truth:1.1"
     }
 
@@ -78,6 +79,7 @@ object Deps {
         val spekRunner =
             "org.spekframework.spek2:spek-runner-junit5:$spek_version" // testRuntimeOnly
         val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version" // testRuntimeOnly
+
     }
 
     val flexbox = "com.google.android.flexbox:flexbox:3.0.0"

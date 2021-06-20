@@ -47,6 +47,7 @@ dependencies {
     implementation Deps.Koin.ext
 
     testImplementation Deps.Test.mockk
+    testImplementation Deps.Test.mockkAgent
     testImplementation Deps.Test.truth
     testImplementation Deps.Spek.spek
     testImplementation Deps.Spek.spekRunner

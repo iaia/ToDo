@@ -8,8 +8,11 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.runBlockingTest
+import org.junit.Assert.assertThrows
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
@@ -36,7 +39,9 @@ internal object TaskRepositoryImplTest : Spek({
             }
 
             it("追加していない") {
-                repository.add(task)
+                runBlockingTest {
+                    repository.add(task)
+                }
 
                 verify(exactly = 0) { dataSource.add(any(), any()) }
             }
@@ -48,7 +53,9 @@ internal object TaskRepositoryImplTest : Spek({
             }
 
             it("追加している") {
-                repository.add(task)
+                runBlockingTest {
+                    repository.add(task)
+                }
 
                 verify() { dataSource.add(any(), any()) }
             }
@@ -91,7 +98,7 @@ internal object TaskRepositoryImplTest : Spek({
         }
     }
 
-    describe("#allIncompleteTask") {
+    describe("#getTasks") {
         val taskId = "task_id"
 
         beforeEachTest {
@@ -105,58 +112,14 @@ internal object TaskRepositoryImplTest : Spek({
                 every { userRepository.me()?.id } returns null
             }
 
-            it("空が返る") {
+            it("例外が返る") {
                 runBlockingTest(dispatcher) {
-                    val result = repository.allIncompleteTask()
-
-                    assertThat(result.size).isEqualTo(0)
-                }
-            }
-        }
-
-        context("ログイン済み") {
-            beforeEachTest {
-                every { userRepository.me()?.id } returns "user_id"
-            }
-
-            context("1件登録済み") {
-                beforeEachTest {
-                    coEvery { dataSource.allIncompleteTask(any()) } returns listOf(mockk())
-                }
-
-                it("1件返る") {
-                    runBlockingTest(dispatcher) {
-                        val result = repository.allIncompleteTask()
-
-                        assertThat(result.size).isEqualTo(1)
+                    assertThrows(Exception::class.java) {
+                        repository.getTasks(true)
                     }
                 }
             }
         }
-    }
-
-    describe("#allCompletedTask") {
-        val taskId = "task_id"
-
-        beforeEachTest {
-            dataSource = mockk()
-            userRepository = mockk()
-            repository = TaskRepositoryImpl(dataSource, userRepository, dispatcher)
-        }
-
-        context("未ログイン") {
-            beforeEachTest {
-                every { userRepository.me()?.id } returns null
-            }
-
-            it("空が返る") {
-                runBlockingTest(dispatcher) {
-                    val result = repository.allCompletedTask()
-
-                    assertThat(result.size).isEqualTo(0)
-                }
-            }
-        }
 
         context("ログイン済み") {
             beforeEachTest {
@@ -164,13 +127,17 @@ internal object TaskRepositoryImplTest : Spek({
             }
 
             context("1件登録済み") {
+                val tasksFlow = flow<List<Task>> {
+                    emit(listOf(mockk()))
+                }
+
                 beforeEachTest {
-                    coEvery { dataSource.allCompletedTask(any()) } returns listOf(mockk())
+                    coEvery { dataSource.getTasks(any(), any()) } returns tasksFlow
                 }
 
                 it("1件返る") {
                     runBlockingTest(dispatcher) {
-                        val result = repository.allCompletedTask()
+                        val result = repository.getTasks(true).toList()
 
                         assertThat(result.size).isEqualTo(1)
                     }

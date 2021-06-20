@@ -20,7 +20,9 @@ internal object UserRepositoryImplTest : Spek({
 
     describe("#me") {
         beforeEachTest {
-            userAuth = mockk()
+            userAuth = mockk() {
+                every { alreadyLoggedIn } returns mockk()
+            }
             repository = UserRepositoryImpl(userAuth, dispatcher)
         }
 
@@ -55,7 +57,8 @@ internal object UserRepositoryImplTest : Spek({
 
         beforeEachTest {
             userAuth = mockk() {
-                coEvery { login(any(), any()) } returns Unit
+                every { alreadyLoggedIn } returns mockk()
+                coEvery { login(any(), any()) } returns mockk()
             }
             repository = UserRepositoryImpl(userAuth, dispatcher)
         }
@@ -67,7 +70,10 @@ internal object UserRepositoryImplTest : Spek({
 
             it("再度ログインしない") {
                 runBlockingTest(dispatcher) {
-                    repository.login(email, password)
+                    try {
+                        repository.login(email, password)
+                    } catch (e: Exception) {
+                    }
 
                     coVerify(exactly = 0) { userAuth.login(any(), any()) }
                 }
@@ -97,6 +103,7 @@ internal object UserRepositoryImplTest : Spek({
     describe("#logout") {
         beforeEachTest {
             userAuth = mockk {
+                every { alreadyLoggedIn } returns mockk()
                 coEvery { logout() } returns Unit
             }
             repository = UserRepositoryImpl(userAuth, dispatcher)
@@ -107,6 +114,24 @@ internal object UserRepositoryImplTest : Spek({
                 repository.logout()
 
                 coVerify { userAuth.logout() }
+            }
+        }
+    }
+
+    describe("#signUp") {
+        beforeEachTest {
+            userAuth = mockk {
+                every { alreadyLoggedIn } returns mockk()
+                coEvery { signUp(any(), any()) } returns Unit
+            }
+            repository = UserRepositoryImpl(userAuth, dispatcher)
+        }
+
+        it("サインアップしている") {
+            runBlockingTest {
+                repository.signUp("EMAIL", "PASSWORD")
+
+                coVerify { userAuth.signUp("EMAIL", "PASSWORD") }
             }
         }
     }
