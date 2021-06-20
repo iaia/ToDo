@@ -25,7 +25,7 @@ abstract class SignUpViewModel : ViewModel(), LifecycleObserver, HasToastAction 
 }
 
 internal class SignUpViewModelImpl(
-    private val checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
+    checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
     private val signUpUseCase: SignUpUseCase,
 ) : SignUpViewModel(), HasToastAction by HasToastActionImpl() {
     override val routerAction = LiveEvent<Action>()
@@ -45,9 +45,12 @@ internal class SignUpViewModelImpl(
 
     override fun onClickSignUp() {
         viewModelScope.launch {
-            // TODO: try-catchする
-            // TODO: メール送りましたトースト出す
-            signUpUseCase(email.value, password.value)
+            try {
+                signUpUseCase(email.value, password.value)
+                // TODO: メール送りましたトースト出す
+            } catch (e: Exception) {
+                // TODO: toast出す
+            }
         }
     }
 }
