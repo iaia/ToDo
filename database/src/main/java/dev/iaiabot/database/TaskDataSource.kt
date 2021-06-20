@@ -59,14 +59,17 @@ internal class TaskDataSourceImpl(
                 .addOnFailureListener {
                     close(it)
                 }
-            collection(userId).addSnapshotListener { value, error ->
-                if (value == null) {
-                    return@addSnapshotListener
+            collection(userId)
+                .whereEqualTo("completed", onlyCompleted)
+                .orderBy("order", Query.Direction.DESCENDING)
+                .addSnapshotListener { value, error ->
+                    if (value == null) {
+                        return@addSnapshotListener
+                    }
+                    val newTasks = value.toObjects(TaskModel::class.java)
+                    taskCounter = newTasks.maxOf { it.order }
+                    trySend(newTasks)
                 }
-                val newTasks = value.toObjects(TaskModel::class.java)
-                taskCounter = newTasks.maxOf { it.order }
-                trySend(newTasks)
-            }
             awaitClose { }
         }
     }
