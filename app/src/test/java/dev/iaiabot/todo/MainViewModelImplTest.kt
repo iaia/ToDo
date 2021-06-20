@@ -6,7 +6,10 @@ import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
 import dev.iaiabot.usecase.user.LogoutUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
+import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runBlockingTest
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -18,23 +21,26 @@ internal object MainViewModelImplTest : Spek({
 
     val coroutineScope = viewModelTestRule()
 
-    describe("#onResume") {
-        beforeEachTest {
+    describe("#loggedIn") {
+        lateinit var loggedInFlow: Flow<Boolean>
+
+        beforeGroup {
             logoutUseCase = mockk()
             checkAlreadyLoggedInUseCase = mockk()
-            viewModel = MainViewModelImpl(checkAlreadyLoggedInUseCase, logoutUseCase)
         }
 
         context("すでにログインしている場合") {
             beforeEachTest {
-                coEvery { checkAlreadyLoggedInUseCase() } returns true
-                assertThat(viewModel.loggedIn.value).isFalse()
+                loggedInFlow = flow<Boolean> {
+                    emit(true)
+                }
+                every { checkAlreadyLoggedInUseCase() } returns loggedInFlow
+                viewModel = MainViewModelImpl(checkAlreadyLoggedInUseCase, logoutUseCase)
             }
 
             it("loggedInがtrueになっている") {
+                viewModel.loggedIn.observeForever { }
                 coroutineScope.runBlockingTest {
-                    viewModel.onResume()
-
                     assertThat(viewModel.loggedIn.value).isTrue()
                 }
             }
@@ -42,14 +48,16 @@ internal object MainViewModelImplTest : Spek({
 
         context("未ログインの場合") {
             beforeEachTest {
-                coEvery { checkAlreadyLoggedInUseCase() } returns false
-                assertThat(viewModel.loggedIn.value).isFalse()
+                loggedInFlow = flow<Boolean> {
+                    emit(false)
+                }
+                coEvery { checkAlreadyLoggedInUseCase() } returns loggedInFlow
+                viewModel = MainViewModelImpl(checkAlreadyLoggedInUseCase, logoutUseCase)
             }
 
             it("loggedInがfalseになっている") {
+                viewModel.loggedIn.observeForever { }
                 coroutineScope.runBlockingTest {
-                    viewModel.onResume()
-
                     assertThat(viewModel.loggedIn.value).isFalse()
                 }
             }
@@ -61,8 +69,11 @@ internal object MainViewModelImplTest : Spek({
             logoutUseCase = mockk() {
                 coEvery { this@mockk() } returns Unit
             }
+            val loggedInFlow = flow<Boolean> {
+                emit(true)
+            }
             checkAlreadyLoggedInUseCase = mockk() {
-                coEvery { this@mockk() } returns true
+                coEvery { this@mockk() } returns loggedInFlow
             }
             viewModel = MainViewModelImpl(checkAlreadyLoggedInUseCase, logoutUseCase)
         }
@@ -72,14 +83,6 @@ internal object MainViewModelImplTest : Spek({
                 viewModel.onClickLogout()
 
                 coVerify { logoutUseCase() }
-            }
-        }
-
-        it("routerActionがGoToTasksになっている") {
-            coroutineScope.runBlockingTest {
-                viewModel.onClickLogout()
-
-                assertThat(viewModel.routerAction.value).isEqualTo(Action.Finish)
             }
         }
     }

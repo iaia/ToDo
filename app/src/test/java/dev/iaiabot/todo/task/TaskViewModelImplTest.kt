@@ -1,99 +1,85 @@
 package dev.iaiabot.todo.task
 
 import com.google.common.truth.Truth.assertThat
+import dev.iaiabot.entity.Task
 import dev.iaiabot.todo.testrule.viewModelTestRule
 import dev.iaiabot.usecase.*
 import dev.iaiabot.usecase.task.AddTaskUseCase
-import dev.iaiabot.usecase.task.GetAllCompletedTaskUseCase
+import dev.iaiabot.usecase.task.ChangeTaskUseCase
 import dev.iaiabot.usecase.task.GetTasksUseCase
 import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
-import io.mockk.coEvery
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
 internal object TaskViewModelImplTest : Spek({
     lateinit var viewModel: TaskViewModel
     lateinit var addTaskUseCase: AddTaskUseCase
-    lateinit var getAllIncompleteTaskUseCase: GetTasksUseCase
-    lateinit var getAllCompletedTaskUseCase: GetAllCompletedTaskUseCase
+    lateinit var getTasksUseCase: GetTasksUseCase
+    lateinit var tasksFlow: Flow<List<Task>>
     lateinit var toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase
+    lateinit var changeTaskUseCase: ChangeTaskUseCase
 
     val coroutineScope = viewModelTestRule()
 
     beforeEachTest {
         addTaskUseCase = mockk() {
-            coEvery { this@mockk(any()) } returns true
+            coEvery { this@mockk() } returns Unit
         }
-        getAllIncompleteTaskUseCase = mockk() {
-            coEvery { this@mockk() } returns listOf(mockk())
+        tasksFlow = flow {
+            emit(listOf(mockk()))
         }
-        getAllCompletedTaskUseCase = mockk() {
-            coEvery { this@mockk() } returns listOf(mockk())
+        getTasksUseCase = mockk() {
+            coEvery { this@mockk(any()) } returns tasksFlow
         }
         toggleCompleteTaskUseCase = mockk()
+        changeTaskUseCase = mockk()
         viewModel = TaskViewModelImpl(
+            true,
+            getTasksUseCase,
             addTaskUseCase,
-            getAllIncompleteTaskUseCase,
-            getAllCompletedTaskUseCase,
-            toggleCompleteTaskUseCase
+            toggleCompleteTaskUseCase,
+            changeTaskUseCase,
         )
     }
 
-    describe("#init") {
-        it("未完了と完了のタスクが両方設定されている") {
-            viewModel.init()
+    describe("#tasks") {
+        it("1個タスクを持っている") {
+            viewModel.tasks.observeForever { }
 
-            assertThat(viewModel.allTask.value).hasSize(2)
-        }
-    }
-
-    describe("#addTask") {
-        beforeEachTest {
-            viewModel.newTaskTitle.value = "タスク"
-        }
-
-        it("タスク追加のユースケースを実行している") {
-            viewModel.addTask()
-
-            verify {
-                addTaskUseCase(withArg {
-                    assertThat(it).isEqualTo("タスク")
-                })
-            }
-        }
-
-        it("追加タスクの変数を空にしている") {
-            assertThat(viewModel.newTaskTitle.value).isEqualTo("タスク")
-
-            viewModel.addTask()
-
-            assertThat(viewModel.newTaskTitle.value).isEqualTo("")
+            assertThat(viewModel.tasks.value?.size).isEqualTo(1)
         }
     }
 
     describe("#onClickAddTask") {
-        it("ableAddTaskをtoggleしている") {
-            assertThat(viewModel.ableAddTask.value).isEqualTo(false)
-
+        it("タスク追加のユースケースを実行している") {
             viewModel.onClickAddTask()
 
-            assertThat(viewModel.ableAddTask.value).isEqualTo(true)
+            coVerify { addTaskUseCase() }
+        }
+    }
+
+    describe("#toggleComplete") {
+        val task = mockk<Task>()
+
+        it("タスク追加のユースケースを実行している") {
+            viewModel.toggleComplete(task)
+
+            coVerify { toggleCompleteTaskUseCase(task) }
+        }
+    }
+
+    describe("#onChangeTask") {
+        val task = mockk<Task>() {
+            every { title } returns "TODO"
         }
 
-        context("追加可能状態から不可能状態になったとき") {
-            beforeEachTest {
-                viewModel.onClickAddTask()
-                viewModel.newTaskTitle.value = "タスク"
-                assertThat(viewModel.ableAddTask.value).isEqualTo(true)
-            }
+        it("タスク追加のユースケースを実行している") {
+            viewModel.onChangeTask(task, "NEW_TODO")
 
-            it("タスクを追加している") {
-                viewModel.onClickAddTask()
-
-                verify { addTaskUseCase(any()) }
-            }
+            coVerify { changeTaskUseCase(task, "NEW_TODO") }
         }
     }
 })

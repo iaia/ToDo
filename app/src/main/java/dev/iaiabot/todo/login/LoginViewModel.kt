@@ -29,8 +29,8 @@ abstract class LoginViewModel : ViewModel(), LifecycleObserver, HasToastAction {
 }
 
 internal class LoginViewModelImpl(
+    checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
     private val loginUseCase: LoginUseCase,
-    private val checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
 ) : LoginViewModel(), HasToastAction by HasToastActionImpl() {
     override val routerAction = LiveEvent<Action>()
     override val email = MutableLiveData("")

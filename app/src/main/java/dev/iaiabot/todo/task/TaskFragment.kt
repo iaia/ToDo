@@ -51,7 +51,7 @@ class TaskFragment : Fragment() {
         controller = TaskController(viewModel, ::hideKeyboard)
         binding.flexCards.setController(controller)
 
-        viewModel.allTask.observe(viewLifecycleOwner) { tasks ->
+        viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
             controller.setData(tasks)
             binding.flexCards.scrollToPosition(0)
         }

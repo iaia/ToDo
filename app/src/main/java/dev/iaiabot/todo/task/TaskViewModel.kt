@@ -10,7 +10,7 @@ import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import kotlinx.coroutines.launch
 
 abstract class TaskViewModel : ViewModel(), LifecycleObserver {
-    abstract val allTask: LiveData<List<Task>>
+    abstract val tasks: LiveData<List<Task>>
     abstract val showAddButton: Boolean
 
     @VisibleForTesting
@@ -22,14 +22,14 @@ abstract class TaskViewModel : ViewModel(), LifecycleObserver {
 
 internal class TaskViewModelImpl(
     showCompletedOnly: Boolean,
-    getAllTaskUseCase: GetTasksUseCase,
+    getTasksUseCase: GetTasksUseCase,
     private val addTaskUseCase: AddTaskUseCase,
     private val toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase,
     private val changeTaskUseCase: ChangeTaskUseCase,
 ) : TaskViewModel() {
 
     override val showAddButton: Boolean = !showCompletedOnly
-    override val allTask = getAllTaskUseCase(showCompletedOnly).asLiveData()
+    override val tasks = getTasksUseCase(showCompletedOnly).asLiveData()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun init() {

@@ -16,7 +16,7 @@ abstract class MainViewModel : ViewModel(), LifecycleObserver {
 }
 
 internal class MainViewModelImpl(
-    private val checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
+    checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
     private val logoutUseCase: LogoutUseCase,
 ) : MainViewModel() {
 
