@@ -4,6 +4,9 @@ import com.google.common.truth.Truth.assertThat
 import dev.iaiabot.repository.UserRepository
 import io.mockk.every
 import io.mockk.mockk
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.test.runBlockingTest
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
@@ -11,6 +14,7 @@ import org.spekframework.spek2.style.specification.describe
 internal object CheckAlreadyLoggedInUseCaseImplTest : Spek({
     lateinit var usecase: CheckAlreadyLoggedInUseCase
     lateinit var userRepository: UserRepository
+    lateinit var alreadyLoggedIn: Flow<Boolean>
 
     describe("#invoke") {
         beforeEachTest {
@@ -20,12 +24,13 @@ internal object CheckAlreadyLoggedInUseCaseImplTest : Spek({
 
         context("未ログイン") {
             beforeEachTest {
-                every { userRepository.me() } returns null
+                alreadyLoggedIn = flow { emit(false) }
+                every { userRepository.alreadyLoggedIn } returns alreadyLoggedIn
             }
 
             it("falseが返る") {
                 runBlockingTest {
-                    val result = usecase()
+                    val result = usecase().single()
 
                     assertThat(result).isEqualTo(false)
                 }
@@ -34,12 +39,13 @@ internal object CheckAlreadyLoggedInUseCaseImplTest : Spek({
 
         context("すでにログイン済み") {
             beforeEachTest {
-                every { userRepository.me() } returns mockk()
+                alreadyLoggedIn = flow { emit(true) }
+                every { userRepository.alreadyLoggedIn } returns alreadyLoggedIn
             }
 
             it("trueが返る") {
                 runBlockingTest {
-                    val result = usecase()
+                    val result = usecase().single()
 
                     assertThat(result).isEqualTo(true)
                 }
