@@ -12,8 +12,8 @@ class TaskViewPagerAdapter(
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> TaskFragment.newInstance(true)
-            else -> TaskFragment.newInstance(false)
+            0 -> TaskFragment.newInstance(false)
+            else -> TaskFragment.newInstance(true)
         }
     }
 }
