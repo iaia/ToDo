@@ -8,7 +8,8 @@ import dev.iaiabot.todo.listItemTask
 import java.lang.ref.WeakReference
 
 class TaskController(
-    private val viewModel: TaskViewModel
+    private val viewModel: TaskViewModel,
+    private val hideKeyboard: () -> Unit
 ) : TypedEpoxyController<List<Task>>() {
 
     var editModeTaskBinding: WeakReference<ListItemTaskBinding>? = null
@@ -62,5 +63,6 @@ class TaskController(
             viewModel.onChangeTask(it, title ?: "")
         }
         editModeTaskBinding = null
+        hideKeyboard.invoke()
     }
 }
