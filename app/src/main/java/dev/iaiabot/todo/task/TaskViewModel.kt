@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 
 abstract class TaskViewModel : ViewModel(), LifecycleObserver {
     abstract val allTask: LiveData<List<Task>>
+    abstract val showAddButton: Boolean
 
     @VisibleForTesting
     abstract fun init()
@@ -27,6 +28,7 @@ internal class TaskViewModelImpl(
     private val changeTaskUseCase: ChangeTaskUseCase,
 ) : TaskViewModel() {
 
+    override val showAddButton: Boolean = !showCompletedOnly
     override val allTask = getAllTaskUseCase(showCompletedOnly).asLiveData()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
