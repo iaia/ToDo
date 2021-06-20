@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.10092592592592593" />
         <entry key="app/src/main/res/layout/fragment_sign_up.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_task.xml" value="0.21875" />
+        <entry key="app/src/main/res/layout/fragment_task_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/list_item_task.xml" value="0.1928020565552699" />
         <entry key="app/src/main/res/layout/list_item_task_completed.xml" value="0.10055724417426545" />
         <entry key="app/src/main/res/layout/list_item_task_incomplete.xml" value="0.10055724417426545" />

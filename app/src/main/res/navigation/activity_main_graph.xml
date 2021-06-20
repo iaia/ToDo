@@ -18,7 +18,7 @@
         android:label="Login">
         <action
             android:id="@+id/action_login_to_task"
-            app:destination="@id/task"
+            app:destination="@id/task_main"
             app:popUpTo="@id/login"
             app:popUpToInclusive="true"
             />
@@ -35,15 +35,15 @@
         android:label="SignUp">
         <action
             android:id="@+id/action_sign_up_to_task"
-            app:destination="@id/task"
+            app:destination="@id/task_main"
             app:popUpTo="@id/login"
             app:popUpToInclusive="true"
             />
     </fragment>
 
     <fragment
-        android:id="@+id/task"
-        android:name="dev.iaiabot.todo.task.TaskFragment"
+        android:id="@+id/task_main"
+        android:name="dev.iaiabot.todo.taskmain.TaskMainFragment"
         android:label="Task" />
 
 </navigation>
