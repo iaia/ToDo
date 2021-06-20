@@ -12,6 +12,18 @@ import org.koin.android.ext.android.inject
 
 class TaskFragment : Fragment() {
 
+    companion object {
+        private const val ARG_TYPE_COMPLETED = "arg_type_completed"
+
+        fun newInstance(completed: Boolean): TaskFragment {
+            return TaskFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_TYPE_COMPLETED, completed)
+                }
+            }
+        }
+    }
+
     private lateinit var binding: FragmentTaskBinding
     private val viewModel: TaskViewModel by inject()
     private lateinit var controller: TaskController
