@@ -1,23 +1,18 @@
 package dev.iaiabot.database
 
 import com.google.firebase.firestore.Query
-import com.google.firebase.firestore.ktx.toObjects
 import dev.iaiabot.database.model.TaskModel
 import dev.iaiabot.entity.Task
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 interface TaskDataSource {
     fun add(userId: String, task: Task)
     fun delete(userId: String, task: Task)
     suspend fun update(userId: String, task: Task, newTaskTitle: String)
     fun saveCompletedState(userId: String, taskId: String, completedState: Boolean)
-    fun getAllTask(userId: String): Flow<List<Task>>
-    suspend fun allIncompleteTask(userId: String): List<Task>
-    suspend fun allCompletedTask(userId: String): List<Task>
+    fun getTasks(userId: String, onlyCompleted: Boolean): Flow<List<Task>>
 }
 
 internal class TaskDataSourceImpl(
@@ -50,9 +45,10 @@ internal class TaskDataSourceImpl(
             .update("completed", completedState)
     }
 
-    override fun getAllTask(userId: String): Flow<List<Task>> {
+    override fun getTasks(userId: String, onlyCompleted: Boolean): Flow<List<Task>> {
         return callbackFlow<List<TaskModel>> {
             collection(userId)
+                .whereEqualTo("completed", onlyCompleted)
                 .orderBy("order", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener {
@@ -72,22 +68,6 @@ internal class TaskDataSourceImpl(
                 trySend(newTasks)
             }
             awaitClose { }
-        }
-    }
-
-    override suspend fun allIncompleteTask(userId: String): List<Task> {
-        return suspendCoroutine { continuation ->
-            collection(userId).whereEqualTo("completed", false).get().addOnSuccessListener {
-                continuation.resume(it.toObjects<TaskModel>())
-            }
-        }
-    }
-
-    override suspend fun allCompletedTask(userId: String): List<Task> {
-        return suspendCoroutine { continuation ->
-            collection(userId).whereEqualTo("completed", true).get().addOnSuccessListener {
-                continuation.resume(it.toObjects<TaskModel>())
-            }
         }
     }
 }

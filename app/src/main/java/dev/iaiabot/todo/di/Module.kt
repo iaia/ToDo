@@ -14,8 +14,18 @@ import org.koin.dsl.module
 object Module {
     val appModule = module {
         viewModel<MainViewModel> { MainViewModelImpl(get(), get()) }
+
         viewModel<LoginViewModel> { LoginViewModelImpl(get(), get()) }
-        viewModel<TaskViewModel> { TaskViewModelImpl(get(), get(), get(), get()) }
         viewModel<SignUpViewModel> { SignUpViewModelImpl(get(), get()) }
+
+        viewModel<TaskViewModel> { (showOnlyCompleted: Boolean) ->
+            TaskViewModelImpl(
+                showOnlyCompleted,
+                get(),
+                get(),
+                get(),
+                get()
+            )
+        }
     }
 }

@@ -11,9 +11,7 @@ interface TaskRepository {
     suspend fun delete(task: Task)
     suspend fun update(task: Task, newTaskTitle: String)
     fun saveCompletedState(taskId: String, newCompletedState: Boolean)
-    fun allTask(): Flow<List<Task>>
-    suspend fun allIncompleteTask(): List<Task>
-    suspend fun allCompletedTask(): List<Task>
+    fun getTasks(onlyCompleted: Boolean): Flow<List<Task>>
 }
 
 internal class TaskRepositoryImpl(
@@ -52,25 +50,9 @@ internal class TaskRepositoryImpl(
         }
     }
 
-    override fun allTask(): Flow<List<Task>> {
+    override fun getTasks(onlyCompleted: Boolean): Flow<List<Task>> {
         userId?.let { userId ->
-            return taskDataSource.getAllTask(userId)
+            return taskDataSource.getTasks(userId, onlyCompleted)
         } ?: throw Exception("TODO: user id 無いときのexception")
-    }
-
-    override suspend fun allIncompleteTask(): List<Task> {
-        return withContext(dispatcher) {
-            userId?.let { userId ->
-                taskDataSource.allIncompleteTask(userId)
-            } ?: emptyList()
-        }
-    }
-
-    override suspend fun allCompletedTask(): List<Task> {
-        return withContext(dispatcher) {
-            userId?.let { userId ->
-                taskDataSource.allCompletedTask(userId)
-            } ?: emptyList()
-        }
     }
 }

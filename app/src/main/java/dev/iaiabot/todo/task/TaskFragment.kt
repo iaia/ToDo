@@ -8,7 +8,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import dev.iaiabot.todo.databinding.FragmentTaskBinding
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 
 class TaskFragment : Fragment() {
 
@@ -25,7 +26,9 @@ class TaskFragment : Fragment() {
     }
 
     private lateinit var binding: FragmentTaskBinding
-    private val viewModel: TaskViewModel by inject()
+    private val viewModel: TaskViewModel by viewModel {
+        parametersOf(arguments?.getBoolean(ARG_TYPE_COMPLETED) ?: true)
+    }
     private lateinit var controller: TaskController
 
     override fun onCreateView(

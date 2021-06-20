@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import dev.iaiabot.entity.Task
 import dev.iaiabot.usecase.task.AddTaskUseCase
 import dev.iaiabot.usecase.task.ChangeTaskUseCase
-import dev.iaiabot.usecase.task.GetAllTaskUseCase
+import dev.iaiabot.usecase.task.GetTasksUseCase
 import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
 import kotlinx.coroutines.launch
 
@@ -20,13 +20,14 @@ abstract class TaskViewModel : ViewModel(), LifecycleObserver {
 }
 
 internal class TaskViewModelImpl(
+    showCompletedOnly: Boolean,
+    getAllTaskUseCase: GetTasksUseCase,
     private val addTaskUseCase: AddTaskUseCase,
-    private val getAllTaskUseCase: GetAllTaskUseCase,
     private val toggleCompleteTaskUseCase: ToggleCompleteTaskUseCase,
     private val changeTaskUseCase: ChangeTaskUseCase,
 ) : TaskViewModel() {
 
-    override val allTask = getAllTaskUseCase().asLiveData()
+    override val allTask = getAllTaskUseCase(showCompletedOnly).asLiveData()
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun init() {
