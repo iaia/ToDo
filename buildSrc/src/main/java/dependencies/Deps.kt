@@ -83,4 +83,6 @@ object Deps {
     }
 
     val flexbox = "com.google.android.flexbox:flexbox:3.0.0"
+
+    val furufuru = "dev.iaiabot.furufuru:furufuru:0.8.0"
 }

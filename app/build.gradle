@@ -37,7 +37,7 @@ android {
     }
     buildFeatures {
         dataBinding true
-        compose true
+        // compose true
         viewBinding true
     }
 
@@ -79,6 +79,9 @@ dependencies {
     // di
     implementation Deps.Koin.base
     implementation Deps.Koin.ext
+
+    // debug
+    debugImplementation Deps.furufuru
 
     testImplementation Deps.Test.mockk
     testImplementation Deps.Test.truth
