@@ -42,7 +42,7 @@ dependencies {
 
     // di
     implementation Deps.Koin.base
-    implementation Deps.Koin.ext
+    implementation Deps.Koin.compat
 
     // firebase
     implementation platform(Deps.Firebase.bom)

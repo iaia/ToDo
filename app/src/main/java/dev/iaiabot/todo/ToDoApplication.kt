@@ -1,7 +1,6 @@
 package dev.iaiabot.todo
 
 import android.app.Application
-import dev.iaiabot.furufuru.feature.Furufuru
 import dev.iaiabot.todo.di.Module.appModule
 import dev.iaiabot.usecase.di.Module.useCaseModule
 import org.koin.android.ext.koin.androidContext
@@ -18,10 +17,13 @@ class ToDoApplication : Application() {
             modules(listOf(useCaseModule, appModule))
         }
 
+        /*
         Furufuru.Builder(this).settingGithub(
             "TOKEN",
             "iaia",
             "Furufuru",
         ).build()
+
+         */
     }
 }

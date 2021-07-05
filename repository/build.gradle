@@ -44,7 +44,7 @@ dependencies {
 
     // di
     implementation Deps.Koin.base
-    implementation Deps.Koin.ext
+    implementation Deps.Koin.compat
 
     testImplementation Deps.Test.mockk
     testImplementation Deps.Test.mockkAgent
