@@ -1,5 +1,6 @@
 package dev.iaiabot.todo.task
 
+import androidx.core.view.postDelayed
 import com.airbnb.epoxy.TypedEpoxyController
 import dev.iaiabot.entity.Task
 import dev.iaiabot.todo.bindingadapter.OnOkInSoftKeyboardListener
@@ -53,6 +54,9 @@ class TaskController(
         }
         finishEdit()
         taskBinding.editMode = true
+        taskBinding.tietTitle.postDelayed(100) {
+            taskBinding.tietTitle.requestFocus()
+        }
         editModeTaskBinding = WeakReference(taskBinding)
     }
 
