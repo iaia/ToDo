@@ -43,7 +43,7 @@ dependencies {
 
     // di
     implementation Deps.Koin.base
-    implementation Deps.Koin.ext
+    implementation Deps.Koin.compat
 
     testImplementation Deps.Test.junit4
     testImplementation Deps.Test.mockk

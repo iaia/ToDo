@@ -6,9 +6,8 @@ import dev.iaiabot.todo.HasToastAction
 import dev.iaiabot.todo.HasToastActionImpl
 import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
 import dev.iaiabot.usecase.user.LoginUseCase
-import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.single
 import kotlinx.coroutines.launch
 
@@ -36,13 +35,16 @@ internal class LoginViewModelImpl(
     override val email = MutableLiveData("")
     override val password = MutableLiveData("")
     override val nowLogin = MutableLiveData<Boolean>(false)
-    private val loggedIn = checkAlreadyLoggedInUseCase()
-        .mapLatest { loggedIn ->
-            if (loggedIn) {
-                routerAction.postValue(Action.GoToTasks)
+
+    init {
+        checkAlreadyLoggedInUseCase()
+            .mapLatest { loggedIn ->
+                if (loggedIn) {
+                    routerAction.postValue(Action.GoToTasks)
+                }
             }
-        }
-        .shareIn(viewModelScope, replay = 1, started = SharingStarted.Eagerly)
+            .launchIn(viewModelScope)
+    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
     override fun onResume() {

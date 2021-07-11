@@ -54,9 +54,11 @@ object Deps {
     }
 
     object Koin {
-        private val koin_version = "3.0.2"
+        private val koin_version = "3.1.1"
         val base = "io.insert-koin:koin-android:$koin_version"
-        val ext = "io.insert-koin:koin-android-ext:$koin_version"
+        val compat = "io.insert-koin:koin-android-compat:$koin_version"
+        // val workManger = "io.insert-koin:koin-androidx-workmanager:$koin_version"
+        // val compose = "io.insert-koin:koin-androidx-compose:$koin_version"
     }
 
     object Firebase {
@@ -83,4 +85,6 @@ object Deps {
     }
 
     val flexbox = "com.google.android.flexbox:flexbox:3.0.0"
+
+    val furufuru = "dev.iaiabot.furufuru:furufuru:0.8.0"
 }

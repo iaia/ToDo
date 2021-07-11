@@ -1,10 +1,11 @@
 package dev.iaiabot.todo.task
 
+import androidx.core.view.postDelayed
 import com.airbnb.epoxy.TypedEpoxyController
 import dev.iaiabot.entity.Task
 import dev.iaiabot.todo.bindingadapter.OnOkInSoftKeyboardListener
-import dev.iaiabot.todo.databinding.ListItemTaskBinding
-import dev.iaiabot.todo.listItemTask
+import dev.iaiabot.todo.databinding.ViewTaskBinding
+import dev.iaiabot.todo.viewTask
 import java.lang.ref.WeakReference
 
 class TaskController(
@@ -12,7 +13,7 @@ class TaskController(
     private val hideKeyboard: () -> Unit
 ) : TypedEpoxyController<List<Task>>() {
 
-    var editModeTaskBinding: WeakReference<ListItemTaskBinding>? = null
+    private var editModeTaskBinding: WeakReference<ViewTaskBinding>? = null
 
     val onOkInSoftKeyboardListener = object : OnOkInSoftKeyboardListener {
         override fun onOkInSoftKeyboard() {
@@ -23,22 +24,22 @@ class TaskController(
     override fun buildModels(data: List<Task>) {
         data.sortedByDescending { it.order }.forEach { task ->
             var checked = task.completed
-            listItemTask {
+            viewTask {
                 id(task.id)
                 task(task)
                 title(task.title)
                 editMode(false)
                 onOkInSoftKeyboardListener(onOkInSoftKeyboardListener)
                 onBind { _, view, _ ->
-                    val binding = view.dataBinding as ListItemTaskBinding
-                    binding.taskCard.isChecked = task.completed
+                    val binding = view.dataBinding as ViewTaskBinding
+                    binding.checked = task.completed
                     binding.taskCard.setOnClickListener {
                         switchEditMode(binding)
                     }
                     binding.taskCard.setOnLongClickListener {
                         viewModel.toggleComplete(task)
                         checked = !checked
-                        binding.taskCard.isChecked = checked
+                        binding.checked = checked
                         true
                     }
                 }
@@ -46,13 +47,16 @@ class TaskController(
         }
     }
 
-    private fun switchEditMode(taskBinding: ListItemTaskBinding) {
+    private fun switchEditMode(taskBinding: ViewTaskBinding) {
         if (taskBinding.editMode == true) {
             finishEdit()
             return
         }
         finishEdit()
         taskBinding.editMode = true
+        taskBinding.tietTitle.postDelayed(100) {
+            taskBinding.tietTitle.requestFocus()
+        }
         editModeTaskBinding = WeakReference(taskBinding)
     }
 

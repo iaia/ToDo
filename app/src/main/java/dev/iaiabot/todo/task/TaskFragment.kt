@@ -48,12 +48,18 @@ class TaskFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.viewModel = viewModel
+
+        configureRecyclerView()
+
+    }
+
+    private fun configureRecyclerView() {
         controller = TaskController(viewModel, ::hideKeyboard)
-        binding.flexCards.setController(controller)
+        binding.cardsContainer.setController(controller)
 
         viewModel.tasks.observe(viewLifecycleOwner) { tasks ->
             controller.setData(tasks)
-            binding.flexCards.scrollToPosition(0)
+            binding.cardsContainer.scrollToPosition(0)
         }
     }
 

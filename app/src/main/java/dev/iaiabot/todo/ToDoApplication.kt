@@ -16,5 +16,14 @@ class ToDoApplication : Application() {
             androidContext(this@ToDoApplication)
             modules(listOf(useCaseModule, appModule))
         }
+
+        /*
+        Furufuru.Builder(this).settingGithub(
+            "TOKEN",
+            "iaia",
+            "Furufuru",
+        ).build()
+
+         */
     }
 }
