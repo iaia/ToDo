@@ -53,7 +53,9 @@ internal class TaskDataSourceImpl(
                 .get()
                 .addOnSuccessListener {
                     val tasks = it.toObjects(TaskModel::class.java)
-                    taskCounter = tasks.maxOf { it.order }
+                    if (tasks.isNotEmpty()) {
+                        taskCounter = tasks.maxOf { it.order }
+                    }
                     trySend(tasks)
                 }
                 .addOnFailureListener {
@@ -67,7 +69,9 @@ internal class TaskDataSourceImpl(
                         return@addSnapshotListener
                     }
                     val newTasks = value.toObjects(TaskModel::class.java)
-                    taskCounter = newTasks.maxOf { it.order }
+                    if (newTasks.isNotEmpty()) {
+                        taskCounter = newTasks.maxOf { it.order }
+                    }
                     trySend(newTasks)
                 }
             awaitClose { }
