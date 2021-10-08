@@ -1,21 +1,23 @@
 package dependencies
 
 object Deps {
-    val kotlin_version = "1.5.10"
+    val kotlin_version = "1.5.30"
 
     object Kotlin {
         val stdLib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-        val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
+
+        private val coroutineVer = "1.5.2"
+        val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVer"
 
         object Test {
-            val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.0"
+            val coroutine = "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutineVer"
         }
     }
 
     object AndroidX {
-        val coreKtx = "androidx.core:core-ktx:1.5.0"
-        val appCompat = "androidx.appcompat:appcompat:1.3.0"
-        val constraintLayout = "androidx.constraintlayout:constraintlayout:2.0.4"
+        val coreKtx = "androidx.core:core-ktx:1.6.0"
+        val appCompat = "androidx.appcompat:appcompat:1.3.1"
+        val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.1"
         val nav_version = "2.3.5"
         val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$nav_version"
         val navigationUi = "androidx.navigation:navigation-ui-ktx:$nav_version"
@@ -24,7 +26,7 @@ object Deps {
         val viewPager2 = "androidx.viewpager2:viewpager2:1.0.0"
 
         object Compose {
-            val version = "1.0.0-beta08"
+            val version = "1.0.3"
             val compose = "androidx.compose.ui:ui:${version}"
             val tooling = "androidx.compose.ui:ui-tooling:${version}"
             val foundation = "androidx.compose.foundation:foundation:${version}"
@@ -37,24 +39,24 @@ object Deps {
 
         object Test {
             val coreTesting = "androidx.arch.core:core-testing:2.1.0"
-            val extJunit = "androidx.test.ext:junit:1.1.2"
+            val extJunit = "androidx.test.ext:junit:1.1.3"
             val espresso = "androidx.test.espresso:espresso-core:3.3.0"
         }
     }
 
     object Epoxy {
-        private val epoxyVersion = "4.4.4"
+        private val epoxyVersion = "4.6.4"
         val epoxy = "com.airbnb.android:epoxy:$epoxyVersion"
         val epoxyProcessor = "com.airbnb.android:epoxy-processor:$epoxyVersion"
         val epoxyDataBinding = "com.airbnb.android:epoxy-databinding:$epoxyVersion"
     }
 
     object MaterialDesign {
-        val material = "com.google.android.material:material:1.3.0"
+        val material = "com.google.android.material:material:1.4.0"
     }
 
     object Koin {
-        private val koin_version = "3.1.1"
+        private val koin_version = "3.1.2"
         val base = "io.insert-koin:koin-android:$koin_version"
         val compat = "io.insert-koin:koin-android-compat:$koin_version"
         // val workManger = "io.insert-koin:koin-androidx-workmanager:$koin_version"
@@ -69,14 +71,14 @@ object Deps {
 
     object Test {
         val junit4 = "junit:junit:4.13.2"
-        private val mockk_version = "1.11.0"
+        private val mockk_version = "1.12.0"
         val mockk = "io.mockk:mockk:$mockk_version"
         val mockkAgent = "io.mockk:mockk-agent-jvm:$mockk_version"
         val truth = "com.google.truth:truth:1.1"
     }
 
     object Spek {
-        private val spek_version = "2.0.14"
+        private val spek_version = "2.0.17"
         val spek = "org.spekframework.spek2:spek-dsl-jvm:$spek_version"
         val spekRunner =
             "org.spekframework.spek2:spek-runner-junit5:$spek_version" // testRuntimeOnly
@@ -86,5 +88,5 @@ object Deps {
 
     val flexbox = "com.google.android.flexbox:flexbox:3.0.0"
 
-    val furufuru = "dev.iaiabot.furufuru:furufuru:0.8.0"
+    val furufuru = "dev.iaiabot.furufuru:furufuru:0.9.1"
 }

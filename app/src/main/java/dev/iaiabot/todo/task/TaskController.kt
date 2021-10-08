@@ -28,15 +28,15 @@ class TaskController(
                 task(task)
                 title(task.title)
                 editMode(false)
-                onOkInSoftKeyboardListener(onOkInSoftKeyboardListener)
+                // onOkInSoftKeyboardListener(onOkInSoftKeyboardListener)
                 onBind { _, view, _ ->
                     val binding = view.dataBinding as ViewTaskBinding
                     binding.checked = task.completed
                     binding.taskCard.setOnClickListener {
-                        switchEditMode(binding)
+                        // switchEditMode(binding)
                     }
                     binding.taskCard.setOnLongClickListener {
-                        viewModel.toggleComplete(task)
+                        // viewModel.toggleComplete(task)
                         checked = !checked
                         binding.checked = checked
                         true
