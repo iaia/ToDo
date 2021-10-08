@@ -2,8 +2,8 @@ package dev.iaiabot.todo.login
 
 import com.google.common.truth.Truth.assertThat
 import dev.iaiabot.todo.testrule.viewModelTestRule
-import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
-import dev.iaiabot.usecase.user.LoginUseCase
+import dev.iaiabot.todo.usecase.user.CheckAlreadyLoggedInUseCase
+import dev.iaiabot.todo.usecase.user.LoginUseCase
 import io.mockk.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

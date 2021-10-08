@@ -1,13 +1,13 @@
 package dev.iaiabot.todo.task
 
 import com.google.common.truth.Truth.assertThat
-import dev.iaiabot.entity.Task
+import dev.iaiabot.todo.model.Task
 import dev.iaiabot.todo.testrule.viewModelTestRule
-import dev.iaiabot.usecase.*
-import dev.iaiabot.usecase.task.AddTaskUseCase
-import dev.iaiabot.usecase.task.ChangeTaskUseCase
-import dev.iaiabot.usecase.task.GetTasksUseCase
-import dev.iaiabot.usecase.task.ToggleCompleteTaskUseCase
+import dev.iaiabot.todo.usecase.*
+import dev.iaiabot.todo.usecase.task.AddTaskUseCase
+import dev.iaiabot.todo.usecase.task.ChangeTaskUseCase
+import dev.iaiabot.todo.usecase.task.GetTasksUseCase
+import dev.iaiabot.todo.usecase.task.ToggleCompleteTaskUseCase
 import io.mockk.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

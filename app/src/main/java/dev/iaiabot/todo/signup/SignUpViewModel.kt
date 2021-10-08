@@ -4,8 +4,8 @@ import androidx.lifecycle.*
 import com.hadilq.liveevent.LiveEvent
 import dev.iaiabot.todo.HasToastAction
 import dev.iaiabot.todo.HasToastActionImpl
-import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
-import dev.iaiabot.usecase.user.SignUpUseCase
+import dev.iaiabot.todo.usecase.user.CheckAlreadyLoggedInUseCase
+import dev.iaiabot.todo.usecase.user.SignUpUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch

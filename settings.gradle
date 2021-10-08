@@ -1,4 +1,4 @@
-include ':entity'
+include ':model'
 include ':auth'
 include ':database'
 include ':repository'

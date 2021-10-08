@@ -16,7 +16,7 @@
             <option value="$PROJECT_DIR$/auth" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/database" />
-            <option value="$PROJECT_DIR$/entity" />
+            <option value="$PROJECT_DIR$/model" />
             <option value="$PROJECT_DIR$/repository" />
             <option value="$PROJECT_DIR$/usecase" />
           </set>

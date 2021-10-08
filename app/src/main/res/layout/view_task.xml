@@ -10,7 +10,7 @@
 
         <variable
             name="task"
-            type="dev.iaiabot.entity.Task" />
+            type="dev.iaiabot.todo.model.Task" />
 
         <variable
             name="title"

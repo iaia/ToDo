@@ -2,8 +2,8 @@ package dev.iaiabot.todo
 
 import com.google.common.truth.Truth.*
 import dev.iaiabot.todo.testrule.viewModelTestRule
-import dev.iaiabot.usecase.user.CheckAlreadyLoggedInUseCase
-import dev.iaiabot.usecase.user.LogoutUseCase
+import dev.iaiabot.todo.usecase.user.CheckAlreadyLoggedInUseCase
+import dev.iaiabot.todo.usecase.user.LogoutUseCase
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.every
