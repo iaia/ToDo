@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/sign_up"
-        android:name="dev.iaiabot.todo.signup.SignUpFragment"
+        android:name="dev.iaiabot.todo.feature.signup.SignUpFragment"
         android:label="SignUp">
         <action
             android:id="@+id/action_sign_up_to_task"

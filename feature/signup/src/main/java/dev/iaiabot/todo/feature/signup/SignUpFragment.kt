@@ -1,4 +1,4 @@
-package dev.iaiabot.todo.signup
+package dev.iaiabot.todo.feature.signup
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import dev.iaiabot.todo.R
 import dev.iaiabot.todo.databinding.FragmentSignUpBinding
 import dev.iaiabot.todo.observeToastAction
 import org.koin.android.ext.android.inject

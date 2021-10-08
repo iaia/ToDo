@@ -1,4 +1,4 @@
-package dev.iaiabot.todo.signup
+package dev.iaiabot.todo.feature.signup
 
 import androidx.lifecycle.*
 import com.hadilq.liveevent.LiveEvent

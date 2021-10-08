@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".signup.SignUpFragment"
+    tools:context="dev.iaiabot.todo.feature.signup.SignUpFragment"
     >
 
     <data>
 
         <variable
             name="viewModel"
-            type="dev.iaiabot.todo.signup.SignUpViewModel" />
+            type="dev.iaiabot.todo.feature.signup.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

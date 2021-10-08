@@ -1,4 +1,4 @@
-package dev.iaiabot.todo.signup
+package dev.iaiabot.todo.feature.signup
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
