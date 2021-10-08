@@ -1,3 +1,5 @@
+import com.github.benmanes.gradle.versions.VersionsPlugin
+
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.5.30"
@@ -24,7 +26,7 @@ allprojects {
         mavenCentral()
     }
 
-    apply plugin: com.github.benmanes.gradle.versions.VersionsPlugin
+    apply plugin: VersionsPlugin
     // https://github.com/ben-manes/gradle-versions-plugin
     tasks.named("dependencyUpdates").configure {
         rejectVersionIf {
