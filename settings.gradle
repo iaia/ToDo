@@ -1,7 +1,9 @@
+rootProject.name = "ToDo"
+
 include ':model'
 include ':auth'
 include ':database'
 include ':repository'
 include ':usecase'
 include ':app'
-rootProject.name = "ToDo"
+include ':feature:signup'
