@@ -1,6 +1,9 @@
+import dependencies.Deps
+
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
+    id "kotlin-kapt"
 }
 
 android {
@@ -32,11 +35,21 @@ android {
 }
 
 dependencies {
+    implementation(project(':commonandroid'))
+    implementation(project(":usecase"))
 
-    implementation 'androidx.core:core-ktx:1.6.0'
-    implementation 'androidx.appcompat:appcompat:1.3.1'
-    implementation 'com.google.android.material:material:1.4.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation Deps.Kotlin.stdLib
+    implementation Deps.AndroidX.coreKtx
+    implementation Deps.AndroidX.appCompat
+    implementation Deps.AndroidX.liveDataLifecycleKtx
+    implementation Deps.AndroidX.viewModelKtx
+    implementation Deps.AndroidX.liveEvent
+
+    testImplementation Deps.Test.mockk
+    testImplementation Deps.Test.truth
+    testImplementation Deps.Spek.spek
+    testImplementation Deps.Spek.spekRunner
+    testImplementation Deps.Spek.kotlinReflect
+    testImplementation Deps.Kotlin.Test.coroutine
+    testImplementation Deps.AndroidX.Test.coreTesting
 }

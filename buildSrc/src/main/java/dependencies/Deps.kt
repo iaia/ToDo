@@ -22,6 +22,7 @@ object Deps {
         val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$nav_version"
         val navigationUi = "androidx.navigation:navigation-ui-ktx:$nav_version"
         val liveDataLifecycleKtx = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+        val viewModelKtx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
         val liveEvent = "com.github.hadilq:live-event:1.2.3"
         val viewPager2 = "androidx.viewpager2:viewpager2:1.0.0"
 

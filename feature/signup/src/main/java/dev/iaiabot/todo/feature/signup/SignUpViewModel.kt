@@ -2,8 +2,8 @@ package dev.iaiabot.todo.feature.signup
 
 import androidx.lifecycle.*
 import com.hadilq.liveevent.LiveEvent
-import dev.iaiabot.todo.HasToastAction
-import dev.iaiabot.todo.HasToastActionImpl
+import dev.iaiabot.todo.commonandroid.HasToastAction
+import dev.iaiabot.todo.commonandroid.HasToastActionImpl
 import dev.iaiabot.todo.usecase.user.CheckAlreadyLoggedInUseCase
 import dev.iaiabot.todo.usecase.user.SignUpUseCase
 import kotlinx.coroutines.flow.launchIn

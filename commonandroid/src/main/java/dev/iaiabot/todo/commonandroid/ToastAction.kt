@@ -15,7 +15,7 @@ interface HasToastAction {
     fun showToast(text: String?)
 }
 
-internal class HasToastActionImpl() : HasToastAction {
+class HasToastActionImpl() : HasToastAction {
     // LiveEventを使う
     override val toastAction = MutableLiveData<ToastAction>()
 
@@ -27,7 +27,7 @@ internal class HasToastActionImpl() : HasToastAction {
     }
 }
 
-internal fun Fragment.observeToastAction(
+fun Fragment.observeToastAction(
     hasToastAction: HasToastAction
 ) {
     hasToastAction.toastAction.observe(viewLifecycleOwner) {
