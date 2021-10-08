@@ -1,4 +1,4 @@
-package dev.iaiabot.todo
+package dev.iaiabot.todo.commonandroid
 
 import android.widget.Toast
 import androidx.fragment.app.Fragment
