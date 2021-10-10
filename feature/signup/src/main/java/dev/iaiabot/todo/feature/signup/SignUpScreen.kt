@@ -37,7 +37,8 @@ fun SignUpScreen(
             modifier = Modifier.fillMaxSize(),
             onClick = {
                 viewModel.onClickSignUp()
-            }) {
+            }
+        ) {
             Text(text = "Sign In")
         }
     }
