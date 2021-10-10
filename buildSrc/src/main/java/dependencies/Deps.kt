@@ -37,6 +37,7 @@ object Deps {
             val materialIconExtend = "androidx.compose.material:material-icons-extended:${version}"
             val rxJava = "androidx.compose.runtime:runtime-rxjava2:${version}"
             val livedata = "androidx.compose.runtime:runtime-livedata:${version}"
+            val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07"
         }
 
         object Test {

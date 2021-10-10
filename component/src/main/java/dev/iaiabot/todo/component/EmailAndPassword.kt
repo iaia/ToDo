@@ -4,39 +4,40 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun EmailAndPassword() {
+fun EmailAndPassword(
+    email: String,
+    emailOnChange: (String) -> Unit,
+    password: String,
+    passwordOnChange: (String) -> Unit,
+) {
     Column(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Email()
-        Password()
+        Email(email, emailOnChange)
+        Password(password, passwordOnChange)
     }
 }
 
 @Composable
-fun Email() {
-    var text by remember { mutableStateOf("Hello") }
-
+fun Email(text: String, onChange: (String) -> Unit) {
     TextField(
         value = text,
-        onValueChange = { text = it },
+        onValueChange = onChange,
         label = { Text("email") }
     )
 }
 
 @Composable
-fun Password() {
-    var text by remember { mutableStateOf("Hello") }
-
+fun Password(text: String, onChange: (String) -> Unit) {
     TextField(
         value = text,
-        onValueChange = { text = it },
+        onValueChange = onChange,
         label = { Text("password") }
     )
 }
@@ -44,5 +45,10 @@ fun Password() {
 @Composable
 @Preview
 fun EmailAndPasswordPreview() {
-    EmailAndPassword()
+    EmailAndPassword(
+        "email",
+        { _ -> },
+        "password",
+        { _ -> }
+    )
 }

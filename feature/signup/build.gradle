@@ -67,6 +67,7 @@ dependencies {
     implementation Deps.AndroidX.Compose.materialIconExtend
     implementation Deps.AndroidX.Compose.rxJava
     implementation Deps.AndroidX.Compose.livedata
+    implementation Deps.AndroidX.Compose.viewModel
 
     testImplementation Deps.Test.mockk
     testImplementation Deps.Test.truth

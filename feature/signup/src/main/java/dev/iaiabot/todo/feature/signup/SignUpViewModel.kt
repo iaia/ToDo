@@ -16,20 +16,26 @@ sealed class Action {
 
 abstract class SignUpViewModel : ViewModel(), LifecycleObserver, HasToastAction {
     abstract val routerAction: LiveData<Action>
-    abstract val email: MutableLiveData<String>
-    abstract val password: MutableLiveData<String>
+    abstract val email: LiveData<String>
+    abstract val password: LiveData<String>
 
-    abstract fun onResume()
+    // TODO: 共通化
+    abstract val nowLoading: LiveData<Boolean>
+
+    abstract fun onChangeEmail(text: String)
+    abstract fun onChangePassword(text: String)
     abstract fun onClickSignUp()
 }
 
-internal class SignUpViewModelImpl(
+// TODO: internal にする
+class SignUpViewModelImpl(
     checkAlreadyLoggedInUseCase: CheckAlreadyLoggedInUseCase,
     private val signUpUseCase: SignUpUseCase,
 ) : SignUpViewModel(), HasToastAction by HasToastActionImpl() {
     override val routerAction = LiveEvent<Action>()
     override val email = MutableLiveData("")
     override val password = MutableLiveData("")
+    override val nowLoading = MutableLiveData<Boolean>(false)
 
     init {
         checkAlreadyLoggedInUseCase()
@@ -41,8 +47,12 @@ internal class SignUpViewModelImpl(
             .launchIn(viewModelScope)
     }
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    override fun onResume() {
+    override fun onChangeEmail(text: String) {
+        email.value = text
+    }
+
+    override fun onChangePassword(text: String) {
+        password.value = text
     }
 
     override fun onClickSignUp() {

@@ -7,7 +7,9 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import dev.iaiabot.todo.component.MyAppBar
 import dev.iaiabot.todo.component.MyTheme
+import dev.iaiabot.todo.feature.signup.SignUpScreen
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 
 class MainActivity : AppCompatActivity() {
     // private lateinit var binding: ActivityMainBinding
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             MainContent {
+                SignUpScreen(getViewModel())
             }
         }
 

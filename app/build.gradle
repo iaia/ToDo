@@ -52,6 +52,7 @@ dependencies {
     implementation(project(":usecase"))
     implementation(project(":commonandroid"))
     implementation(project(":component"))
+    implementation(project(":feature:signup"))
 
     implementation Deps.Kotlin.stdLib
     implementation Deps.AndroidX.coreKtx
@@ -74,6 +75,7 @@ dependencies {
     implementation Deps.AndroidX.Compose.materialIconExtend
     implementation Deps.AndroidX.Compose.rxJava
     implementation Deps.AndroidX.Compose.livedata
+    implementation Deps.AndroidX.Compose.viewModel
     implementation Deps.Epoxy.epoxy
     implementation Deps.Epoxy.epoxyDataBinding
     kapt Deps.Epoxy.epoxyProcessor
