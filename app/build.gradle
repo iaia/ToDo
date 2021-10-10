@@ -51,10 +51,12 @@ dependencies {
     implementation(project(':model'))
     implementation(project(":usecase"))
     implementation(project(":commonandroid"))
+    implementation(project(":component"))
 
     implementation Deps.Kotlin.stdLib
     implementation Deps.AndroidX.coreKtx
     implementation Deps.AndroidX.appCompat
+    implementation Deps.AndroidX.activityCompose
     implementation Deps.AndroidX.liveDataLifecycleKtx
     implementation Deps.AndroidX.liveEvent
 

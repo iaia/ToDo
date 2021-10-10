@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import dev.iaiabot.todo.component.EmailAndPassword
-import dev.iaiabot.todo.component.MainContent
+import dev.iaiabot.todo.component.MyTheme
 import dev.iaiabot.todo.component.Progress
 
 @Composable
@@ -31,7 +31,7 @@ fun SignUpScreen() {
 @Composable
 @Preview
 fun SignUpScreenPreview() {
-    MainContent {
+    MyTheme {
         SignUpScreen()
     }
 }

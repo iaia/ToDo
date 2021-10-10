@@ -17,6 +17,7 @@ object Deps {
     object AndroidX {
         val coreKtx = "androidx.core:core-ktx:1.6.0"
         val appCompat = "androidx.appcompat:appcompat:1.3.1"
+        val activityCompose = "androidx.activity:activity-compose:1.3.1"
         val constraintLayout = "androidx.constraintlayout:constraintlayout:2.1.1"
         val nav_version = "2.3.5"
         val navigationFragment = "androidx.navigation:navigation-fragment-ktx:$nav_version"
