@@ -28,8 +28,8 @@ object Deps {
 
         object Compose {
             val version = "1.0.3"
-            val compose = "androidx.compose.ui:ui:${version}"
-            val tooling = "androidx.compose.ui:ui-tooling:${version}"
+            val ui = "androidx.compose.ui:ui:${version}"
+            val uiTooling = "androidx.compose.ui:ui-tooling:${version}"
             val foundation = "androidx.compose.foundation:foundation:${version}"
             val material = "androidx.compose.material:material:${version}"
             val materialIcon = "androidx.compose.material:material-icons-core:${version}"

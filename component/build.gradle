@@ -3,7 +3,6 @@ import dependencies.Deps
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id "kotlin-kapt"
 }
 
 android {
@@ -33,6 +32,10 @@ android {
         jvmTarget = '1.8'
     }
 
+    buildFeatures {
+        compose true
+    }
+
     composeOptions {
         kotlinCompilerVersion Deps.kotlin_version
         kotlinCompilerExtensionVersion Deps.AndroidX.Compose.version
@@ -40,21 +43,17 @@ android {
 }
 
 dependencies {
-    implementation(project(':commonandroid'))
-    implementation(project(":usecase"))
 
     implementation Deps.Kotlin.stdLib
     implementation Deps.AndroidX.coreKtx
     implementation Deps.AndroidX.appCompat
-    implementation Deps.AndroidX.liveDataLifecycleKtx
-    implementation Deps.AndroidX.viewModelKtx
-    implementation Deps.AndroidX.liveEvent
 
-    testImplementation Deps.Test.mockk
-    testImplementation Deps.Test.truth
-    testImplementation Deps.Spek.spek
-    testImplementation Deps.Spek.spekRunner
-    testImplementation Deps.Spek.kotlinReflect
-    testImplementation Deps.Kotlin.Test.coroutine
-    testImplementation Deps.AndroidX.Test.coreTesting
+    implementation Deps.AndroidX.Compose.ui
+    implementation Deps.AndroidX.Compose.uiTooling
+    implementation Deps.AndroidX.Compose.foundation
+    implementation Deps.AndroidX.Compose.material
+    implementation Deps.AndroidX.Compose.materialIcon
+    implementation Deps.AndroidX.Compose.materialIconExtend
+    implementation Deps.AndroidX.Compose.rxJava
+    implementation Deps.AndroidX.Compose.livedata
 }

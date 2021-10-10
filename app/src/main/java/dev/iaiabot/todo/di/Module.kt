@@ -2,8 +2,6 @@ package dev.iaiabot.todo.di
 
 import dev.iaiabot.todo.MainViewModel
 import dev.iaiabot.todo.MainViewModelImpl
-import dev.iaiabot.todo.feature.signup.SignUpViewModel
-import dev.iaiabot.todo.feature.signup.SignUpViewModelImpl
 import dev.iaiabot.todo.login.LoginViewModel
 import dev.iaiabot.todo.login.LoginViewModelImpl
 import dev.iaiabot.todo.task.TaskViewModel
@@ -16,7 +14,7 @@ object Module {
         viewModel<MainViewModel> { MainViewModelImpl(get(), get()) }
 
         viewModel<LoginViewModel> { LoginViewModelImpl(get(), get()) }
-        viewModel<SignUpViewModel> { SignUpViewModelImpl(get(), get()) }
+        // viewModel<SignUpViewModel> { SignUpViewModelImpl(get(), get()) }
 
         viewModel<TaskViewModel> { (showOnlyCompleted: Boolean) ->
             TaskViewModelImpl(

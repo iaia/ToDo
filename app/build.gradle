@@ -50,6 +50,7 @@ android {
 dependencies {
     implementation(project(':model'))
     implementation(project(":usecase"))
+    implementation(project(":commonandroid"))
 
     implementation Deps.Kotlin.stdLib
     implementation Deps.AndroidX.coreKtx
@@ -63,8 +64,8 @@ dependencies {
     implementation Deps.AndroidX.navigationFragment
     implementation Deps.AndroidX.navigationUi
     implementation Deps.AndroidX.viewPager2
-    implementation Deps.AndroidX.Compose.compose
-    implementation Deps.AndroidX.Compose.tooling
+    implementation Deps.AndroidX.Compose.ui
+    implementation Deps.AndroidX.Compose.uiTooling
     implementation Deps.AndroidX.Compose.foundation
     implementation Deps.AndroidX.Compose.material
     implementation Deps.AndroidX.Compose.materialIcon

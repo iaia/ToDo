@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import dev.iaiabot.todo.R
+import dev.iaiabot.todo.commonandroid.observeToastAction
 import dev.iaiabot.todo.databinding.FragmentLoginBinding
-import dev.iaiabot.todo.observeToastAction
 import org.koin.android.ext.android.inject
 
 class LoginFragment : Fragment() {
@@ -34,10 +34,14 @@ class LoginFragment : Fragment() {
         viewModel.routerAction.observe(viewLifecycleOwner) {
             when (it) {
                 Action.GoToTasks -> findNavController().navigate(R.id.action_login_to_task, null)
-                Action.GoToSignUp -> findNavController().navigate(
+                Action.GoToSignUp -> {
+                }
+                /*findNavController().navigate(
                     R.id.action_login_to_sign_up,
                     null
                 )
+
+                 */
             }
         }
 
