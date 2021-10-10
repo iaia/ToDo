@@ -33,6 +33,10 @@ android {
         jvmTarget = '1.8'
     }
 
+    buildFeatures {
+        compose true
+    }
+
     composeOptions {
         kotlinCompilerVersion Deps.kotlin_version
         kotlinCompilerExtensionVersion Deps.AndroidX.Compose.version
@@ -49,6 +53,19 @@ dependencies {
     implementation Deps.AndroidX.liveDataLifecycleKtx
     implementation Deps.AndroidX.viewModelKtx
     implementation Deps.AndroidX.liveEvent
+
+    implementation Deps.Kotlin.stdLib
+    implementation Deps.AndroidX.coreKtx
+    implementation Deps.AndroidX.appCompat
+
+    implementation Deps.AndroidX.Compose.ui
+    implementation Deps.AndroidX.Compose.uiTooling
+    implementation Deps.AndroidX.Compose.foundation
+    implementation Deps.AndroidX.Compose.material
+    implementation Deps.AndroidX.Compose.materialIcon
+    implementation Deps.AndroidX.Compose.materialIconExtend
+    implementation Deps.AndroidX.Compose.rxJava
+    implementation Deps.AndroidX.Compose.livedata
 
     testImplementation Deps.Test.mockk
     testImplementation Deps.Test.truth

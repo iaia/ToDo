@@ -9,21 +9,6 @@ class SignUpFragment : Fragment() {
 
     private lateinit var viewModel: SignUpViewModel
 
-    /*
-    private lateinit var binding: FragmentSignUpBinding
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSignUpBinding.inflate(inflater, container, false)
-        binding.lifecycleOwner = viewLifecycleOwner
-        binding.viewModel = viewModel
-        viewLifecycleOwner.lifecycle.addObserver(viewModel)
-        return binding.root
-    }
-     */
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
