@@ -1,14 +1,19 @@
 package dev.iaiabot.todo.component
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun EmailAndPassword() {
-    Column {
+    Column(
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Email()
         Password()
     }

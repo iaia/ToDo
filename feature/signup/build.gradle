@@ -45,6 +45,7 @@ android {
 
 dependencies {
     implementation(project(':commonandroid'))
+    implementation(project(':component'))
     implementation(project(":usecase"))
 
     implementation Deps.Kotlin.stdLib
